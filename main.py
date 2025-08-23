@@ -12,6 +12,7 @@ def main():
     while True:
         print("\n--------------------")
         print(game)
+        print(f"Current Ante: {game.ante}")
         print("\n--- Your Hand ---")
         for i, card in enumerate(game.hand):
             print(f"[{i}] {card}")
