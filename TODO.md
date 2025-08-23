@@ -52,3 +52,8 @@
 - [x] Show score needed to win blind.
 - [x] Fix: Two Pair registered only as a Pair.
 - [x] Display play again option if player loses.
+- [x] Add card value to chips during scoring.
+- [x] Show detailed breakdown of chip and multiplier changes.
+- [x] Provide command to view remaining deck.
+- [x] Use suit emojis for card display.
+

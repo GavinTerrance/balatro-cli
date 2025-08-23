@@ -185,9 +185,11 @@ class Game:
 
         played_hand_type = evaluate_hand(cards_to_play)
         if played_hand_type:
-            hand_score = calculate_score(
+            hand_score, chips, mult, breakdown = calculate_score(
                 played_hand_type, cards_to_play, self.player.jokers, self
             )
+            for line in breakdown:
+                print(line)
             self.player.score += hand_score
             print(
                 f"Hand played: {played_hand_type.value} for {hand_score} points!"
@@ -227,6 +229,12 @@ class Game:
         print(
             f"Discarded {len(discarded)} cards. {self.player.discards} discards remaining."
         )
+
+    def show_deck(self):
+        print("\n--- Remaining Deck ---")
+        for i, card in enumerate(self.deck.cards):
+            print(f"[{i}] {card}")
+        print("--------------------")
 
     # ------------------------------------------------------------------
     def __str__(self) -> str:

@@ -33,6 +33,7 @@ class BalatroCLI:
         print("  't': Use a Tarot card from your inventory.")
         print("  's': Use a Spectral card from your inventory.")
         print("  'o': Sort your hand by rank or suit.")
+        print("  'c': View the remaining deck.")
         print("  'v': Save the current game.")
         print("  'l': Load a previously saved game.")
         print("  'q': Quit the game.")
@@ -73,6 +74,8 @@ class BalatroCLI:
                 self.game.discard_cards(card_indices)
             else:
                 print("Did you list the cards you want to discard after 'd'?")
+        elif action == "c":
+            self.game.show_deck()
         else:
             print("Invalid action or card indices. Please try again.")
         return True
