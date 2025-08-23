@@ -1,6 +1,7 @@
 # balatro/scoring.py
 
 from .poker import PokerHand
+from .jokers import Joker
 
 # Base chips and multiplier for each hand type
 # Values taken from Balatro wiki
@@ -17,13 +18,16 @@ HAND_SCORES = {
     PokerHand.FIVE_OF_A_KIND: {"chips": 120, "mult": 12}, # Assuming a generic five of a kind
 }
 
-def calculate_score(hand_type: PokerHand, cards: list):
-    """Calculates the score for a given hand type and the cards in it."""
+def calculate_score(hand_type: PokerHand, cards: list, jokers: list[Joker]):
+    """Calculates the score for a given hand type, applying joker bonuses."""
     base_score = HAND_SCORES.get(hand_type, {"chips": 0, "mult": 0})
     
-    # For now, card-specific bonuses are not implemented.
-    # This is a simplified calculation.
     chips = base_score["chips"]
     mult = base_score["mult"]
+
+    # Apply joker bonuses
+    for joker in jokers:
+        chips = joker.apply_chips(chips)
+        mult = joker.apply_mult(mult)
     
     return chips * mult

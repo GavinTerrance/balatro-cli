@@ -4,12 +4,14 @@ from .deck import Deck
 from .cards import Card
 from .poker import evaluate_hand
 from .scoring import calculate_score
+from .jokers import JokerOfMadness # Example Joker
 
 class Game:
     def __init__(self):
         self.deck = Deck()
         self.deck.shuffle()
         self.hand = []
+        self.jokers = [JokerOfMadness()] # Start with a joker for testing
         
         # Game state variables
         self.money = 4
@@ -38,7 +40,7 @@ class Game:
         
         played_hand_type = evaluate_hand(cards_to_play)
         if played_hand_type:
-            hand_score = calculate_score(played_hand_type, cards_to_play)
+            hand_score = calculate_score(played_hand_type, cards_to_play, self.jokers)
             self.score += hand_score
             print(f"Hand played: {played_hand_type.value} for {hand_score} points!")
         else:
