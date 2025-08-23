@@ -41,7 +41,7 @@
 - [ ] Implement Challenges.
 - [x] Add CLI user interface for interaction.
 - [x] Add save/load functionality.
-- [ ] Implement error handling and robust input validation.
+- [x] Implement error handling and robust input validation.
 - [ ] Write unit tests.
 - [ ] Refine game balance.
 - [ ] Add comprehensive documentation.

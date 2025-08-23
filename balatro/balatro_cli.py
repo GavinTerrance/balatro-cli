@@ -124,6 +124,8 @@ def main():
             print("  's': Use a Spectral card from your inventory.")
             print("  'p': Use a Planet card from your inventory.")
             print("  'o': Sort your hand by rank or suit.")
+            print("  'v': Save the current game.")
+            print("  'l': Load a previously saved game.")
             print("  'q': Quit the game.")
             print("--------------------")
             continue
