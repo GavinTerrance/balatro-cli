@@ -10,6 +10,8 @@ def main():
     game.draw_hand()
 
     while True:
+        if game.game_over:
+            break
         print("\n--------------------")
         print(game)
         print(f"Current Ante: {game.ante}")

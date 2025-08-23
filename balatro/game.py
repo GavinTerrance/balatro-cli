@@ -33,6 +33,7 @@ class Game:
         self.discards = 3
         self.score = 0
         self.ante = 1 # Starting ante
+        self.game_over = False # New attribute for game over state
 
     def __repr__(self):
         return (
@@ -64,7 +65,10 @@ class Game:
             self.money += 10
             self.advance_blind()
             return True
-        return False
+        else:
+            print(f"\n--- Failed to clear {self.current_blind.name}! Game Over! ---")
+            self.game_over = True
+            return False
 
     def draw_hand(self, hand_size: int = 8):
         # Discard current hand if any, and draw a new one.
