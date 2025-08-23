@@ -105,3 +105,35 @@ class Game:
             # Reset hands for next round, draw new hand, etc.
             self.hands = 4 # Reset for next round for now
             self.draw_hand() # Draw new hand for next round
+
+    def discard_cards(self, card_indices: list[int]):
+        if self.discards <= 0:
+            print("No discards remaining!")
+            return
+
+        if not card_indices:
+            print("No cards selected to discard.")
+            return
+
+        # Ensure all indices are valid and unique
+        if any(i < 0 or i >= len(self.hand) for i in card_indices):
+            print("Error: Invalid card index for discard.")
+            return
+        if len(card_indices) != len(set(card_indices)):
+            print("Error: Duplicate card indices for discard.")
+            return
+
+        # Sort indices in descending order to avoid issues when removing
+        card_indices.sort(reverse=True)
+        discarded_cards = []
+        for index in card_indices:
+            discarded_cards.append(self.hand.pop(index))
+        
+        # Draw new cards to replace discarded ones
+        new_cards = self.deck.draw(len(discarded_cards))
+        self.hand.extend(new_cards)
+        
+        self.discards -= 1
+        print(f"Discarded {len(discarded_cards)} cards. {self.discards} discards remaining.")
+        self.hands -= 1 # Discarding also counts as a hand played
+        print(f"Discarding counts as a hand. {self.hands} hands remaining.")

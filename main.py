@@ -68,8 +68,16 @@ def main():
                 print("Invalid input. Please enter a number.")
             continue
         elif action == 'd':
-            # Implement discard logic later
-            print("Discarding not yet implemented.")
+            if game.discards <= 0:
+                print("No discards remaining!")
+                continue
+            
+            discard_input = input("Enter card indices to discard (e.g., '0 2 4'): ").lower()
+            try:
+                indices_to_discard = [int(i) for i in discard_input.split()]
+                game.discard_cards(indices_to_discard)
+            except ValueError:
+                print("Invalid input. Please enter space-separated numbers.")
             continue
 
         try:
