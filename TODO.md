@@ -13,3 +13,4 @@
 - [x] Implement shop system
 - [x] Implement discard functionality
 - [x] Refine end-of-round flow
+- [x] Implement dedicated shop phase
