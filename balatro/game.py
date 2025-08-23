@@ -3,6 +3,7 @@
 from .deck import Deck
 from .cards import Card
 from .poker import evaluate_hand
+from .scoring import calculate_score
 
 class Game:
     def __init__(self):
@@ -28,8 +29,6 @@ class Game:
         self.hand = self.deck.draw(hand_size)
 
     def play_hand(self, cards_to_play: list[Card]):
-        # Basic logic for playing a hand. For now, just removes cards from hand.
-        # Scoring and hand evaluation will be added later.
         if not all(c in self.hand for c in cards_to_play):
             print("Error: One or more cards are not in the current hand.")
             return
@@ -38,7 +37,12 @@ class Game:
             self.hand.remove(card)
         
         played_hand_type = evaluate_hand(cards_to_play)
-        print(f"Hand played: {played_hand_type.value}")
+        if played_hand_type:
+            hand_score = calculate_score(played_hand_type, cards_to_play)
+            self.score += hand_score
+            print(f"Hand played: {played_hand_type.value} for {hand_score} points!")
+        else:
+            print("No valid poker hand was played.")
 
         self.hands -= 1
         print(f"Played {len(cards_to_play)} cards. {self.hands} hands remaining.")
