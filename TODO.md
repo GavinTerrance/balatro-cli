@@ -7,5 +7,5 @@
 - [x] Implement scoring logic
 - [x] Add Jokers
 - [x] Add Vouchers
-- [ ] Add Blinds & Antes
+- [x] Add Blinds & Antes
 - [ ] Implement shop system
