@@ -46,7 +46,17 @@ class Game:
 
         self.blind_manager = BlindManager()
         self.shop = Shop()
+        self.round_earnings = 0
+        self.voucher_purchased = False
         self.activate_vouchers()
+
+    @property
+    def money(self):
+        return self.player.money
+
+    @money.setter
+    def money(self, value):
+        self.player.money = value
 
     # ------------------------------------------------------------------
     # Serialization helpers
@@ -111,21 +121,55 @@ class Game:
 
     def advance_blind(self):
         cleared_ante = self.blind_manager.advance()
+        self.player.score = 0
+        self.player.hands = 4
+        self.player.discards = 3
+        if self.deck_key == "Red":
+            self.player.discards += 1
         if cleared_ante:
             print("\n--- All Blinds in Ante Cleared! Advancing to next Ante! ---")
             self.ante += 1
-            self.player.score = 0
+            self.voucher_purchased = False
         print(
             f"\n--- Advancing to {self.blind_manager.current.name} (Score required: {self.blind_manager.current.score_required}) ---"
         )
 
+    def end_of_round_winnings(self) -> int:
+        base = 10
+        leftover = self.player.hands
+        self.player.money += base + leftover
+        total = base + leftover + self.round_earnings
+        print(
+            f"End of round winnings: base ${base} + joker/gold ${self.round_earnings} + leftover hands ${leftover} = ${total}"
+        )
+        self.round_earnings = 0
+        self.player.hands = 0
+        return total
+
+    def enter_shop(self):
+        self.shop.generate_items(self)
+        while True:
+            self.shop.display_items()
+            choice = input(
+                "Select item to purchase or press Enter to continue: "
+            ).strip()
+            if choice == "":
+                break
+            try:
+                idx = int(choice)
+                self.shop.purchase_item(idx, self)
+            except ValueError:
+                print("Invalid selection.")
+
     def check_blind_cleared(self):
         if self.player.score >= self.blind_manager.current.score_required:
+            total = self.end_of_round_winnings()
             print(
-                f"\n--- {self.blind_manager.current.name} Cleared! You gained 10 money! ---"
+                f"\n--- {self.blind_manager.current.name} Cleared! You gained ${total}! ---"
             )
-            self.player.money += 10
+            self.enter_shop()
             self.advance_blind()
+            self.draw_hand()
             return True
         print(
             f"\n--- Failed to clear {self.blind_manager.current.name}! Game Over! ---"
@@ -173,6 +217,9 @@ class Game:
         self.player.use_planet_card(index, self)
 
     def play_hand(self, cards_to_play: list[Card]):
+        if len(cards_to_play) != 5:
+            print("Error: You must play exactly 5 cards.")
+            return
         if not all(c in self.player.hand for c in cards_to_play):
             print("Error: One or more cards are not in the current hand.")
             return
@@ -182,9 +229,11 @@ class Game:
 
         played_hand_type = evaluate_hand(cards_to_play)
         if played_hand_type:
-            hand_score = calculate_score(
+            hand_score, chips, mult, breakdown = calculate_score(
                 played_hand_type, cards_to_play, self.player.jokers, self
             )
+            for line in breakdown:
+                print(line)
             self.player.score += hand_score
             print(
                 f"Hand played: {played_hand_type.value} for {hand_score} points!"
@@ -196,6 +245,10 @@ class Game:
         print(
             f"Played {len(cards_to_play)} cards. {self.player.hands} hands remaining."
         )
+
+        if self.player.score >= self.blind_manager.current.score_required:
+            self.check_blind_cleared()
+            return
 
         if self.player.hands == 0:
             self.check_blind_cleared()
@@ -225,6 +278,12 @@ class Game:
             f"Discarded {len(discarded)} cards. {self.player.discards} discards remaining."
         )
 
+    def show_deck(self):
+        print("\n--- Remaining Deck ---")
+        for i, card in enumerate(self.deck.cards):
+            print(f"[{i}] {card}")
+        print("--------------------")
+
     # ------------------------------------------------------------------
     def __str__(self) -> str:
         def render_section(title, seq, line_fn, enumerated=False):
@@ -245,6 +304,7 @@ class Game:
             "--------------------",
             repr(self),
             f"Current Ante: {self.ante}",
+            f"Score needed to win blind: {self.blind_manager.current.score_required}",
         ]
 
         lines += render_section(
