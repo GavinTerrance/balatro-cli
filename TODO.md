@@ -16,7 +16,7 @@
 - [x] Extract "Tags" wiki content.
 - [x] Extract "Poker Hands" wiki content.
 - [x] Extract "Shop" wiki content.
-- [ ] Initialize Python project structure (e.g., `src/`, `main.py`).
+- [x] Initialize Python project structure (e.g., `src/`, `main.py`).
 - [ ] Create `README.md` with basic project info and run instructions.
 - [ ] Define basic `Card` class (rank, suit).
 - [ ] Define basic `Deck` class (collection of cards, shuffling, drawing).
