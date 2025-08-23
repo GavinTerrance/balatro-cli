@@ -32,7 +32,14 @@ def main():
                 print(f"{voucher.name}: {voucher.description}")
             print("--------------------")
 
-        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 's' for shop, or 'q' to quit: ").lower()
+        # Display Tarot Cards
+        if game.tarot_cards:
+            print("\n--- Your Tarot Cards ---")
+            for i, tarot_card in enumerate(game.tarot_cards):
+                print(f"[{i}] {tarot_card.name}: {tarot_card.description}")
+            print("--------------------")
+
+        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 's' for shop, 't' to use Tarot card, or 'q' to quit: ").lower()
 
         if action == 'q':
             break
@@ -45,6 +52,20 @@ def main():
                 pass # Go back to game
             else:
                 print("Invalid shop action.")
+            continue
+        elif action == 't':
+            if not game.tarot_cards:
+                print("You have no Tarot cards to use.")
+                continue
+            print("\n--- Your Tarot Cards ---")
+            for i, tarot_card in enumerate(game.tarot_cards):
+                print(f"[{i}] {tarot_card.name}: {tarot_card.description}")
+            print("--------------------")
+            try:
+                tarot_index = int(input("Enter the index of the Tarot card to use: "))
+                game.use_tarot_card(tarot_index)
+            except ValueError:
+                print("Invalid input. Please enter a number.")
             continue
         elif action == 'd':
             # Implement discard logic later
