@@ -45,3 +45,4 @@
 - [x] Refine game balance.
 - [ ] Write unit tests. (Skipped due to pytest installation issues)
 - [x] Add comprehensive documentation.
+- [x] Fixed crash in balatro_cli.py
