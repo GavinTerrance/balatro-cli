@@ -39,7 +39,7 @@
 - [x] Implement Enhancements, Editions, Seals.
 - [x] Implement different Deck types.
 - [ ] Implement Challenges.
-- [ ] Add CLI user interface for interaction.
+- [x] Add CLI user interface for interaction.
 - [ ] Add save/load functionality.
 - [ ] Implement error handling and robust input validation.
 - [ ] Write unit tests.

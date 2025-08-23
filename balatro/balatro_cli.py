@@ -74,10 +74,21 @@ def main():
                 print(f"[{i}] {planet_card.name}: {planet_card.description}")
             print("--------------------")
 
-        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 't' to use Tarot card, 's' to use Spectral card, 'p' to use Planet card, or 'q' to quit: ").lower()
+        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 't' to use Tarot card, 's' to use Spectral card, 'p' to use Planet card, 'h' for help, or 'q' to quit: ").lower()
 
         if action == 'q':
             break
+        elif action == 'h':
+            print("\n--- Help ---")
+            print("  Enter space-separated card indices (e.g., '0 2 4') to play a hand.")
+            print("  'd': Discard selected cards and draw new ones. Costs a hand.")
+            print("  't': Use a Tarot card from your inventory.")
+            print("  's': Use a Spectral card from your inventory.")
+            print("  'p': Use a Planet card from your inventory.")
+            print("  'o': Sort your hand by rank or suit.")
+            print("  'q': Quit the game.")
+            print("--------------------")
+            continue
         elif action == 'o':
             sort_option = input("Sort hand by 'rank' or 'suit'? ").lower()
             if sort_option in ['rank', 'suit']:
