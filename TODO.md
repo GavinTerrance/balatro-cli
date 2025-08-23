@@ -47,3 +47,4 @@
 - [x] Game runs without crashing with simulated input.
 - [ ] Write unit tests. (Skipped due to pytest installation issues)
 - [x] Add comprehensive documentation.
+- [x] Fix: Game not progressing when cards are played.
