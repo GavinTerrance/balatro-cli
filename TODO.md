@@ -26,7 +26,7 @@
 
 ## Phase 2: Core Game Mechanics
 
-- [ ] Implement Poker Hand evaluation.
+- [x] Implement Poker Hand evaluation.
 - [ ] Implement scoring (Chips and Mult).
 - [ ] Implement Blinds and Antes.
 - [ ] Implement basic Shop functionality.
