@@ -81,12 +81,23 @@ class BalatroCLI:
     def run(self) -> Game:
         """Start the interactive command loop."""
         self._print_help()
-        while not self.game.game_over:
-            print(self.game)
-            user_input = input("Enter your action: ").strip().lower()
-            action = user_input[:1]
-            additional_input = user_input[1:]
-            if not self._handle_action(action, additional_input):
+        while True:
+            while not self.game.game_over:
+                print(self.game)
+                user_input = input("Enter your action: ").strip().lower()
+                action = user_input[:1]
+                additional_input = user_input[1:]
+                if not self._handle_action(action, additional_input):
+                    return self.game
+            again = input("Play again? (y/n): ").strip().lower()
+            if again == "y":
+                deck_type = self.game.deck_key
+                self.game = Game(deck_type=deck_type)
+                print(f"You have chosen the {self.game.deck.name}!")
+                self.game.draw_hand()
+                self.game.game_over = False
+                self._print_help()
+            else:
                 break
         return self.game
 
