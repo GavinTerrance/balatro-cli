@@ -5,7 +5,7 @@ import random
 from ..cards.jokers import Joker, load_jokers
 from .stickers import Sticker, StickerType
 from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
-from ..cards.tarot_cards import TarotCard, TheFool, TheMagician, TheWorld
+from ..cards.tarot_cards import TarotCard, load_tarot_cards
 from ..cards.spectral_cards import SpectralCard, TheSoul, BlackHole, Omen
 from ..cards.planet_cards import PlanetCard, load_planet_cards
 
@@ -37,7 +37,7 @@ class BoosterPack:
         if self.pack_type == "joker":
             options = random.sample(load_jokers(), 3)
         elif self.pack_type == "tarot":
-            options = [random.choice([TheFool, TheMagician, TheWorld])() for _ in range(3)]
+            options = random.sample(load_tarot_cards(), 3)
         elif self.pack_type == "spectral":
             options = [random.choice([TheSoul, BlackHole, Omen])() for _ in range(3)]
         else:  # planet
@@ -109,7 +109,6 @@ class Shop:
     def generate_items(self, game):
         self.items = []
         available_vouchers = [TarotMerchant, CardSharp, Honeypot]
-        available_tarot = [TheFool, TheMagician, TheWorld]
 
         booster_types = [
             ("Joker Pack", "joker"),
@@ -131,7 +130,7 @@ class Shop:
             if choice == "joker":
                 item = random.choice(load_jokers())
             elif choice == "tarot":
-                item = random.choice(available_tarot)()
+                item = random.choice(load_tarot_cards())
                 item.cost = BASE_COSTS["Tarot Card"]
             else:
                 item = random.choice(load_planet_cards())
