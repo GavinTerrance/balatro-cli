@@ -2,6 +2,7 @@
 
 from .deck import Deck
 from .cards import Card
+from .poker import evaluate_hand
 
 class Game:
     def __init__(self):
@@ -36,6 +37,9 @@ class Game:
         for card in cards_to_play:
             self.hand.remove(card)
         
+        played_hand_type = evaluate_hand(cards_to_play)
+        print(f"Hand played: {played_hand_type.value}")
+
         self.hands -= 1
         print(f"Played {len(cards_to_play)} cards. {self.hands} hands remaining.")
 
