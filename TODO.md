@@ -17,3 +17,5 @@
 - [x] Implement money management
 - [x] Implement game over condition
 - [x] Implement Joker/Voucher/Tarot Card acquisition
+- [] Implement card sorting in hand
+- [] Implement blind skipping 

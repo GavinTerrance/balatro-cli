@@ -73,6 +73,7 @@ class Game:
     def draw_hand(self, hand_size: int = 8):
         # Discard current hand if any, and draw a new one.
         self.hand = self.deck.draw(hand_size)
+        self.sort_hand() # Sort the hand after drawing
 
     def use_tarot_card(self, tarot_card_index: int):
         if 0 <= tarot_card_index < len(self.tarot_cards):
@@ -89,6 +90,7 @@ class Game:
 
         for card in cards_to_play:
             self.hand.remove(card)
+        self.sort_hand() # Sort the hand after playing cards
         
         played_hand_type = evaluate_hand(cards_to_play)
         if played_hand_type:
@@ -130,8 +132,19 @@ class Game:
         # Draw new cards to replace discarded ones
         new_cards = self.deck.draw(len(discarded_cards))
         self.hand.extend(new_cards)
+        self.sort_hand() # Sort the hand after discarding
         
         self.discards -= 1
         print(f"Discarded {len(discarded_cards)} cards. {self.discards} discards remaining.")
         self.hands -= 1 # Discarding also counts as a hand played
         print(f"Discarding counts as a hand. {self.hands} hands remaining.")
+
+    def sort_hand(self):
+        # Define a custom sorting key for cards
+        def card_sort_key(card):
+            rank_order = {
+                '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, 'T': 10, 
+                'J': 11, 'Q': 12, 'K': 13, 'A': 14
+            }
+            return (rank_order[card.rank], card.suit)
+        self.hand.sort(key=card_sort_key)
