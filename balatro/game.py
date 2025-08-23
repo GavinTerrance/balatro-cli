@@ -50,8 +50,6 @@ class Game:
         if self.current_blind_index < len(self.blinds):
             self.current_blind = self.blinds[self.current_blind_index]
             print(f"\n--- Advancing to {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
-            self.shop.generate_items() # Refresh shop items on new blind
-            self.shop.display_items() # Display shop items
         else:
             print("\n--- All Blinds in Ante Cleared! Advancing to next Ante! ---")
             self.ante += 1
@@ -59,8 +57,6 @@ class Game:
             self.current_blind = self.blinds[self.current_blind_index]
             self.score = 0 # Reset score for new ante
             print(f"\n--- Now in Ante {self.ante}, starting with {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
-            self.shop.generate_items() # Refresh shop items on new ante
-            self.shop.display_items() # Display shop items
 
     def check_blind_cleared(self):
         if self.score >= self.current_blind.score_required:

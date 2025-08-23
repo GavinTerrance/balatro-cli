@@ -39,20 +39,11 @@ def main():
                 print(f"[{i}] {tarot_card.name}: {tarot_card.description}")
             print("--------------------")
 
-        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 's' for shop, 't' to use Tarot card, or 'q' to quit: ").lower()
+        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 't' to use Tarot card, or 'q' to quit: ").lower()
 
         if action == 'q':
             break
-        elif action == 's':
-            game.shop.display_items()
-            shop_action = input("Enter item index to purchase, or 'b' to go back: ").lower()
-            if shop_action.isdigit():
-                game.shop.purchase_item(int(shop_action), game)
-            elif shop_action == 'b':
-                pass # Go back to game
-            else:
-                print("Invalid shop action.")
-            continue
+        
         elif action == 't':
             if not game.tarot_cards:
                 print("You have no Tarot cards to use.")
@@ -80,7 +71,7 @@ def main():
                 if game.hands == 0:
                     print("\n--- End of Round ---")
                     game.check_blind_cleared()
-                    input("Press Enter to continue to the next round...")
+                    shop_phase(game) # Call shop phase
                     game.hands = 4 # Reset for next round
                     game.draw_hand() # Draw new hand for next round
             except ValueError:
@@ -100,12 +91,28 @@ def main():
             if game.hands == 0:
                 print("\n--- End of Round ---")
                 game.check_blind_cleared()
-                input("Press Enter to continue to the next round...")
+                shop_phase(game) # Call shop phase
                 game.hands = 4 # Reset for next round
                 game.draw_hand() # Draw new hand for next round
 
         except ValueError:
             print("Invalid input. Please enter space-separated numbers.")
+
+def shop_phase(game):
+    while True:
+        print("\n--- Shop ---")
+        game.shop.display_items()
+        shop_action = input("Enter item index to purchase, 'r' to reroll, or 'c' to continue to next round: ").lower()
+
+        if shop_action.isdigit():
+            game.shop.purchase_item(int(shop_action), game)
+        elif shop_action == 'r':
+            game.shop.generate_items() # Reroll shop items
+            print("Shop rerolled!")
+        elif shop_action == 'c':
+            break # Exit shop phase
+        else:
+            print("Invalid shop action.")
 
     print("\n--- Game Over ---")
     print(f"Final Score: {game.score}")
