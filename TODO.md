@@ -5,7 +5,7 @@
 - [ ] Implement core game loop
 - [x] Define poker hands
 - [x] Implement scoring logic
-- [ ] Add Jokers
+- [x] Add Jokers
 - [ ] Add Vouchers
 - [ ] Add Blinds & Antes
 - [ ] Implement shop system
