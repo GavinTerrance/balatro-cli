@@ -15,8 +15,8 @@ class Game:
         self.deck = Deck()
         self.deck.shuffle()
         self.hand = []
-        self.jokers = [JokerOfMadness()] # Start with a joker for testing
-        self.vouchers = [TarotMerchant()] # Start with a voucher for testing
+        self.jokers = [] # No longer hardcoded
+        self.vouchers = [] # No longer hardcoded
         self.tarot_cards = [] # New list for tarot cards
         self.activate_vouchers()
 
