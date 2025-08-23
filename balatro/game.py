@@ -5,6 +5,7 @@ from .cards import Card
 from .poker import evaluate_hand
 from .scoring import calculate_score
 from .jokers import JokerOfMadness # Example Joker
+from .vouchers import Voucher, TarotMerchant # Example Voucher
 
 class Game:
     def __init__(self):
@@ -12,6 +13,12 @@ class Game:
         self.deck.shuffle()
         self.hand = []
         self.jokers = [JokerOfMadness()] # Start with a joker for testing
+        self.vouchers = [TarotMerchant()] # Start with a voucher for testing
+        self.activate_vouchers()
+
+    def activate_vouchers(self):
+        for voucher in self.vouchers:
+            voucher.apply_effect(self)
         
         # Game state variables
         self.money = 4
