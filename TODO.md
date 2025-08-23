@@ -43,6 +43,6 @@
 - [x] Add save/load functionality.
 - [x] Implement error handling and robust input validation.
 - [x] Refine game balance.
+- [x] Fixed crash in balatro_cli.py
 - [ ] Write unit tests. (Skipped due to pytest installation issues)
 - [x] Add comprehensive documentation.
-- [x] Fixed crash in balatro_cli.py
