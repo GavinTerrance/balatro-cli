@@ -8,4 +8,4 @@
 - [x] Add Jokers
 - [x] Add Vouchers
 - [x] Add Blinds & Antes
-- [ ] Implement shop system
+- [x] Implement shop system
