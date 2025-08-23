@@ -3,6 +3,7 @@
 import random
 from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
 from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
+from .tarot_cards import TarotCard, TheFool, TheMagician, TheWorld
 
 class Shop:
     def __init__(self):
@@ -14,6 +15,7 @@ class Shop:
         # For now, a simple random selection of Jokers and Vouchers
         available_jokers = [JokerOfGreed, JokerOfMadness, ChipJoker]
         available_vouchers = [TarotMerchant, CardSharp, Honeypot]
+        available_tarot_cards = [TheFool, TheMagician, TheWorld]
 
         # Add 3 random jokers
         for _ in range(3):
@@ -21,6 +23,9 @@ class Shop:
         
         # Add 1 random voucher
         self.items.append(random.choice(available_vouchers)())
+
+        # Add 1 random tarot card
+        self.items.append(random.choice(available_tarot_cards)())
 
     def display_items(self):
         print("--- Shop Items ---")
@@ -40,6 +45,9 @@ class Shop:
                     game.vouchers.append(item)
                     item.apply_effect(game) # Apply effect immediately upon purchase
                     print(f"Purchased {item.name}! Effect applied.")
+                elif isinstance(item, TarotCard):
+                    game.tarot_cards.append(item)
+                    print(f"Purchased {item.name}! Added to your Tarot Cards.")
                 self.items.pop(item_index) # Remove purchased item from shop
                 return True
             else:

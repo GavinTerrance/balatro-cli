@@ -8,6 +8,7 @@ from .jokers import JokerOfMadness # Example Joker
 from .vouchers import Voucher, TarotMerchant # Example Voucher
 from .blinds import SmallBlind, BigBlind, BossBlind
 from .shop import Shop
+from .tarot_cards import TarotCard # Import TarotCard base class
 
 class Game:
     def __init__(self):
@@ -16,6 +17,7 @@ class Game:
         self.hand = []
         self.jokers = [JokerOfMadness()] # Start with a joker for testing
         self.vouchers = [TarotMerchant()] # Start with a voucher for testing
+        self.tarot_cards = [] # New list for tarot cards
         self.activate_vouchers()
 
         self.blinds = [SmallBlind(), BigBlind(), BossBlind()]
@@ -70,6 +72,14 @@ class Game:
     def draw_hand(self, hand_size: int = 8):
         # Discard current hand if any, and draw a new one.
         self.hand = self.deck.draw(hand_size)
+
+    def use_tarot_card(self, tarot_card_index: int):
+        if 0 <= tarot_card_index < len(self.tarot_cards):
+            tarot_card = self.tarot_cards.pop(tarot_card_index)
+            print(f"Using {tarot_card.name}...")
+            tarot_card.apply_effect(self)
+        else:
+            print("Invalid Tarot card index.")
 
     def play_hand(self, cards_to_play: list[Card]):
         if not all(c in self.hand for c in cards_to_play):
