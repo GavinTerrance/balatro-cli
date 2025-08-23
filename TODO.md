@@ -22,3 +22,4 @@
 - [x] Enforce 5-card discard limit
 - [x] Recreate wiki in local project (Jokers page)
 - [x] Recreate wiki in local project (Vouchers page)
+- [x] Recreate wiki in local project (Blinds page)
