@@ -30,10 +30,11 @@ class Game:
         self.hands = 4
         self.discards = 3
         self.score = 0
+        self.ante = 1 # Starting ante
 
     def __repr__(self):
         return (
-            f"Game(round={self.round}, hands={self.hands}, "
+            f"Game(Ante={self.ante}, round={self.round}, hands={self.hands}, "
             f"discards={self.discards}, score={self.score}, money={self.money}, "
             f"current_blind={self.current_blind.name})"
         )
@@ -50,8 +51,14 @@ class Game:
             self.shop.generate_items() # Refresh shop items on new blind
             self.shop.display_items() # Display shop items
         else:
-            print("\n--- All Blinds Cleared! You Win! ---")
-            # This would eventually lead to game end or next ante
+            print("\n--- All Blinds in Ante Cleared! Advancing to next Ante! ---")
+            self.ante += 1
+            self.current_blind_index = 0 # Reset blind index for new ante
+            self.current_blind = self.blinds[self.current_blind_index]
+            self.score = 0 # Reset score for new ante
+            print(f"\n--- Now in Ante {self.ante}, starting with {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
+            self.shop.generate_items() # Refresh shop items on new ante
+            self.shop.display_items() # Display shop items
 
     def check_blind_cleared(self):
         if self.score >= self.current_blind.score_required:
