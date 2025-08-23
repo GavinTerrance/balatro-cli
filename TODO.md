@@ -24,3 +24,4 @@
 - [x] Recreate wiki in local project (Vouchers page)
 - [x] Recreate wiki in local project (Blinds page)
 - [x] Recreate wiki in local project (Tarot Cards page)
+- [ ] Investigate Playing Cards wiki content
