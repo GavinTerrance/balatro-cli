@@ -1,7 +1,7 @@
 """This module defines the BaseDeck class and its subclasses for different deck types."""
 
 import random
-from .cards import Card, Suit, Rank
+from ..cards.cards import Card, Suit, Rank
 
 class BaseDeck:
     """Represents a standard deck of playing cards."""

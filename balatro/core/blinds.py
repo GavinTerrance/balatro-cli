@@ -32,3 +32,28 @@ class BossBlind(Blind):
             name="Boss Blind",
             score_required=2000
         )
+
+
+class BlindManager:
+    """Keeps track of the current blind and handles advancement."""
+
+    def __init__(self):
+        self.blinds = [SmallBlind(), BigBlind(), BossBlind()]
+        self.index = 0
+
+    @property
+    def current(self) -> Blind:
+        return self.blinds[self.index]
+
+    def advance(self) -> bool:
+        """Advance to the next blind.
+
+        Returns ``True`` when all blinds have been cleared, signalling that
+        the ante should increase.
+        """
+
+        self.index += 1
+        if self.index >= len(self.blinds):
+            self.index = 0
+            return True
+        return False
