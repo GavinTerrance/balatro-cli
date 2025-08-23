@@ -1,8 +1,8 @@
 """This module handles the scoring logic for poker hands in Balatro."""
 
-from .poker import PokerHand, get_rank_value
+from .poker import PokerHand
 from ..cards.jokers import Joker
-from ..cards.cards import Card, Enhancement, Edition, Seal
+from ..cards.cards import Card, Enhancement, Edition, Seal, Rank
 import random  # Import random for Lucky Card
 
 # Base chips and multiplier for each hand type
@@ -30,8 +30,24 @@ def calculate_score(
     mult = base_score["mult"]
     messages: list[str] = [f"Base hand ({hand_type.value}): {chips} chips, {mult} mult"]
 
+    rank_chip_values = {
+        Rank.TWO: 2,
+        Rank.THREE: 3,
+        Rank.FOUR: 4,
+        Rank.FIVE: 5,
+        Rank.SIX: 6,
+        Rank.SEVEN: 7,
+        Rank.EIGHT: 8,
+        Rank.NINE: 9,
+        Rank.TEN: 10,
+        Rank.JACK: 10,
+        Rank.QUEEN: 10,
+        Rank.KING: 10,
+        Rank.ACE: 11,
+    }
+
     for card in cards:
-        rank_value = get_rank_value(card.rank)
+        rank_value = rank_chip_values[card.rank]
         chips += rank_value
         messages.append(f"{card} adds +{rank_value} chips (card value)")
 
@@ -43,6 +59,7 @@ def calculate_score(
             messages.append(f"{card} Steel bonus: x1.5 mult")
         elif card.enhancement == Enhancement.GOLD:
             game.money += 3
+            game.round_earnings += 3
             print(f"Gold Card played: +$3. Current money: ${game.money}")
         elif card.enhancement == Enhancement.LUCKY:
             if random.random() < 0.25:
@@ -67,6 +84,7 @@ def calculate_score(
 
         if card.seal == Seal.GOLD:
             game.money += 3
+            game.round_earnings += 3
             print(f"Gold Seal card played: +$3. Current money: ${game.money}")
 
     for joker in jokers:
