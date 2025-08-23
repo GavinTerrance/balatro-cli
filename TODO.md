@@ -12,3 +12,4 @@
 - [x] Implement Ante system
 - [x] Implement shop system
 - [x] Implement discard functionality
+- [x] Refine end-of-round flow
