@@ -19,6 +19,8 @@ class Game:
         self.jokers = [] # No longer hardcoded
         self.vouchers = [] # No longer hardcoded
         self.tarot_cards = [] # New list for tarot cards
+        self.spectral_cards = [] # New list for spectral cards
+        self.planet_cards = [] # New list for planet cards
         self.activate_vouchers()
 
         self.blinds = [SmallBlind(), BigBlind(), BossBlind()]
@@ -96,6 +98,22 @@ class Game:
             tarot_card.apply_effect(self)
         else:
             print("Invalid Tarot card index.")
+
+    def use_spectral_card(self, spectral_card_index: int):
+        if 0 <= spectral_card_index < len(self.spectral_cards):
+            spectral_card = self.spectral_cards.pop(spectral_card_index)
+            print(f"Using {spectral_card.name}...")
+            spectral_card.apply_effect(self)
+        else:
+            print("Invalid Spectral card index.")
+
+    def use_planet_card(self, planet_card_index: int):
+        if 0 <= planet_card_index < len(self.planet_cards):
+            planet_card = self.planet_cards.pop(planet_card_index)
+            print(f"Using {planet_card.name}...")
+            planet_card.apply_effect(self)
+        else:
+            print("Invalid Planet card index.")
 
     def play_hand(self, cards_to_play: list[Card]):
         if not all(c in self.hand for c in cards_to_play):

@@ -41,7 +41,21 @@ def main():
                 print(f"[{i}] {tarot_card.name}: {tarot_card.description}")
             print("--------------------")
 
-        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 't' to use Tarot card, or 'q' to quit: ").lower()
+        # Display Spectral Cards
+        if game.spectral_cards:
+            print("\n--- Your Spectral Cards ---")
+            for i, spectral_card in enumerate(game.spectral_cards):
+                print(f"[{i}] {spectral_card.name}: {spectral_card.description}")
+            print("--------------------")
+
+        # Display Planet Cards
+        if game.planet_cards:
+            print("\n--- Your Planet Cards ---")
+            for i, planet_card in enumerate(game.planet_cards):
+                print(f"[{i}] {planet_card.name}: {planet_card.description}")
+            print("--------------------")
+
+        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 't' to use Tarot card, 's' to use Spectral card, 'p' to use Planet card, or 'q' to quit: ").lower()
 
         if action == 'q':
             break
@@ -64,6 +78,34 @@ def main():
             try:
                 tarot_index = int(input("Enter the index of the Tarot card to use: "))
                 game.use_tarot_card(tarot_index)
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+            continue
+        elif action == 's':
+            if not game.spectral_cards:
+                print("You have no Spectral cards to use.")
+                continue
+            print("\n--- Your Spectral Cards ---")
+            for i, spectral_card in enumerate(game.spectral_cards):
+                print(f"[{i}] {spectral_card.name}: {spectral_card.description}")
+            print("--------------------")
+            try:
+                spectral_index = int(input("Enter the index of the Spectral card to use: "))
+                game.use_spectral_card(spectral_index)
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+            continue
+        elif action == 'p':
+            if not game.planet_cards:
+                print("You have no Planet cards to use.")
+                continue
+            print("\n--- Your Planet Cards ---")
+            for i, planet_card in enumerate(game.planet_cards):
+                print(f"[{i}] {planet_card.name}: {planet_card.description}")
+            print("--------------------")
+            try:
+                planet_index = int(input("Enter the index of the Planet card to use: "))
+                game.use_planet_card(planet_index)
             except ValueError:
                 print("Invalid input. Please enter a number.")
             continue

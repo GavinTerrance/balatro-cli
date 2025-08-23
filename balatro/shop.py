@@ -5,6 +5,8 @@ from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
 from .stickers import Sticker, StickerType
 from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
 from .tarot_cards import TarotCard, TheFool, TheMagician, TheWorld
+from .spectral_cards import SpectralCard, TheSoul, BlackHole, Omen, FlatEarth, Seance, Immolate, Observatory, Nebula, Void, Echo, Grim, Sigil, WheelOfFortune, Death, Judgement, HangedMan, Strength, Hermit
+from .planet_cards import PlanetCard, Pluto, Mercury, Uranus, Venus, Saturn, Jupiter, Earth, Mars, Neptune, PlanetX, Ceres, Eris
 
 class Shop:
     def __init__(self):
@@ -17,6 +19,8 @@ class Shop:
         available_jokers = [JokerOfGreed, JokerOfMadness, ChipJoker]
         available_vouchers = [TarotMerchant, CardSharp, Honeypot]
         available_tarot_cards = [TheFool, TheMagician, TheWorld]
+        available_spectral_cards = [TheSoul, BlackHole, Omen, FlatEarth, Seance, Immolate, Observatory, Nebula, Void, Echo, Grim, Sigil, WheelOfFortune, Death, Judgement, HangedMan, Strength, Hermit]
+        available_planet_cards = [Pluto, Mercury, Uranus, Venus, Saturn, Jupiter, Earth, Mars, Neptune, PlanetX, Ceres, Eris]
 
         # Add 3 random jokers
         for _ in range(3):
@@ -27,6 +31,12 @@ class Shop:
 
         # Add 1 random tarot card
         self.items.append(random.choice(available_tarot_cards)())
+
+        # Add 1 random spectral card
+        self.items.append(random.choice(available_spectral_cards)())
+
+        # Add 1 random planet card
+        self.items.append(random.choice(available_planet_cards)())
 
     def display_items(self):
         print("--- Shop Items ---")
@@ -60,6 +70,12 @@ class Shop:
                 elif isinstance(item, TarotCard):
                     game.tarot_cards.append(item)
                     print(f"Purchased {item.name}! Added to your Tarot Cards.")
+                elif isinstance(item, SpectralCard):
+                    game.spectral_cards.append(item)
+                    print(f"Purchased {item.name}! Added to your Spectral Cards.")
+                elif isinstance(item, PlanetCard):
+                    game.planet_cards.append(item)
+                    print(f"Purchased {item.name}! Added to your Planet Cards.")
                 self.items.pop(item_index) # Remove purchased item from shop
                 return True
             else:
