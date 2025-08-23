@@ -4,7 +4,7 @@
 - [x] Implement basic card and deck classes
 - [ ] Implement core game loop
 - [x] Define poker hands
-- [ ] Implement scoring logic
+- [x] Implement scoring logic
 - [ ] Add Jokers
 - [ ] Add Vouchers
 - [ ] Add Blinds & Antes
