@@ -1,20 +1,31 @@
 # balatro/jokers.py
 
+from .stickers import Sticker # Import Sticker class
+
 class Joker:
     """Base class for all Joker cards."""
     def __init__(self, name: str, description: str):
         self.name = name
         self.description = description
+        self.stickers = [] # New attribute to hold Sticker objects
 
     def __repr__(self):
         return f"Joker(name='{self.name}')"
 
+    self.stickers = [] # New attribute to hold Sticker objects
+        self.rounds_active = 0 # For Perishable sticker
+        self.is_debuffed = False # For Perishable sticker
+
     def apply_chips(self, chips: int) -> int:
         """Apply any chip modifications. Overridden by specific jokers."""
+        if self.is_debuffed:
+            return 0 # Debuffed jokers provide no chips
         return chips
 
     def apply_mult(self, mult: int) -> int:
         """Apply any multiplier modifications. Overridden by specific jokers."""
+        if self.is_debuffed:
+            return 0 # Debuffed jokers provide no multiplier
         return mult
 
 # --- Example Joker Implementations ---

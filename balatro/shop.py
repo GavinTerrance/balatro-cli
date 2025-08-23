@@ -2,6 +2,7 @@
 
 import random
 from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
+from .stickers import Sticker, StickerType
 from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
 from .tarot_cards import TarotCard, TheFool, TheMagician, TheWorld
 
@@ -39,6 +40,17 @@ class Shop:
             if game.money >= item.cost:
                 game.money -= item.cost
                 if isinstance(item, Joker):
+                    # Apply stickers based on game ante (difficulty)
+                    if game.ante >= 4 and random.random() < 0.3: # Black Stake and higher
+                        item.stickers.append(Sticker(StickerType.ETERNAL))
+                        print(f"  {item.name} gained an Eternal Sticker!")
+                    elif game.ante >= 7 and random.random() < 0.3: # Orange Stake and higher
+                        item.stickers.append(Sticker(StickerType.PERISHABLE))
+                        print(f"  {item.name} gained a Perishable Sticker!")
+                    elif game.ante >= 8 and random.random() < 0.3: # Gold Stake and higher
+                        item.stickers.append(Sticker(StickerType.RENTAL))
+                        print(f"  {item.name} gained a Rental Sticker!")
+                    
                     game.jokers.append(item)
                     print(f"Purchased {item.name}! Added to your Jokers.")
                 elif isinstance(item, Voucher):

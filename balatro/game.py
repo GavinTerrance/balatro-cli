@@ -9,6 +9,7 @@ from .vouchers import Voucher, TarotMerchant # Example Voucher
 from .blinds import SmallBlind, BigBlind, BossBlind
 from .shop import Shop
 from .tarot_cards import TarotCard # Import TarotCard base class
+from .stickers import StickerType # Import StickerType enum
 
 class Game:
     def __init__(self):
@@ -69,6 +70,19 @@ class Game:
             print(f"\n--- Failed to clear {self.current_blind.name}! Game Over! ---")
             self.game_over = True
             return False
+
+    def end_of_round_effects(self):
+        # Handle Perishable and Rental stickers
+        for joker in self.jokers:
+            for sticker in joker.stickers:
+                if sticker.sticker_type == StickerType.PERISHABLE:
+                    joker.rounds_active += 1
+                    if joker.rounds_active >= 5:
+                        joker.is_debuffed = True
+                        print(f"{joker.name} has become debuffed due to Perishable Sticker!")
+                elif sticker.sticker_type == StickerType.RENTAL:
+                    self.money -= 3
+                    print(f"Rental fee for {joker.name}: -$3. Current money: ${self.money}")
 
     def draw_hand(self, hand_size: int = 8):
         # Discard current hand if any, and draw a new one.

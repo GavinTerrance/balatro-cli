@@ -80,6 +80,7 @@ def main():
                 if game.hands == 0:
                     print("\n--- End of Round ---")
                     game.check_blind_cleared()
+                    game.end_of_round_effects() # Apply end of round effects
                     shop_phase(game) # Call shop phase
                     game.hands = 4 # Reset for next round
                     game.draw_hand() # Draw new hand for next round
@@ -100,6 +101,7 @@ def main():
             if game.hands == 0:
                 print("\n--- End of Round ---")
                 game.check_blind_cleared()
+                game.end_of_round_effects() # Apply end of round effects
                 shop_phase(game) # Call shop phase
                 game.hands = 4 # Reset for next round
                 game.draw_hand() # Draw new hand for next round
