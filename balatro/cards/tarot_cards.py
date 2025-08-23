@@ -1,7 +1,7 @@
 """This module defines the TarotCard class and its subclasses, representing different Tarot cards in the game."""
 
 from .cards import Card, Suit, Rank
-from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker, joker_from_dict # Import joker_from_dict
+from .jokers import Joker, load_jokers, joker_from_dict  # Import joker_from_dict
 from ..shop.vouchers import (
     Voucher,
     TarotMerchant,
@@ -64,8 +64,8 @@ class TheFool(TarotCard):
 
     def apply_effect(self, game):
         """Applies the effect of The Fool: generates a random Joker."""
-        available_jokers = [JokerOfGreed, JokerOfMadness, ChipJoker]
-        new_joker = random.choice(available_jokers)()
+        available_jokers = load_jokers()
+        new_joker = random.choice(available_jokers)
         game.jokers.append(new_joker)
         print(f"The Fool generated: {new_joker.name}!")
 

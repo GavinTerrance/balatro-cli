@@ -2,26 +2,12 @@
 
 import random
 
-from ..cards.jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
+from ..cards.jokers import Joker, load_jokers
 from .stickers import Sticker, StickerType
 from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
 from ..cards.tarot_cards import TarotCard, TheFool, TheMagician, TheWorld
 from ..cards.spectral_cards import SpectralCard, TheSoul, BlackHole, Omen
-from ..cards.planet_cards import (
-    PlanetCard,
-    Pluto,
-    Mercury,
-    Uranus,
-    Venus,
-    Saturn,
-    Jupiter,
-    Earth,
-    Mars,
-    Neptune,
-    PlanetX,
-    Ceres,
-    Eris,
-)
+from ..cards.planet_cards import PlanetCard, load_planet_cards
 
 BASE_COSTS = {
     "Joker (Common)": 5,
@@ -49,27 +35,13 @@ class BoosterPack:
     def open_pack(self, game):
         """Generate cards based on pack type and let the player pick one."""
         if self.pack_type == "joker":
-            options = [random.choice([JokerOfGreed, JokerOfMadness, ChipJoker])() for _ in range(3)]
+            options = random.sample(load_jokers(), 3)
         elif self.pack_type == "tarot":
             options = [random.choice([TheFool, TheMagician, TheWorld])() for _ in range(3)]
         elif self.pack_type == "spectral":
             options = [random.choice([TheSoul, BlackHole, Omen])() for _ in range(3)]
         else:  # planet
-            planet_pool = [
-                Pluto,
-                Mercury,
-                Uranus,
-                Venus,
-                Saturn,
-                Jupiter,
-                Earth,
-                Mars,
-                Neptune,
-                PlanetX,
-                Ceres,
-                Eris,
-            ]
-            options = [random.choice(planet_pool)() for _ in range(3)]
+            options = random.sample(load_planet_cards(), 3)
 
         print(f"--- {self.name} Contents ---")
         for i, opt in enumerate(options):
@@ -136,23 +108,8 @@ class Shop:
 
     def generate_items(self, game):
         self.items = []
-        available_jokers = [JokerOfGreed, JokerOfMadness, ChipJoker]
         available_vouchers = [TarotMerchant, CardSharp, Honeypot]
         available_tarot = [TheFool, TheMagician, TheWorld]
-        available_planets = [
-            Pluto,
-            Mercury,
-            Uranus,
-            Venus,
-            Saturn,
-            Jupiter,
-            Earth,
-            Mars,
-            Neptune,
-            PlanetX,
-            Ceres,
-            Eris,
-        ]
 
         booster_types = [
             ("Joker Pack", "joker"),
@@ -172,14 +129,12 @@ class Shop:
         for _ in range(2):
             choice = random.choice(["joker", "tarot", "planet"])
             if choice == "joker":
-                item = random.choice(available_jokers)()
-                item.cost = BASE_COSTS["Joker (Common)"]
+                item = random.choice(load_jokers())
             elif choice == "tarot":
                 item = random.choice(available_tarot)()
                 item.cost = BASE_COSTS["Tarot Card"]
             else:
-                item = random.choice(available_planets)()
-                item.cost = BASE_COSTS["Planet Card"]
+                item = random.choice(load_planet_cards())
             self.items.append(item)
 
     def display_items(self, money: int):

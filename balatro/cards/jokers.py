@@ -2,6 +2,9 @@
 
 """This module defines the Joker class and its subclasses, representing different Joker cards in the game."""
 
+import json
+from pathlib import Path
+
 from ..shop.stickers import Sticker, StickerType  # Import Sticker class and StickerType
 
 class Joker:
@@ -169,3 +172,30 @@ def joker_from_dict(data):
     """Factory function to create a Joker object from a dictionary."""
     joker_class = JOKER_CLASSES[data["_class"]]
     return joker_class.from_dict(data)
+
+
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+
+
+def load_jokers():
+    """Load joker data from JSON configuration."""
+    with open(DATA_DIR / "jokers.json", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    jokers = []
+    for entry in raw:
+        name = entry.get("name", "")
+        description = entry.get("effect", "")
+        joker = Joker(name, description)
+        # Parse cost like "$5" -> 5
+        cost_str = str(entry.get("cost", "")).strip()
+        if cost_str.startswith("$"):
+            cost_str = cost_str[1:]
+        try:
+            joker.cost = int(cost_str)
+        except (ValueError, TypeError):
+            joker.cost = 0
+        joker.rarity = entry.get("rarity")
+        jokers.append(joker)
+
+    return jokers
