@@ -9,7 +9,7 @@ def main():
     game = Game()
     game.draw_hand()
 
-    while game.hands > 0:
+    while True:
         print("\n--------------------")
         print(game)
         print("\n--- Your Hand ---")
@@ -17,10 +17,38 @@ def main():
             print(f"[{i}] {card}")
         print("--------------------")
 
-        action = input("Enter card indices to play (e.g., '0 2 4'), or 'd' to discard: ").lower()
+        # Display Jokers
+        if game.jokers:
+            print("\n--- Your Jokers ---")
+            for joker in game.jokers:
+                print(f"{joker.name}: {joker.description}")
+            print("--------------------")
+
+        # Display Vouchers
+        if game.vouchers:
+            print("\n--- Your Vouchers ---")
+            for voucher in game.vouchers:
+                print(f"{voucher.name}: {voucher.description}")
+            print("--------------------")
+
+        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 's' for shop, or 'q' to quit: ").lower()
 
         if action == 'q':
             break
+        elif action == 's':
+            game.shop.display_items()
+            shop_action = input("Enter item index to purchase, or 'b' to go back: ").lower()
+            if shop_action.isdigit():
+                game.shop.purchase_item(int(shop_action), game)
+            elif shop_action == 'b':
+                pass # Go back to game
+            else:
+                print("Invalid shop action.")
+            continue
+        elif action == 'd':
+            # Implement discard logic later
+            print("Discarding not yet implemented.")
+            continue
 
         try:
             indices = [int(i) for i in action.split()]
