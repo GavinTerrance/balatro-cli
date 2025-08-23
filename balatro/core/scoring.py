@@ -1,8 +1,8 @@
 """This module handles the scoring logic for poker hands in Balatro."""
 
 from .poker import PokerHand
-from .jokers import Joker
-from .cards import Card, Enhancement, Edition, Seal
+from ..cards.jokers import Joker
+from ..cards.cards import Card, Enhancement, Edition, Seal
 import random # Import random for Lucky Card
 
 # Base chips and multiplier for each hand type

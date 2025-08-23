@@ -2,7 +2,7 @@
 
 from enum import Enum
 from collections import Counter
-from .cards import Card, Rank
+from ..cards.cards import Card, Rank
 
 class PokerHand(Enum):
     """Represents different types of poker hands."""

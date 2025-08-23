@@ -2,7 +2,7 @@ from .cards import Card, Suit, Rank
 from enum import Enum
 import random
 from .jokers import joker_from_dict
-from .vouchers import voucher_from_dict
+from ..shop.vouchers import voucher_from_dict
 from .tarot_cards import tarot_card_from_dict
 
 class SpectralCardType(Enum):

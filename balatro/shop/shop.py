@@ -1,13 +1,53 @@
 """This module defines the Shop class where players can purchase various items."""
 
 import random
-from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
+
+from ..cards.jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
 from .stickers import Sticker, StickerType
 from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
-from .tarot_cards import TarotCard, TheFool, TheMagician, TheWorld
-from .spectral_cards import SpectralCard, TheSoul, BlackHole, Omen, FlatEarth, Seance, Immolate, Observatory, Nebula, Void, Echo, Grim, Sigil, WheelOfFortune, Death, Judgement, HangedMan, Strength, Hermit
-from .planet_cards import PlanetCard, Pluto, Mercury, Uranus, Venus, Saturn, Jupiter, Earth, Mars, Neptune, PlanetX, Ceres, Eris
-from .cards import Card, Suit, Rank, Enhancement, Edition, Seal
+from ..cards.tarot_cards import (
+    TarotCard,
+    TheFool,
+    TheMagician,
+    TheWorld,
+)
+from ..cards.spectral_cards import (
+    SpectralCard,
+    TheSoul,
+    BlackHole,
+    Omen,
+    FlatEarth,
+    Seance,
+    Immolate,
+    Observatory,
+    Nebula,
+    Void,
+    Echo,
+    Grim,
+    Sigil,
+    WheelOfFortune,
+    Death,
+    Judgement,
+    HangedMan,
+    Strength,
+    Hermit,
+)
+from ..cards.planet_cards import (
+    PlanetCard,
+    Pluto,
+    Mercury,
+    Uranus,
+    Venus,
+    Saturn,
+    Jupiter,
+    Earth,
+    Mars,
+    Neptune,
+    PlanetX,
+    Ceres,
+    Eris,
+)
+from ..cards.cards import Card, Suit, Rank, Enhancement, Edition, Seal
 
 # Base costs for items (from wiki)
 BASE_COSTS = {
