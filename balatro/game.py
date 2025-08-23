@@ -102,9 +102,6 @@ class Game:
 
         if self.hands == 0: # End of round, check if blind is cleared
             self.check_blind_cleared()
-            # Reset hands for next round, draw new hand, etc.
-            self.hands = 4 # Reset for next round for now
-            self.draw_hand() # Draw new hand for next round
 
     def discard_cards(self, card_indices: list[int]):
         if self.discards <= 0:

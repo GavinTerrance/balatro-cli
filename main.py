@@ -76,6 +76,13 @@ def main():
             try:
                 indices_to_discard = [int(i) for i in discard_input.split()]
                 game.discard_cards(indices_to_discard)
+
+                if game.hands == 0:
+                    print("\n--- End of Round ---")
+                    game.check_blind_cleared()
+                    input("Press Enter to continue to the next round...")
+                    game.hands = 4 # Reset for next round
+                    game.draw_hand() # Draw new hand for next round
             except ValueError:
                 print("Invalid input. Please enter space-separated numbers.")
             continue
@@ -89,6 +96,13 @@ def main():
 
             cards_to_play = [game.hand[i] for i in indices]
             game.play_hand(cards_to_play)
+
+            if game.hands == 0:
+                print("\n--- End of Round ---")
+                game.check_blind_cleared()
+                input("Press Enter to continue to the next round...")
+                game.hands = 4 # Reset for next round
+                game.draw_hand() # Draw new hand for next round
 
         except ValueError:
             print("Invalid input. Please enter space-separated numbers.")
