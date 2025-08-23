@@ -173,6 +173,9 @@ class Game:
         self.player.use_planet_card(index, self)
 
     def play_hand(self, cards_to_play: list[Card]):
+        if len(cards_to_play) != 5:
+            print("Error: You must play exactly 5 cards.")
+            return
         if not all(c in self.player.hand for c in cards_to_play):
             print("Error: One or more cards are not in the current hand.")
             return
@@ -245,6 +248,7 @@ class Game:
             "--------------------",
             repr(self),
             f"Current Ante: {self.ante}",
+            f"Score needed to win blind: {self.blind_manager.current.score_required}",
         ]
 
         lines += render_section(
