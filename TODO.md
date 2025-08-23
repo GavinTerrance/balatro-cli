@@ -22,7 +22,7 @@
 - [x] Define basic `Deck` class (collection of cards, shuffling, drawing).
 - [x] Define basic `Joker` class (placeholder for now, will add effects later).
 - [x] Define `Sticker` classes/enums based on research (Eternal, Perishable, Rental, Stake).
-- [ ] Implement a basic game loop placeholder in `main.py`.
+- [x] Implement a basic game loop placeholder in `main.py`.
 
 ## Phase 2: Core Game Mechanics
 
