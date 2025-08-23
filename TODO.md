@@ -30,7 +30,7 @@
 - [x] Implement scoring (Chips and Mult).
 - [x] Implement Blinds and Antes.
 - [x] Implement basic Shop functionality.
-- [ ] Integrate Jokers and their effects.
+- [x] Integrate Jokers and their effects.
 - [ ] Integrate Stickers and their effects.
 
 ## Phase 3: Advanced Features & Polish
