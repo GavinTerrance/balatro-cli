@@ -2,6 +2,7 @@
 
 from .poker import PokerHand
 from .jokers import Joker
+from .cards import Card, Enhancement, Edition, Seal
 
 # Base chips and multiplier for each hand type
 # Values taken from Balatro wiki
@@ -18,12 +19,41 @@ HAND_SCORES = {
     PokerHand.FIVE_OF_A_KIND: {"chips": 120, "mult": 12}, # Assuming a generic five of a kind
 }
 
-def calculate_score(hand_type: PokerHand, cards: list, jokers: list[Joker]):
+def calculate_score(hand_type: PokerHand, cards: list, jokers: list[Joker], game):
     """Calculates the score for a given hand type, applying joker bonuses."""
     base_score = HAND_SCORES.get(hand_type, {"chips": 0, "mult": 0})
     
     chips = base_score["chips"]
     mult = base_score["mult"]
+
+    # Apply card enhancement and edition bonuses
+    for card in cards:
+        if card.enhancement == Enhancement.GLASS:
+            mult += 2
+        elif card.enhancement == Enhancement.STEEL:
+            mult *= 1.5
+        elif card.enhancement == Enhancement.GOLD:
+            game.money += 3
+            print(f"Gold Card played: +$3. Current money: ${game.money}")
+        elif card.enhancement == Enhancement.LUCKY:
+            if random.random() < 0.25:
+                mult += 20
+                print(f"Lucky Card activated: +20 Mult!")
+        elif card.enhancement == Enhancement.MULT:
+            mult += 4
+        elif card.enhancement == Enhancement.CHIP:
+            chips += 10
+
+        if card.edition == Edition.FOIL:
+            chips += 50
+        elif card.edition == Edition.HOLOGRAPHIC:
+            mult += 10
+        elif card.edition == Edition.POLYCHROME:
+            mult *= 1.5
+
+        if card.seal == Seal.GOLD:
+            game.money += 3
+            print(f"Gold Seal card played: +$3. Current money: ${game.money}")
 
     # Apply joker bonuses
     for joker in jokers:

@@ -7,6 +7,7 @@ from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
 from .tarot_cards import TarotCard, TheFool, TheMagician, TheWorld
 from .spectral_cards import SpectralCard, TheSoul, BlackHole, Omen, FlatEarth, Seance, Immolate, Observatory, Nebula, Void, Echo, Grim, Sigil, WheelOfFortune, Death, Judgement, HangedMan, Strength, Hermit
 from .planet_cards import PlanetCard, Pluto, Mercury, Uranus, Venus, Saturn, Jupiter, Earth, Mars, Neptune, PlanetX, Ceres, Eris
+from .cards import Card, Suit, Rank, Enhancement, Edition, Seal
 
 class Shop:
     def __init__(self):
@@ -37,6 +38,25 @@ class Shop:
 
         # Add 1 random planet card
         self.items.append(random.choice(available_planet_cards)())
+
+        # Add 3 random standard playing cards with potential modifiers
+        for _ in range(3):
+            suit = random.choice(list(Suit))
+            rank = random.choice(list(Rank))
+            
+            enhancement = Enhancement.NONE
+            if random.random() < 0.1: # 10% chance for enhancement
+                enhancement = random.choice([e for e in list(Enhancement) if e != Enhancement.NONE])
+            
+            edition = Edition.NONE
+            if random.random() < 0.05: # 5% chance for edition
+                edition = random.choice([e for e in list(Edition) if e != Edition.NONE])
+
+            seal = Seal.NONE
+            if random.random() < 0.05: # 5% chance for seal
+                seal = random.choice([s for s in list(Seal) if s != Seal.NONE])
+
+            self.items.append(Card(suit, rank, enhancement, edition, seal))
 
     def display_items(self):
         print("--- Shop Items ---")

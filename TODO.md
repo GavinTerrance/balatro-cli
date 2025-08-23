@@ -36,7 +36,7 @@
 ## Phase 3: Advanced Features & Polish
 
 - [x] Implement Vouchers, Spectral Cards, Planet Cards, Tarot Cards.
-- [ ] Implement Enhancements, Editions, Seals.
+- [x] Implement Enhancements, Editions, Seals.
 - [ ] Implement different Deck types.
 - [ ] Implement Challenges.
 - [ ] Add CLI user interface for interaction.

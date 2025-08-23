@@ -126,7 +126,7 @@ class Game:
         
         played_hand_type = evaluate_hand(cards_to_play)
         if played_hand_type:
-            hand_score = calculate_score(played_hand_type, cards_to_play, self.jokers)
+            hand_score = calculate_score(played_hand_type, cards_to_play, self.jokers, self)
             self.score += hand_score
             print(f"Hand played: {played_hand_type.value} for {hand_score} points!")
         else:

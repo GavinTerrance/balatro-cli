@@ -23,13 +23,50 @@ class Rank(Enum):
     KING = "King"
     ACE = "Ace"
 
+class Enhancement(Enum):
+    NONE = "None"
+    GLASS = "Glass"
+    STEEL = "Steel"
+    GOLD = "Gold"
+    LUCKY = "Lucky"
+    MULT = "Mult"
+    CHIP = "Chip"
+
+class Edition(Enum):
+    NONE = "None"
+    FOIL = "Foil"
+    HOLOGRAPHIC = "Holographic"
+    POLYCHROME = "Polychrome"
+    NEGATIVE = "Negative"
+
+class Seal(Enum):
+    NONE = "None"
+    GOLD = "Gold"
+    RED = "Red"
+    BLUE = "Blue"
+    PURPLE = "Purple"
+
 class Card:
-    def __init__(self, suit: Suit, rank: Rank):
+    def __init__(self, suit: Suit, rank: Rank, enhancement: Enhancement = Enhancement.NONE, edition: Edition = Edition.NONE, seal: Seal = Seal.NONE):
         self.suit = suit
         self.rank = rank
+        self.enhancement = enhancement
+        self.edition = edition
+        self.seal = seal
 
     def __repr__(self):
-        return f"Card('{self.rank.value}', '{self.suit.value}')"
+        return f"Card('{self.rank.value}', '{self.suit.value}', Enhancement.{self.enhancement.name}, Edition.{self.edition.name}, Seal.{self.seal.name})"
 
     def __str__(self):
-        return f"{self.rank.value} of {self.suit.value}"
+        modifiers = []
+        if self.enhancement != Enhancement.NONE:
+            modifiers.append(self.enhancement.value)
+        if self.edition != Edition.NONE:
+            modifiers.append(self.edition.value)
+        if self.seal != Seal.NONE:
+            modifiers.append(self.seal.value)
+        
+        if modifiers:
+            return f"{self.rank.value} of {self.suit.value} ({', '.join(modifiers)})"
+        else:
+            return f"{self.rank.value} of {self.suit.value}"
