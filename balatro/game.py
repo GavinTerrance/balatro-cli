@@ -1,6 +1,6 @@
 # balatro/game.py
 
-from .deck import Deck
+from .deck import BaseDeck, RedDeck, GreenDeck, YellowDeck
 from .cards import Card
 from .poker import evaluate_hand
 from .scoring import calculate_score
@@ -12,8 +12,19 @@ from .tarot_cards import TarotCard # Import TarotCard base class
 from .stickers import StickerType # Import StickerType enum
 
 class Game:
-    def __init__(self):
-        self.deck = Deck()
+    def __init__(self, deck_type: str = "Base"):
+        if deck_type == "Red":
+            self.deck = RedDeck()
+            self.discards += 1 # Red Deck effect
+        elif deck_type == "Green":
+            self.deck = GreenDeck()
+            self.earns_interest = False # Green Deck effect
+        elif deck_type == "Yellow":
+            self.deck = YellowDeck()
+            self.money += 10 # Yellow Deck effect
+        else:
+            self.deck = BaseDeck()
+
         self.deck.shuffle()
         self.hand = []
         self.jokers = [] # No longer hardcoded

@@ -1,13 +1,32 @@
 # main.py
 
 from balatro.game import Game
+from balatro.deck import BaseDeck, RedDeck, GreenDeck, YellowDeck
 
 def main():
     """Main function to run the Balatro CLI game."""
     print("Welcome to Balatro CLI!\n")
+
+    # Allow user to choose a starting deck
+    print("Available Decks:")
+    print("  1. Base Deck (Standard 52-card deck)")
+    print("  2. Red Deck (+1 discard every round)")
+    print("  3. Green Deck (End of Round: $2 per remaining Hand, $1 per remaining Discard. No Interest)")
+    print("  4. Yellow Deck (Start with extra $10)")
+
+    deck_choice = input("Choose your starting deck (1-4): ")
+    selected_deck_type = "Base"
+    if deck_choice == "2":
+        selected_deck_type = "Red"
+    elif deck_choice == "3":
+        selected_deck_type = "Green"
+    elif deck_choice == "4":
+        selected_deck_type = "Yellow"
     
-    game = Game()
+    game = Game(deck_type=selected_deck_type)
+    print(f"You have chosen the {game.deck.name}!")
     game.draw_hand()
+
 
     while True:
         if game.game_over:

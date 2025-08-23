@@ -37,7 +37,7 @@
 
 - [x] Implement Vouchers, Spectral Cards, Planet Cards, Tarot Cards.
 - [x] Implement Enhancements, Editions, Seals.
-- [ ] Implement different Deck types.
+- [x] Implement different Deck types.
 - [ ] Implement Challenges.
 - [ ] Add CLI user interface for interaction.
 - [ ] Add save/load functionality.
