@@ -1,9 +1,8 @@
 # Balatro CLI
 
-A command-line interface recreation of the roguelike deckbuilder game Balatro.
+An attempt to have Gemini CLI recreate the game Balatro in the command line. 
 
-## How to Run
 
-1.  Ensure you have Python 3 installed.
-2.  Navigate to the project root directory.
-3.  Run the game using: `python main.py`
+# What I learned doing this project
+
+Gemini CLI cannot recreate Balatro in the command line 
