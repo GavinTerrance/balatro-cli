@@ -38,10 +38,10 @@
 - [x] Implement Vouchers, Spectral Cards, Planet Cards, Tarot Cards.
 - [x] Implement Enhancements, Editions, Seals.
 - [x] Implement different Deck types.
-- [ ] Implement Challenges.
+- [ ] Implement Challenges. (Skipped due to wiki access issues)
 - [x] Add CLI user interface for interaction.
 - [x] Add save/load functionality.
 - [x] Implement error handling and robust input validation.
 - [x] Refine game balance.
-- [ ] Write unit tests.
+- [ ] Write unit tests. (Skipped due to pytest installation issues)
 - [x] Add comprehensive documentation.
