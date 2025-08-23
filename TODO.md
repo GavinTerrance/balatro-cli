@@ -18,3 +18,4 @@
 - [x] Implement game over condition
 - [x] Implement Joker/Voucher/Tarot Card acquisition
 - [x] Implement card sorting in hand
+- [x] Implement hand sorting options
