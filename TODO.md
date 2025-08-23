@@ -16,3 +16,4 @@
 - [x] Implement dedicated shop phase
 - [x] Implement money management
 - [x] Implement game over condition
+- [x] Implement Joker/Voucher/Tarot Card acquisition
