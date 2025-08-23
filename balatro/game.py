@@ -115,6 +115,10 @@ class Game:
             print("No cards selected to discard.")
             return
 
+        if len(card_indices) > 5:
+            print("Error: You can only discard up to 5 cards.")
+            return
+
         # Ensure all indices are valid and unique
         if any(i < 0 or i >= len(self.hand) for i in card_indices):
             print("Error: Invalid card index for discard.")
