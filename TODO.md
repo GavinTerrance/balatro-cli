@@ -8,5 +8,6 @@
 - [x] Add Jokers
 - [x] Add Vouchers
 - [x] Add Blinds & Antes
+- [x] Add Tarot Cards
 - [x] Implement Ante system
 - [x] Implement shop system
