@@ -16,12 +16,32 @@ class PlanetCardType(Enum):
     ERIS = "Eris"
 
 class PlanetCard:
-    def __init__(self, name: str, chips_bonus: int, mult_bonus: int, poker_hand_type: str, cost: int = 3):
+    def __init__(
+        self,
+        name: str,
+        chips_bonus: int,
+        mult_bonus: int,
+        poker_hand_type: str,
+        cost: int = 3,
+    ):
         self.name = name
         self.chips_bonus = chips_bonus
         self.mult_bonus = mult_bonus
         self.poker_hand_type = poker_hand_type
         self.cost = cost
+
+    @property
+    def description(self) -> str:
+        """Human-readable summary used by the CLI when listing cards.
+
+        Defining ``description`` as a property guarantees the attribute is
+        available even if a ``PlanetCard`` is instantiated in an unexpected way
+        (e.g. through deserialisation that bypasses ``__init__``).
+        """
+        chips = getattr(self, "chips_bonus", 0)
+        mult = getattr(self, "mult_bonus", 0)
+        hand = getattr(self, "poker_hand_type", "Unknown")
+        return f"+{chips} Chips, +{mult} Mult for {hand}"
 
     def __repr__(self):
         return f"PlanetCard(name='{self.name}')"

@@ -65,7 +65,7 @@ def evaluate_hand(cards: list[Card]) -> PokerHand | None:
     is_four_of_a_kind = counts[0] == 4
     is_full_house = counts == [3, 2]
     is_three_of_a_kind = counts[0] == 3
-    is_two_pair = counts == [2, 2, 1]
+    is_two_pair = list(rank_counts.values()).count(2) == 2
     is_pair = counts[0] == 2
 
     # --- Determine the hand based on checks ---
