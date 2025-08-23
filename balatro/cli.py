@@ -33,6 +33,7 @@ class BalatroCLI:
         print("  't': Use a Tarot card from your inventory.")
         print("  's': Use a Spectral card from your inventory.")
         print("  'o': Sort your hand by rank or suit.")
+        print("  'c': View the remaining deck.")
         print("  'v': Save the current game.")
         print("  'l': Load a previously saved game.")
         print("  'q': Quit the game.")
@@ -73,6 +74,8 @@ class BalatroCLI:
                 self.game.discard_cards(card_indices)
             else:
                 print("Did you list the cards you want to discard after 'd'?")
+        elif action == "c":
+            self.game.show_deck()
         else:
             print("Invalid action or card indices. Please try again.")
         return True
@@ -81,12 +84,23 @@ class BalatroCLI:
     def run(self) -> Game:
         """Start the interactive command loop."""
         self._print_help()
-        while not self.game.game_over:
-            print(self.game)
-            user_input = input("Enter your action: ").strip().lower()
-            action = user_input[:1]
-            additional_input = user_input[1:]
-            if not self._handle_action(action, additional_input):
+        while True:
+            while not self.game.game_over:
+                print(self.game)
+                user_input = input("Enter your action: ").strip().lower()
+                action = user_input[:1]
+                additional_input = user_input[1:]
+                if not self._handle_action(action, additional_input):
+                    return self.game
+            again = input("Play again? (y/n): ").strip().lower()
+            if again == "y":
+                deck_type = self.game.deck_key
+                self.game = Game(deck_type=deck_type)
+                print(f"You have chosen the {self.game.deck.name}!")
+                self.game.draw_hand()
+                self.game.game_over = False
+                self._print_help()
+            else:
                 break
         return self.game
 

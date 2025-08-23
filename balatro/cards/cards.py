@@ -85,10 +85,16 @@ class Card:
         if self.seal != Seal.NONE:
             modifiers.append(self.seal.value)
         
+        suit_emojis = {
+            Suit.HEARTS: "♥️",
+            Suit.DIAMONDS: "♦️",
+            Suit.CLUBS: "♣️",
+            Suit.SPADES: "♠️",
+        }
+        card_str = f"{self.rank.value}{suit_emojis[self.suit]}"
         if modifiers:
-            return f"{self.rank.value} of {self.suit.value} ({', '.join(modifiers)})"
-        else:
-            return f"{self.rank.value} of {self.suit.value}"
+            return f"{card_str} ({', '.join(modifiers)})"
+        return card_str
 
     def to_dict(self):
         """Converts the Card object to a dictionary for serialization."""
