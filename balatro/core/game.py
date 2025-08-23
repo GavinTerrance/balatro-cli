@@ -149,11 +149,12 @@ class Game:
     def enter_shop(self):
         self.shop.generate_items(self)
         while True:
-            self.shop.display_items()
+            self.shop.display_items(self.money)
             choice = input(
-                "Select item to purchase or press Enter to continue: "
-            ).strip()
-            if choice == "":
+                "Select item to purchase or type 'leave' to continue: "
+            ).strip().lower()
+            if choice in ("", "leave", "l"):
+
                 break
             try:
                 idx = int(choice)
@@ -217,8 +218,7 @@ class Game:
         self.player.use_planet_card(index, self)
 
     def play_hand(self, cards_to_play: list[Card]):
-
-        if len(cards_to_play) > 5:
+        if len(cards_to_play) > 5: # Player can play less than 5 cards, but not more. 
             print("Error: You can't play over 5 cards.")
             return
         if not all(c in self.player.hand for c in cards_to_play):
