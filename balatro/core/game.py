@@ -154,7 +154,6 @@ class Game:
                 "Select item to purchase or type 'leave' to continue: "
             ).strip().lower()
             if choice in ("", "leave", "l"):
-
                 break
             try:
                 idx = int(choice)

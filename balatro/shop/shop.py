@@ -6,6 +6,7 @@ from ..cards.jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
 from .stickers import Sticker, StickerType
 from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
 from ..cards.tarot_cards import TarotCard, TheFool, TheMagician, TheWorld
+from ..cards.spectral_cards import SpectralCard, TheSoul, BlackHole, Omen
 from ..cards.planet_cards import (
     PlanetCard,
     Pluto,
@@ -40,7 +41,8 @@ class BoosterPack:
 
     def __init__(self, name: str, pack_type: str):
         self.name = name
-        self.pack_type = pack_type  # joker, tarot, or planet
+        # pack_type can be joker, tarot, planet or spectral
+        self.pack_type = pack_type
         self.description = f"Choose a {pack_type} card"
         self.cost = BASE_COSTS["Booster Pack (Normal)"]
 
@@ -50,6 +52,8 @@ class BoosterPack:
             options = [random.choice([JokerOfGreed, JokerOfMadness, ChipJoker])() for _ in range(3)]
         elif self.pack_type == "tarot":
             options = [random.choice([TheFool, TheMagician, TheWorld])() for _ in range(3)]
+        elif self.pack_type == "spectral":
+            options = [random.choice([TheSoul, BlackHole, Omen])() for _ in range(3)]
         else:  # planet
             planet_pool = [
                 Pluto,
@@ -81,12 +85,45 @@ class BoosterPack:
             if isinstance(card, Joker):
                 game.player.jokers.append(card)
                 print(f"Added {card.name} to your Jokers.")
-            elif isinstance(card, TarotCard):
-                game.player.tarot_cards.append(card)
-                print(f"Added {card.name} to your Tarot Cards.")
             elif isinstance(card, PlanetCard):
                 game.player.planet_cards.append(card)
                 print(f"Added {card.name} to your Planet Cards.")
+            elif isinstance(card, TarotCard) or isinstance(card, SpectralCard):
+                # Display sample playing cards and current jokers for potential application
+                sample_cards = game.deck.cards[:8]
+                print("--- Available Cards for Application ---")
+                for i, c in enumerate(sample_cards):
+                    print(f"[{i}] {c}")
+                for j, joker in enumerate(game.player.jokers):
+                    print(f"[J{j}] {joker.name}")
+                print("---------------------------")
+                target = input("Select target index (number or J#) or press Enter to keep card: ").strip()
+                if target:
+                    if target.upper().startswith("J"):
+                        try:
+                            j_idx = int(target[1:])
+                            joker = game.player.jokers[j_idx]
+                            print(
+                                f"Applied {card.name} to {joker.name} (effect not yet implemented)."
+                            )
+                        except (ValueError, IndexError):
+                            print("Invalid joker selection.")
+                    else:
+                        try:
+                            c_idx = int(target)
+                            chosen_card = sample_cards[c_idx]
+                            print(
+                                f"Applied {card.name} to {chosen_card} (effect not yet implemented)."
+                            )
+                        except (ValueError, IndexError):
+                            print("Invalid card selection.")
+                else:
+                    if isinstance(card, TarotCard):
+                        game.player.tarot_cards.append(card)
+                        print(f"Added {card.name} to your Tarot Cards.")
+                    else:
+                        game.player.spectral_cards.append(card)
+                        print(f"Added {card.name} to your Spectral Cards.")
         except (ValueError, IndexError):
             print("Invalid selection.")
 
@@ -121,6 +158,7 @@ class Shop:
             ("Joker Pack", "joker"),
             ("Arcana Pack", "tarot"),
             ("Celestial Pack", "planet"),
+            ("Spectral Pack", "spectral"),
         ]
         for _ in range(2):
             name, pack_type = random.choice(booster_types)
@@ -177,6 +215,9 @@ class Shop:
                 elif isinstance(item, TarotCard):
                     game.player.tarot_cards.append(item)
                     print(f"Purchased {item.name}! Added to your Tarot Cards.")
+                elif isinstance(item, SpectralCard):
+                    game.player.spectral_cards.append(item)
+                    print(f"Purchased {item.name}! Added to your Spectral Cards.")
                 elif isinstance(item, PlanetCard):
                     game.player.planet_cards.append(item)
                     print(f"Purchased {item.name}! Added to your Planet Cards.")
