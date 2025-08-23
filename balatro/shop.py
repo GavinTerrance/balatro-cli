@@ -9,6 +9,22 @@ from .spectral_cards import SpectralCard, TheSoul, BlackHole, Omen, FlatEarth, S
 from .planet_cards import PlanetCard, Pluto, Mercury, Uranus, Venus, Saturn, Jupiter, Earth, Mars, Neptune, PlanetX, Ceres, Eris
 from .cards import Card, Suit, Rank, Enhancement, Edition, Seal
 
+# Base costs for items (from wiki)
+BASE_COSTS = {
+    "Joker (Common)": 5, # Placeholder, need to define rarity for Jokers
+    "Joker (Uncommon)": 8,
+    "Joker (Rare)": 10,
+    "Joker (Legendary)": 20,
+    "Playing Card": 1,
+    "Tarot Card": 3,
+    "Planet Card": 3,
+    "Spectral Card": 4,
+    "Booster Pack (Normal)": 4,
+    "Booster Pack (Jumbo)": 6,
+    "Booster Pack (Mega)": 8,
+    "Voucher": 10
+}
+
 class Shop:
     def __init__(self):
         self.items = []
@@ -25,19 +41,29 @@ class Shop:
 
         # Add 3 random jokers
         for _ in range(3):
-            self.items.append(random.choice(available_jokers)())
+            joker = random.choice(available_jokers)()
+            joker.cost = BASE_COSTS["Joker (Common)"] # Assign a default common joker cost
+            self.items.append(joker)
         
         # Add 1 random voucher
-        self.items.append(random.choice(available_vouchers)())
+        voucher = random.choice(available_vouchers)()
+        voucher.cost = BASE_COSTS["Voucher"]
+        self.items.append(voucher)
 
         # Add 1 random tarot card
-        self.items.append(random.choice(available_tarot_cards)())
+        tarot_card = random.choice(available_tarot_cards)()
+        tarot_card.cost = BASE_COSTS["Tarot Card"]
+        self.items.append(tarot_card)
 
         # Add 1 random spectral card
-        self.items.append(random.choice(available_spectral_cards)())
+        spectral_card = random.choice(available_spectral_cards)()
+        spectral_card.cost = BASE_COSTS["Spectral Card"]
+        self.items.append(spectral_card)
 
         # Add 1 random planet card
-        self.items.append(random.choice(available_planet_cards)())
+        planet_card = random.choice(available_planet_cards)()
+        planet_card.cost = BASE_COSTS["Planet Card"]
+        self.items.append(planet_card)
 
         # Add 3 random standard playing cards with potential modifiers
         for _ in range(3):
@@ -56,7 +82,9 @@ class Shop:
             if random.random() < 0.05: # 5% chance for seal
                 seal = random.choice([s for s in list(Seal) if s != Seal.NONE])
 
-            self.items.append(Card(suit, rank, enhancement, edition, seal))
+            card = Card(suit, rank, enhancement, edition, seal)
+            card.cost = BASE_COSTS["Playing Card"]
+            self.items.append(card)
 
     def display_items(self):
         print("--- Shop Items ---")

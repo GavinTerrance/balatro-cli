@@ -36,7 +36,7 @@ class TarotMerchant(Voucher):
         super().__init__(
             name="Tarot Merchant",
             description="Tarot cards appear in the shop.",
-            cost=4
+            cost=10
         )
 
     def apply_effect(self, game):
@@ -48,7 +48,7 @@ class CardSharp(Voucher):
         super().__init__(
             name="Card Sharp",
             description="First hand of each round gets +2 Mult.",
-            cost=4
+            cost=10
         )
 
     def apply_effect(self, game):
@@ -61,7 +61,7 @@ class Honeypot(Voucher):
         super().__init__(
             name="Honeypot",
             description="Gain $10 when you sell a Joker.",
-            cost=4
+            cost=10
         )
 
     def apply_effect(self, game):

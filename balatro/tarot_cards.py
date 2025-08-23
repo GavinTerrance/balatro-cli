@@ -41,7 +41,7 @@ class TheFool(TarotCard):
         super().__init__(
             name="The Fool",
             description="Generates a random Joker.",
-            cost=4
+            cost=3
         )
 
     def apply_effect(self, game):
@@ -62,7 +62,7 @@ class TheMagician(TarotCard):
         super().__init__(
             name="The Magician",
             description="Upgrades a selected card to a higher rank.",
-            cost=4
+            cost=3
         )
 
     def apply_effect(self, game):
@@ -103,7 +103,7 @@ class TheWorld(TarotCard):
         super().__init__(
             name="The World",
             description="Generates a random Voucher.",
-            cost=4
+            cost=3
         )
 
     def apply_effect(self, game):

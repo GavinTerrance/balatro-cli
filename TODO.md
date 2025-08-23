@@ -42,6 +42,6 @@
 - [x] Add CLI user interface for interaction.
 - [x] Add save/load functionality.
 - [x] Implement error handling and robust input validation.
+- [x] Refine game balance.
 - [ ] Write unit tests.
-- [ ] Refine game balance.
 - [ ] Add comprehensive documentation.

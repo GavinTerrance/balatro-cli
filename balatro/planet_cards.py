@@ -16,7 +16,7 @@ class PlanetCardType(Enum):
     ERIS = "Eris"
 
 class PlanetCard:
-    def __init__(self, name: str, chips_bonus: int, mult_bonus: int, poker_hand_type: str, cost: int = 0):
+    def __init__(self, name: str, chips_bonus: int, mult_bonus: int, poker_hand_type: str, cost: int = 3):
         self.name = name
         self.chips_bonus = chips_bonus
         self.mult_bonus = mult_bonus
