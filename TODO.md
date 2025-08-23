@@ -18,7 +18,7 @@
 - [x] Extract "Shop" wiki content.
 - [x] Initialize Python project structure (e.g., `src/`, `main.py`).
 - [x] Create `README.md` with basic project info and run instructions.
-- [ ] Define basic `Card` class (rank, suit).
+- [x] Define basic `Card` class (rank, suit).
 - [ ] Define basic `Deck` class (collection of cards, shuffling, drawing).
 - [ ] Define basic `Joker` class (placeholder for now, will add effects later).
 - [ ] Define `Sticker` classes/enums based on research (Eternal, Perishable, Rental, Stake).
