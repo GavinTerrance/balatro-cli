@@ -11,3 +11,4 @@
 - [x] Add Tarot Cards
 - [x] Implement Ante system
 - [x] Implement shop system
+- [x] Implement discard functionality
