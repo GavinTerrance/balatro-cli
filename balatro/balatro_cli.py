@@ -5,58 +5,14 @@
 from balatro.game import Game, save_game, load_game
 from balatro.deck import BaseDeck, RedDeck, GreenDeck, YellowDeck
 
-def main():
+def main(commands: list = None):
     """Main function to run the Balatro CLI game."""
 
-    # Allow user to choose a starting deck
-    print("Available Decks:")
-    print("  1. Base Deck (Standard 52-card deck)")
-    print("  2. Red Deck (+1 discard every round)")
-    print("  3. Green Deck (End of Round: $2 per remaining Hand, $1 per remaining Discard. No Interest)")
-    print("  4. Yellow Deck (Start with extra $10)")
+    game = Game(deck_type="Base")
+    print(f"You have chosen the {game.deck.name}!")
+    game.draw_hand()
 
-    game = None
-    # Loop to allow user to start a new game or load an existing one
-    while game is None:
-        start_option = input("Start a [N]ew game or [L]oad game? ").lower()
-        if start_option == 'n':
-            deck_choice = input("Choose your starting deck (1-4): ")
-            selected_deck_type = "Base"
-            if deck_choice == "2":
-                selected_deck_type = "Red"
-            elif deck_choice == "3":
-                selected_deck_type = "Green"
-            elif deck_choice == "4":
-                selected_deck_type = "Yellow"
-            
-            game = Game(deck_type=selected_deck_type)
-            print(f"You have chosen the {game.deck.name}!")
-            game.draw_hand()
-        elif start_option == 'l':
-            game = load_game()
-            if game is None:
-                print("Could not load game. Starting a new game.")
-                # Fallback to new game if load fails
-                print("Available Decks:")
-                print("  1. Base Deck (Standard 52-card deck)")
-                print("  2. Red Deck (+1 discard every round)")
-                print("  3. Green Deck (End of Round: $2 per remaining Hand, $1 per remaining Discard. No Interest)")
-                print("  4. Yellow Deck (Start with extra $10)")
-
-                deck_choice = input("Choose your starting deck (1-4): ")
-                selected_deck_type = "Base"
-                if deck_choice == "2":
-                    selected_deck_type = "Red"
-                elif deck_choice == "3":
-                    selected_deck_type = "Green"
-                elif deck_choice == "4":
-                    selected_deck_type = "Yellow"
-                
-                game = Game(deck_type=selected_deck_type)
-                print(f"You have chosen the {game.deck.name}!")
-                game.draw_hand()
-        else:
-            print("Invalid option. Please enter 'N' or 'L'.")
+    command_index = 0
 
     # Main game loop
     while True:
@@ -105,7 +61,13 @@ def main():
                 print(f"[{i}] {planet_card.name}: {planet_card.description}")
             print("--------------------")
 
-        action = input("Enter card indices to play (e.g., '0 2 4'), 'd' to discard, 't' to use Tarot card, 's' to use Spectral card, 'p' to use Planet card, 'v' to save, 'l' to load, 'h' for help, or 'q' to quit: ").lower()
+        # Get action from commands list or default to 'q' if no commands left
+        if commands and command_index < len(commands):
+            action = commands[command_index].lower()
+            command_index += 1
+            print(f"Executing command: {action}") # Echo the command being executed
+        else:
+            action = 'q' # Default to quit if no more commands
 
         if action == 'q':
             break
@@ -118,6 +80,18 @@ def main():
                 game = loaded_game
             continue
         elif action == 'h':
+            print("\n--- Help ---")
+            print("  Enter space-separated card indices (e.g., '0 2 4') to play a hand.")
+            print("  'd': Discard selected cards and draw new ones. Costs a hand.")
+            print("  't': Use a Tarot card from your inventory.")
+            print("  's': Use a Spectral card from your inventory.")
+            print("  'p': Use a Planet card from your inventory.")
+            print("  'o': Sort your hand by rank or suit.")
+            print("  'v': Save the current game.")
+            print("  'l': Load a previously saved game.")
+            print("  'q': Quit the game.")
+            print("--------------------")
+            continue
 
             
 

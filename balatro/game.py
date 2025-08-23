@@ -119,29 +119,24 @@ class Game:
         self.current_blind_index += 1
         if self.current_blind_index < len(self.blinds):
             self.current_blind = self.blinds[self.current_blind_index]
-            print(f"
---- Advancing to {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
+            print(f"\n--- Advancing to {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
         else:
-            print("
---- All Blinds in Ante Cleared! Advancing to next Ante! ---")
+            print(f"\n--- All Blinds in Ante Cleared! Advancing to next Ante! ---")
             self.ante += 1
             self.current_blind_index = 0 # Reset blind index for new ante
             self.current_blind = self.blinds[self.current_blind_index]
             self.score = 0 # Reset score for new ante
-            print(f"
---- Now in Ante {self.ante}, starting with {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
+            print(f"\n--- Now in Ante {self.ante}, starting with {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
 
     def check_blind_cleared(self):
         """Checks if the current blind has been cleared and updates game state accordingly."""
         if self.score >= self.current_blind.score_required:
-            print(f"
---- {self.current_blind.name} Cleared! You gained 10 money! ---")
+            print(f"\n--- {self.current_blind.name} Cleared! You gained 10 money! ---")
             self.money += 10
             self.advance_blind()
             return True
         else:
-            print(f"
---- Failed to clear {self.current_blind.name}! Game Over! ---")
+            print(f"\n--- Failed to clear {self.current_blind.name}! Game Over! ---")
             self.game_over = True
             return False
 

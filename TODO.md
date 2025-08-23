@@ -44,5 +44,6 @@
 - [x] Implement error handling and robust input validation.
 - [x] Refine game balance.
 - [x] Fixed crash in balatro_cli.py
+- [x] Game runs without crashing with simulated input.
 - [ ] Write unit tests. (Skipped due to pytest installation issues)
 - [x] Add comprehensive documentation.
