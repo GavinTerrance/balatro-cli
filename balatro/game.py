@@ -7,6 +7,7 @@ from .scoring import calculate_score
 from .jokers import JokerOfMadness # Example Joker
 from .vouchers import Voucher, TarotMerchant # Example Voucher
 from .blinds import SmallBlind, BigBlind, BossBlind
+from .shop import Shop
 
 class Game:
     def __init__(self):
@@ -21,6 +22,8 @@ class Game:
         self.current_blind_index = 0
         self.current_blind = self.blinds[self.current_blind_index]
         
+        self.shop = Shop() # Initialize the shop
+
         # Game state variables
         self.money = 4
         self.round = 1
@@ -44,6 +47,8 @@ class Game:
         if self.current_blind_index < len(self.blinds):
             self.current_blind = self.blinds[self.current_blind_index]
             print(f"\n--- Advancing to {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
+            self.shop.generate_items() # Refresh shop items on new blind
+            self.shop.display_items() # Display shop items
         else:
             print("\n--- All Blinds Cleared! You Win! ---")
             # This would eventually lead to game end or next ante
