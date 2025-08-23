@@ -6,6 +6,7 @@ from .poker import evaluate_hand
 from .scoring import calculate_score
 from .jokers import JokerOfMadness # Example Joker
 from .vouchers import Voucher, TarotMerchant # Example Voucher
+from .blinds import SmallBlind, BigBlind, BossBlind
 
 class Game:
     def __init__(self):
@@ -16,9 +17,9 @@ class Game:
         self.vouchers = [TarotMerchant()] # Start with a voucher for testing
         self.activate_vouchers()
 
-    def activate_vouchers(self):
-        for voucher in self.vouchers:
-            voucher.apply_effect(self)
+        self.blinds = [SmallBlind(), BigBlind(), BossBlind()]
+        self.current_blind_index = 0
+        self.current_blind = self.blinds[self.current_blind_index]
         
         # Game state variables
         self.money = 4
@@ -30,8 +31,29 @@ class Game:
     def __repr__(self):
         return (
             f"Game(round={self.round}, hands={self.hands}, "
-            f"discards={self.discards}, score={self.score}, money={self.money})"
+            f"discards={self.discards}, score={self.score}, money={self.money}, "
+            f"current_blind={self.current_blind.name})"
         )
+
+    def activate_vouchers(self):
+        for voucher in self.vouchers:
+            voucher.apply_effect(self)
+
+    def advance_blind(self):
+        self.current_blind_index += 1
+        if self.current_blind_index < len(self.blinds):
+            self.current_blind = self.blinds[self.current_blind_index]
+            print(f"\n--- Advancing to {self.current_blind.name} (Score required: {self.current_blind.score_required}) ---")
+        else:
+            print("\n--- All Blinds Cleared! You Win! ---")
+            # This would eventually lead to game end or next ante
+
+    def check_blind_cleared(self):
+        if self.score >= self.current_blind.score_required:
+            print(f"\n--- {self.current_blind.name} Cleared! ---")
+            self.advance_blind()
+            return True
+        return False
 
     def draw_hand(self, hand_size: int = 8):
         # Discard current hand if any, and draw a new one.
@@ -56,3 +78,8 @@ class Game:
         self.hands -= 1
         print(f"Played {len(cards_to_play)} cards. {self.hands} hands remaining.")
 
+        if self.hands == 0: # End of round, check if blind is cleared
+            self.check_blind_cleared()
+            # Reset hands for next round, draw new hand, etc.
+            self.hands = 4 # Reset for next round for now
+            self.draw_hand() # Draw new hand for next round
