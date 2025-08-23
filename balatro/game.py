@@ -60,7 +60,8 @@ class Game:
 
     def check_blind_cleared(self):
         if self.score >= self.current_blind.score_required:
-            print(f"\n--- {self.current_blind.name} Cleared! ---")
+            print(f"\n--- {self.current_blind.name} Cleared! You gained 10 money! ---")
+            self.money += 10
             self.advance_blind()
             return True
         return False
