@@ -45,7 +45,14 @@ def main():
 
         if action == 'q':
             break
-        
+        elif action == 'o':
+            sort_option = input("Sort hand by 'rank' or 'suit'? ").lower()
+            if sort_option in ['rank', 'suit']:
+                game.sort_hand(sort_by=sort_option)
+                print(f"Hand sorted by {sort_option}.")
+            else:
+                print("Invalid sort option.")
+            continue
         elif action == 't':
             if not game.tarot_cards:
                 print("You have no Tarot cards to use.")
