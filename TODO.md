@@ -15,3 +15,4 @@
 - [x] Refine end-of-round flow
 - [x] Implement dedicated shop phase
 - [x] Implement money management
+- [x] Implement game over condition
