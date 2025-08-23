@@ -5,14 +5,24 @@
 from balatro.game import Game, save_game, load_game
 from balatro.deck import BaseDeck, RedDeck, GreenDeck, YellowDeck
 
-def main(commands: list = None):
+def main():
     """Main function to run the Balatro CLI game."""
 
     game = Game(deck_type="Base")
     print(f"You have chosen the {game.deck.name}!")
     game.draw_hand()
 
-    command_index = 0
+    print("\n--- Help ---")
+    print("  Enter space-separated card indices (e.g., '0 2 4') to play a hand.")
+    print("  'd': Discard selected cards and draw new ones. Costs a hand.")
+    print("  't': Use a Tarot card from your inventory.")
+    print("  's': Use a Spectral card from your inventory.")
+    print("  'p': Use a Planet card from your inventory.")
+    print("  'o': Sort your hand by rank or suit.")
+    print("  'v': Save the current game.")
+    print("  'l': Load a previously saved game.")
+    print("  'q': Quit the game.")
+    print("--------------------")
 
     # Main game loop
     while True:
@@ -62,12 +72,7 @@ def main(commands: list = None):
             print("--------------------")
 
         # Get action from commands list or default to 'q' if no commands left
-        if commands and command_index < len(commands):
-            action = commands[command_index].lower()
-            command_index += 1
-            print(f"Executing command: {action}") # Echo the command being executed
-        else:
-            action = 'q' # Default to quit if no more commands
+        action = input("Enter your action: ").lower()
 
         if action == 'q':
             break
@@ -92,6 +97,19 @@ def main(commands: list = None):
             print("  'q': Quit the game.")
             print("--------------------")
             continue
+        elif action == 'o':
+            game.sort_hand()
+            print("Hand sorted.")
+            continue
+        # Add this block to handle playing cards
+        else:
+            try:
+                # Attempt to parse as card indices
+                card_indices = [int(idx) for idx in action.split()]
+                selected_cards = [game.hand[i] for i in card_indices]
+                game.play_cards(selected_cards)
+            except (ValueError, IndexError):
+                print("Invalid action or card indices. Please try again.")
 
             
 
