@@ -6,6 +6,6 @@
 - [x] Define poker hands
 - [x] Implement scoring logic
 - [x] Add Jokers
-- [ ] Add Vouchers
+- [x] Add Vouchers
 - [ ] Add Blinds & Antes
 - [ ] Implement shop system
