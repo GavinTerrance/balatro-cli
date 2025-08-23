@@ -16,11 +16,11 @@
 - [x] Extract "Tags" wiki content.
 - [x] Extract "Poker Hands" wiki content.
 - [x] Extract "Shop" wiki content.
-- [x] Initialize Python project structure (e.g., `src/`, `main.py`).
+- [x] Initialize Python project structure (e.x., `src/`, `main.py`).
 - [x] Create `README.md` with basic project info and run instructions.
 - [x] Define basic `Card` class (rank, suit).
 - [x] Define basic `Deck` class (collection of cards, shuffling, drawing).
-- [ ] Define basic `Joker` class (placeholder for now, will add effects later).
+- [x] Define basic `Joker` class (placeholder for now, will add effects later).
 - [ ] Define `Sticker` classes/enums based on research (Eternal, Perishable, Rental, Stake).
 - [ ] Implement a basic game loop placeholder in `main.py`.
 
