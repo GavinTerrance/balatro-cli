@@ -22,3 +22,12 @@ class Sticker:
 
     def __str__(self):
         return self.sticker_type.value
+
+    def to_dict(self):
+        return {
+            "sticker_type": self.sticker_type.value
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(StickerType(data["sticker_type"]))

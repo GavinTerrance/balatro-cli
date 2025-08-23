@@ -14,6 +14,21 @@ class Voucher:
         """Applies the voucher's effect to the game state."""
         pass
 
+    def to_dict(self):
+        return {
+            "_class": self.__class__.__name__,
+            "name": self.name,
+            "description": self.description,
+            "cost": self.cost
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        # This will be a generic from_dict for the base Voucher class
+        # Subclasses will need their own from_dict or a more sophisticated factory
+        # For now, it will only handle the base Voucher attributes
+        return cls(data["name"], data["description"], data["cost"])
+
 # --- Example Voucher Implementations ---
 
 class TarotMerchant(Voucher):
@@ -52,3 +67,14 @@ class Honeypot(Voucher):
     def apply_effect(self, game):
         # This effect would need to be triggered when a Joker is sold.
         print(f"{self.name} activated: Gain $10 when you sell a Joker.")
+
+VOUCHER_CLASSES = {
+    "Voucher": Voucher,
+    "TarotMerchant": TarotMerchant,
+    "CardSharp": CardSharp,
+    "Honeypot": Honeypot
+}
+
+def voucher_from_dict(data):
+    voucher_class = VOUCHER_CLASSES[data["_class"]]
+    return voucher_class(data["name"], data["description"], data["cost"])

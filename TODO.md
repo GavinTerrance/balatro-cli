@@ -40,7 +40,7 @@
 - [x] Implement different Deck types.
 - [ ] Implement Challenges.
 - [x] Add CLI user interface for interaction.
-- [ ] Add save/load functionality.
+- [x] Add save/load functionality.
 - [ ] Implement error handling and robust input validation.
 - [ ] Write unit tests.
 - [ ] Refine game balance.

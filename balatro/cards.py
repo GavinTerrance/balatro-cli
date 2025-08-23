@@ -70,3 +70,21 @@ class Card:
             return f"{self.rank.value} of {self.suit.value} ({', '.join(modifiers)})"
         else:
             return f"{self.rank.value} of {self.suit.value}"
+
+    def to_dict(self):
+        return {
+            "suit": self.suit.value,
+            "rank": self.rank.value,
+            "enhancement": self.enhancement.value,
+            "edition": self.edition.value,
+            "seal": self.seal.value
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        suit = Suit(data["suit"])
+        rank = Rank(data["rank"])
+        enhancement = Enhancement(data["enhancement"])
+        edition = Edition(data["edition"])
+        seal = Seal(data["seal"])
+        return cls(suit, rank, enhancement, edition, seal)

@@ -1,15 +1,18 @@
 # balatro/game.py
 
 from .deck import BaseDeck, RedDeck, GreenDeck, YellowDeck
-from .cards import Card
+from .cards import Card, Suit, Rank, Enhancement, Edition, Seal
 from .poker import evaluate_hand
 from .scoring import calculate_score
-from .jokers import JokerOfMadness # Example Joker
-from .vouchers import Voucher, TarotMerchant # Example Voucher
+from .jokers import Joker, joker_from_dict # Import Joker and joker_from_dict
+from .vouchers import Voucher, voucher_from_dict # Import Voucher and voucher_from_dict
 from .blinds import SmallBlind, BigBlind, BossBlind
 from .shop import Shop
-from .tarot_cards import TarotCard # Import TarotCard base class
+from .tarot_cards import TarotCard, tarot_card_from_dict # Import TarotCard and tarot_card_from_dict
+from .spectral_cards import SpectralCard, spectral_card_from_dict # Import SpectralCard and spectral_card_from_dict
+from .planet_cards import PlanetCard, planet_card_from_dict # Import PlanetCard and planet_card_from_dict
 from .stickers import StickerType # Import StickerType enum
+import json
 
 class Game:
     def __init__(self, deck_type: str = "Base"):
@@ -48,6 +51,45 @@ class Game:
         self.score = 0
         self.ante = 1 # Starting ante
         self.game_over = False # New attribute for game over state
+
+    def to_dict(self):
+        return {
+            "deck_type": self.deck.name, # Store deck type as string
+            "hand": [card.to_dict() for card in self.hand],
+            "jokers": [joker.to_dict() for joker in self.jokers],
+            "vouchers": [voucher.to_dict() for voucher in self.vouchers],
+            "tarot_cards": [tarot_card.to_dict() for tarot_card in self.tarot_cards],
+            "spectral_cards": [spectral_card.to_dict() for spectral_card in self.spectral_cards],
+            "planet_cards": [planet_card.to_dict() for planet_card in self.planet_cards],
+            "money": self.money,
+            "round": self.round,
+            "hands": self.hands,
+            "discards": self.discards,
+            "score": self.score,
+            "ante": self.ante,
+            "game_over": self.game_over,
+            "current_blind_index": self.current_blind_index
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        game = cls(deck_type=data["deck_type"]) # Initialize with deck type
+        game.hand = [Card.from_dict(c_data) for c_data in data["hand"]]
+        game.jokers = [joker_from_dict(j_data) for j_data in data["jokers"]]
+        game.vouchers = [voucher_from_dict(v_data) for v_data in data["vouchers"]]
+        game.tarot_cards = [tarot_card_from_dict(t_data) for t_data in data["tarot_cards"]]
+        game.spectral_cards = [spectral_card_from_dict(s_data) for s_data in data["spectral_cards"]]
+        game.planet_cards = [planet_card_from_dict(p_data) for p_data in data["planet_cards"]]
+        game.money = data["money"]
+        game.round = data["round"]
+        game.hands = data["hands"]
+        game.discards = data["discards"]
+        game.score = data["score"]
+        game.ante = data["ante"]
+        game.game_over = data["game_over"]
+        game.current_blind_index = data["current_blind_index"]
+        game.current_blind = game.blinds[game.current_blind_index] # Reconstruct current blind
+        return game
 
     def __repr__(self):
         return (
@@ -200,3 +242,22 @@ class Game:
             else:
                 return (rank_order[card.rank.value], card.suit.value) # Default to rank sort
         self.hand.sort(key=card_sort_key)
+
+def save_game(game, filename="balatro_save.json"):
+    with open(filename, "w") as f:
+        json.dump(game.to_dict(), f, indent=4)
+    print(f"Game saved to {filename}")
+
+def load_game(filename="balatro_save.json"):
+    try:
+        with open(filename, "r") as f:
+            data = json.load(f)
+        game = Game.from_dict(data)
+        print(f"Game loaded from {filename}")
+        return game
+    except FileNotFoundError:
+        print(f"No save file found at {filename}")
+        return None
+    except Exception as e:
+        print(f"Error loading game: {e}")
+        return None

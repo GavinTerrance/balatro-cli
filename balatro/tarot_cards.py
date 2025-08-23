@@ -1,8 +1,8 @@
 # balatro/tarot_cards.py
 
 from .cards import Card, Suit, Rank
-from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
-from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
+from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker, joker_from_dict # Import joker_from_dict
+from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot, voucher_from_dict # Import voucher_from_dict
 import random
 
 class TarotCard:
@@ -19,6 +19,21 @@ class TarotCard:
         """Applies the Tarot card's effect to the game state."""
         raise NotImplementedError("Subclasses must implement apply_effect")
 
+    def to_dict(self):
+        return {
+            "_class": self.__class__.__name__,
+            "name": self.name,
+            "description": self.description,
+            "cost": self.cost
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        # This will be a generic from_dict for the base TarotCard class
+        # Subclasses will need their own from_dict or a more sophisticated factory
+        # For now, it will only handle the base TarotCard attributes
+        return cls(data["name"], data["description"], data["cost"])
+
 # --- Example Tarot Card Implementations ---
 
 class TheFool(TarotCard):
@@ -34,6 +49,13 @@ class TheFool(TarotCard):
         new_joker = random.choice(available_jokers)()
         game.jokers.append(new_joker)
         print(f"The Fool generated: {new_joker.name}!")
+
+    def to_dict(self):
+        return super().to_dict()
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls()
 
 class TheMagician(TarotCard):
     def __init__(self):
@@ -69,6 +91,13 @@ class TheMagician(TarotCard):
         except ValueError:
             print("Invalid input.")
 
+    def to_dict(self):
+        return super().to_dict()
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls()
+
 class TheWorld(TarotCard):
     def __init__(self):
         super().__init__(
@@ -83,3 +112,21 @@ class TheWorld(TarotCard):
         game.vouchers.append(new_voucher)
         new_voucher.apply_effect(game) # Apply effect immediately
         print(f"The World generated: {new_voucher.name}!")
+
+    def to_dict(self):
+        return super().to_dict()
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls()
+
+TAROT_CARD_CLASSES = {
+    "TarotCard": TarotCard,
+    "TheFool": TheFool,
+    "TheMagician": TheMagician,
+    "TheWorld": TheWorld
+}
+
+def tarot_card_from_dict(data):
+    tarot_card_class = TAROT_CARD_CLASSES[data["_class"]]
+    return tarot_card_class(data["name"], data["description"], data["cost"])
