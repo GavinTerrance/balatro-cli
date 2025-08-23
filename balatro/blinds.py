@@ -10,6 +10,7 @@ class Blind:
         return f"Blind(name='{self.name}', score_required={self.score_required})"
 
 class SmallBlind(Blind):
+    """Represents the Small Blind in the game."""
     def __init__(self):
         super().__init__(
             name="Small Blind",
@@ -17,6 +18,7 @@ class SmallBlind(Blind):
         )
 
 class BigBlind(Blind):
+    """Represents the Big Blind in the game."""
     def __init__(self):
         super().__init__(
             name="Big Blind",
@@ -24,6 +26,7 @@ class BigBlind(Blind):
         )
 
 class BossBlind(Blind):
+    """Represents a Boss Blind in the game."""
     def __init__(self):
         super().__init__(
             name="Boss Blind",

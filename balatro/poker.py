@@ -1,10 +1,11 @@
-# balatro/poker.py
+"""This module defines poker hand types and functions for evaluating poker hands."""
 
 from enum import Enum
 from collections import Counter
 from .cards import Card, Rank
 
 class PokerHand(Enum):
+    """Represents different types of poker hands."""
     HIGH_CARD = "High Card"
     PAIR = "Pair"
     TWO_PAIR = "Two Pair"
@@ -17,13 +18,28 @@ class PokerHand(Enum):
     FIVE_OF_A_KIND = "Five of a Kind"
 
 # Helper function to get rank values for sorting and comparison
-def get_rank_value(rank: Rank):
+def get_rank_value(rank: Rank) -> int:
+    """Returns the numerical value of a card rank."
+
+    Args:
+        rank (Rank): The rank of the card.
+
+    Returns:
+        int: The numerical value of the rank.
+    """
     # This mapping is simplified. In a real game, Ace can be high or low.
     rank_order = {r: i for i, r in enumerate(Rank, 2)}
     return rank_order[rank]
 
-def evaluate_hand(cards: list[Card]):
-    """Evaluates a list of cards and returns the best poker hand."""
+def evaluate_hand(cards: list[Card]) -> PokerHand | None:
+    """Evaluates a list of cards and returns the best poker hand."
+
+    Args:
+        cards (list[Card]): A list of Card objects to evaluate.
+
+    Returns:
+        PokerHand | None: The best PokerHand found, or None if no cards are provided.
+    """
     if not cards:
         return None
 

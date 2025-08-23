@@ -1,8 +1,9 @@
-# balatro/scoring.py
+"""This module handles the scoring logic for poker hands in Balatro."""
 
 from .poker import PokerHand
 from .jokers import Joker
 from .cards import Card, Enhancement, Edition, Seal
+import random # Import random for Lucky Card
 
 # Base chips and multiplier for each hand type
 # Values taken from Balatro wiki
@@ -19,8 +20,18 @@ HAND_SCORES = {
     PokerHand.FIVE_OF_A_KIND: {"chips": 120, "mult": 12}, # Assuming a generic five of a kind
 }
 
-def calculate_score(hand_type: PokerHand, cards: list, jokers: list[Joker], game):
-    """Calculates the score for a given hand type, applying joker bonuses."""
+def calculate_score(hand_type: PokerHand, cards: list[Card], jokers: list[Joker], game) -> float:
+    """Calculates the score for a given hand type, applying joker bonuses and card modifiers."
+
+    Args:
+        hand_type (PokerHand): The type of poker hand played.
+        cards (list[Card]): The list of cards that formed the hand.
+        jokers (list[Joker]): The list of active Joker cards.
+        game: The current Game object (for accessing money, etc.).
+
+    Returns:
+        float: The calculated score for the hand.
+    """
     base_score = HAND_SCORES.get(hand_type, {"chips": 0, "mult": 0})
     
     chips = base_score["chips"]

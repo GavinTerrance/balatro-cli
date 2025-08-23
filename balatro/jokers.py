@@ -1,39 +1,56 @@
 # balatro/jokers.py
 
+"""This module defines the Joker class and its subclasses, representing different Joker cards in the game."""
+
 from .stickers import Sticker, StickerType # Import Sticker class and StickerType
 
 class Joker:
     """Base class for all Joker cards."""
     def __init__(self, name: str, description: str):
-        self.name = name
-        self.description = description
-        self.stickers = [] # New attribute to hold Sticker objects
+        """Initializes a Joker object."
 
-    def __repr__(self):
-        return f"Joker(name='{self.name}')"
-
-    class Joker:
-    """Base class for all Joker cards."""
-    def __init__(self, name: str, description: str):
+        Args:
+            name (str): The name of the Joker.
+            description (str): A brief description of the Joker's effect.
+        """
         self.name = name
         self.description = description
         self.stickers = [] # New attribute to hold Sticker objects
         self.rounds_active = 0 # For Perishable sticker
         self.is_debuffed = False # For Perishable sticker
 
+    def __repr__(self):
+        """Returns a string representation of the Joker object for debugging."""
+        return f"Joker(name='{self.name}')"
+
     def apply_chips(self, chips: int) -> int:
-        """Apply any chip modifications. Overridden by specific jokers."""
+        """Applies any chip modifications from this Joker. Overridden by specific jokers."
+
+        Args:
+            chips (int): The current chips value.
+
+        Returns:
+            int: The modified chips value.
+        """
         if self.is_debuffed:
             return 0 # Debuffed jokers provide no chips
         return chips
 
     def apply_mult(self, mult: int) -> int:
-        """Apply any multiplier modifications. Overridden by specific jokers."""
+        """Applies any multiplier modifications from this Joker. Overridden by specific jokers."
+
+        Args:
+            mult (int): The current multiplier value.
+
+        Returns:
+            int: The modified multiplier value.
+        """
         if self.is_debuffed:
             return 0 # Debuffed jokers provide no multiplier
         return mult
 
     def to_dict(self):
+        """Converts the Joker object to a dictionary for serialization."""
         return {
             "_class": self.__class__.__name__,
             "name": self.name,
@@ -45,6 +62,7 @@ class Joker:
 
     @classmethod
     def from_dict(cls, data):
+        """Creates a Joker object from a dictionary. This is a factory method for subclasses."""
         # This will be a generic from_dict for the base Joker class
         # Subclasses will need their own from_dict or a more sophisticated factory
         # For now, it will only handle the base Joker attributes
@@ -53,7 +71,9 @@ class Joker:
 # --- Example Joker Implementations ---
 
 class JokerOfGreed(Joker):
+    """A Joker that adds +4 Mult for every hand played."""
     def __init__(self):
+        """Initializes a JokerOfGreed object."""
         super().__init__(
             name="Joker of Greed",
             description="Adds +4 Mult for every hand played."
@@ -61,15 +81,18 @@ class JokerOfGreed(Joker):
         self.hands_played = 0
 
     def apply_mult(self, mult: int) -> int:
+        """Applies the multiplier bonus based on hands played."""
         return mult + (4 * self.hands_played)
 
     def to_dict(self):
+        """Converts the JokerOfGreed object to a dictionary for serialization."""
         data = super().to_dict()
         data["hands_played"] = self.hands_played
         return data
 
     @classmethod
     def from_dict(cls, data):
+        """Creates a JokerOfGreed object from a dictionary."""
         instance = cls()
         instance.name = data["name"]
         instance.description = data["description"]
@@ -80,20 +103,25 @@ class JokerOfGreed(Joker):
         return instance
 
 class JokerOfMadness(Joker):
+    """A Joker that adds a flat +10 Mult."""
     def __init__(self):
+        """Initializes a JokerOfMadness object."""
         super().__init__(
             name="Joker of Madness",
             description="Adds a flat +10 Mult."
         )
 
     def apply_mult(self, mult: int) -> int:
+        """Applies the flat multiplier bonus."""
         return mult + 10
 
     def to_dict(self):
+        """Converts the JokerOfMadness object to a dictionary for serialization."""
         return super().to_dict()
 
     @classmethod
     def from_dict(cls, data):
+        """Creates a JokerOfMadness object from a dictionary."""
         instance = cls()
         instance.name = data["name"]
         instance.description = data["description"]
@@ -103,20 +131,25 @@ class JokerOfMadness(Joker):
         return instance
 
 class ChipJoker(Joker):
+    """A Joker that adds +100 Chips."""
     def __init__(self):
+        """Initializes a ChipJoker object."""
         super().__init__(
             name="Chip Joker",
             description="Adds +100 Chips."
         )
 
     def apply_chips(self, chips: int) -> int:
+        """Applies the flat chips bonus."""
         return chips + 100
 
     def to_dict(self):
+        """Converts the ChipJoker object to a dictionary for serialization."""
         return super().to_dict()
 
     @classmethod
     def from_dict(cls, data):
+        """Creates a ChipJoker object from a dictionary."""
         instance = cls()
         instance.name = data["name"]
         instance.description = data["description"]
@@ -133,5 +166,6 @@ JOKER_CLASSES = {
 }
 
 def joker_from_dict(data):
+    """Factory function to create a Joker object from a dictionary."""
     joker_class = JOKER_CLASSES[data["_class"]]
     return joker_class.from_dict(data)

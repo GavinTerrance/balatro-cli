@@ -44,4 +44,4 @@
 - [x] Implement error handling and robust input validation.
 - [x] Refine game balance.
 - [ ] Write unit tests.
-- [ ] Add comprehensive documentation.
+- [x] Add comprehensive documentation.

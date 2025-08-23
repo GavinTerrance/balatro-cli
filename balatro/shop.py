@@ -1,4 +1,4 @@
-# balatro/shop.py
+"""This module defines the Shop class where players can purchase various items."""
 
 import random
 from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker
@@ -26,11 +26,14 @@ BASE_COSTS = {
 }
 
 class Shop:
+    """Represents the in-game shop where players can buy items."""
     def __init__(self):
+        """Initializes the Shop and generates its initial items."""
         self.items = []
         self.generate_items()
 
     def generate_items(self):
+        """Generates a new set of random items for the shop."""
         self.items = []
         # For now, a simple random selection of Jokers and Vouchers
         available_jokers = [JokerOfGreed, JokerOfMadness, ChipJoker]
@@ -87,12 +90,22 @@ class Shop:
             self.items.append(card)
 
     def display_items(self):
+        """Prints the current items available in the shop."""
         print("--- Shop Items ---")
         for i, item in enumerate(self.items):
             print(f"[{i}] {item.name} - Cost: ${item.cost} - {item.description}")
         print("------------------")
 
     def purchase_item(self, item_index: int, game) -> bool:
+        """Attempts to purchase an item from the shop."
+
+        Args:
+            item_index (int): The index of the item to purchase.
+            game: The current Game object.
+
+        Returns:
+            bool: True if the purchase was successful, False otherwise.
+        """
         if 0 <= item_index < len(self.items):
             item = self.items[item_index]
             if game.money >= item.cost:
