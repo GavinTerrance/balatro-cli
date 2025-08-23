@@ -28,7 +28,7 @@
 
 - [x] Implement Poker Hand evaluation.
 - [x] Implement scoring (Chips and Mult).
-- [ ] Implement Blinds and Antes.
+- [x] Implement Blinds and Antes.
 - [ ] Implement basic Shop functionality.
 - [ ] Integrate Jokers and their effects.
 - [ ] Integrate Stickers and their effects.
