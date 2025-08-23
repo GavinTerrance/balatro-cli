@@ -2,7 +2,13 @@
 
 from .cards import Card, Suit, Rank
 from .jokers import Joker, JokerOfGreed, JokerOfMadness, ChipJoker, joker_from_dict # Import joker_from_dict
-from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot, voucher_from_dict # Import voucher_from_dict
+from ..shop.vouchers import (
+    Voucher,
+    TarotMerchant,
+    CardSharp,
+    Honeypot,
+    voucher_from_dict,
+)  # Import voucher_from_dict
 import random
 
 class TarotCard:

@@ -1,5 +1,5 @@
 from enum import Enum
-from .poker import PokerHand # Import PokerHand for type hinting
+from ..core.poker import PokerHand  # Import PokerHand for type hinting
 
 class PlanetCardType(Enum):
     PLUTO = "Pluto"

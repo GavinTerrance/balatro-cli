@@ -2,7 +2,7 @@
 
 """This module defines the Joker class and its subclasses, representing different Joker cards in the game."""
 
-from .stickers import Sticker, StickerType # Import Sticker class and StickerType
+from ..shop.stickers import Sticker, StickerType  # Import Sticker class and StickerType
 
 class Joker:
     """Base class for all Joker cards."""
