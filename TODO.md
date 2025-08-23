@@ -20,3 +20,4 @@
 - [x] Implement card sorting in hand
 - [x] Implement hand sorting options
 - [x] Enforce 5-card discard limit
+- [x] Recreate wiki in local project (Jokers page)
