@@ -143,7 +143,7 @@ class Game:
         # Define a custom sorting key for cards
         def card_sort_key(card):
             rank_order = {
-                '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, 'Ten': 10, 
+                '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Ten': 10, 
                 'Jack': 11, 'Queen': 12, 'King': 13, 'Ace': 14
             }
             return (rank_order[card.rank.value], card.suit.value)
