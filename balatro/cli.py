@@ -39,15 +39,15 @@ class BalatroCLI:
         print("  'q': Quit the game.")
         print("--------------------")
 
-    def _handle_action(self, action: str, cards: Optional[str]) -> bool:
+    def _handle_action(self, action: str, additional_input: Optional[str]) -> bool:
         """Handle a single user action.
 
         Returns ``True`` to continue the game loop or ``False`` to quit.
         """
         card_indices: list[int] = []
         selected_cards = []
-        if cards:
-            card_indices = [int(idx) for idx in cards.split()]
+        if additional_input:
+            card_indices = [int(idx) for idx in additional_input.split()]
             selected_cards = [
                 self.game.player.hand[i]
                 for i in card_indices
@@ -79,12 +79,12 @@ class BalatroCLI:
             else:
                 print("Did you list the cards you want to discard after 'd'?")
         elif action == "t":
-            if additional_input.strip().isdigit():
+            if additional_input and additional_input.strip().isdigit():
                 self.game.use_tarot_card(int(additional_input))
             else:
                 print("Provide the index of the Tarot card to use.")
         elif action == "s":
-            if additional_input.strip().isdigit():
+            if additional_input and additional_input.strip().isdigit():
                 self.game.use_spectral_card(int(additional_input))
             else:
                 print("Provide the index of the Spectral card to use.")
