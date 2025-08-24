@@ -65,10 +65,13 @@ def load_planet_cards():
 
     cards = []
     for entry in raw:
-        addition = entry.get("addition", "")
-        match = re.search(r"\+(\d+)\s*Mult.*\+(\d+)\s*Chips", addition)
-        mult = int(match.group(1)) if match else 0
-        chips = int(match.group(2)) if match else 0
+        mult = int(entry.get("mult_bonus", 0))
+        chips = int(entry.get("chips_bonus", 0))
+        if not mult and not chips:
+            addition = entry.get("addition", "")
+            match = re.search(r"\+(\d+)\s*Mult.*\+(\d+)\s*Chips", addition)
+            mult = int(match.group(1)) if match else 0
+            chips = int(match.group(2)) if match else 0
         card = PlanetCard(
             name=entry["name"],
             chips_bonus=chips,
