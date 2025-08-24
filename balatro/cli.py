@@ -48,7 +48,11 @@ class BalatroCLI:
         selected_cards = []
         if cards:
             card_indices = [int(idx) for idx in cards.split()]
-            selected_cards = [self.game.player.hand[i] for i in card_indices]
+            selected_cards = [
+                self.game.player.hand[i]
+                for i in card_indices
+                if 0 <= i < len(self.game.player.hand)
+            ]
 
         if action == "q":
             return False
