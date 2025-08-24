@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Red Deck",
+    "description": "+1 discard every round",
+    "unlock_condition": "Unlocked from start"
+  },
+  {
+    "name": "Blue Deck",
+    "description": "+1 hand every round",
+    "unlock_condition": "Discover at least 20 items from your collection"
+  },
+  {
+    "name": "Yellow Deck",
+    "description": "Start with extra $10",
+    "unlock_condition": "Discover at least 50 items from your collection"
+  },
+  {
+    "name": "Green Deck",
+    "description": "At end of each Round: $2 per remaining hand; $1 per remaining discard; Earn no Interest",
+    "unlock_condition": "Discover at least 75 items from your collection"
+  },
+  {
+    "name": "Black Deck",
+    "description": "+1 Joker slot; -1 hand every round",
+    "unlock_condition": "Discover at least 100 items from your collection"
+  },
+  {
+    "name": "Magic Deck",
+    "description": "Start run with the Crystal Ball voucher and 2 copies of The Fool",
+    "unlock_condition": "Win a run with the Red Deck on any difficulty"
+  },
+  {
+    "name": "Nebula Deck",
+    "description": "Start run with the Telescope voucher; -1 consumable slot",
+    "unlock_condition": "Win a run with the Blue Deck on any difficulty"
+  },
+  {
+    "name": "Ghost Deck",
+    "description": "Spectral cards may appear in the shop; start with a Hex card",
+    "unlock_condition": "Win a run with the Yellow Deck on any difficulty"
+  },
+  {
+    "name": "Abandoned Deck",
+    "description": "Start run with no Face Cards in your deck",
+    "unlock_condition": "Win a run with the Green Deck on any difficulty"
+  },
+  {
+    "name": "Checkered Deck",
+    "description": "Start run with 26 Spades and 26 Hearts in deck",
+    "unlock_condition": "Win a run with the Black Deck on any difficulty"
+  },
+  {
+    "name": "Zodiac Deck",
+    "description": "Start run with Tarot Merchant, Planet Merchant, and Overstock",
+    "unlock_condition": "Win a run with any deck on the Red Stake difficulty or harder"
+  },
+  {
+    "name": "Painted Deck",
+    "description": "+2 hand size; -1 Joker slot",
+    "unlock_condition": "Win a run with any deck on the Green Stake difficulty or harder"
+  },
+  {
+    "name": "Anaglyph Deck",
+    "description": "After defeating each Boss Blind, gain a Double Tag",
+    "unlock_condition": "Win a run with any deck on the Black Stake difficulty or harder"
+  },
+  {
+    "name": "Plasma Deck",
+    "description": "Balance Chips and Mult when calculating score for played hand; X2 base Blind size",
+    "unlock_condition": "Win a run with any deck on the Blue Stake difficulty or harder"
+  },
+  {
+    "name": "Erratic Deck",
+    "description": "All Ranks and Suits in deck are randomized",
+    "unlock_condition": "Win a run with any deck on the Orange Stake difficulty or harder"
+  }
+]
