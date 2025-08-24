@@ -4,83 +4,107 @@
     "addition": "+1 Mult and +10 Chips",
     "poker_hand": "High Card",
     "hand_base_score": "1 Mult x 5 Chips",
-    "type": "Dwarf Planet"
+    "type": "Dwarf Planet",
+    "mult_bonus": 1,
+    "chips_bonus": 10
   },
   {
     "name": "Mercury",
     "addition": "+1 Mult and +15 Chips",
     "poker_hand": "Pair",
     "hand_base_score": "2 Mult x 10 Chips",
-    "type": "Planet"
+    "type": "Planet",
+    "mult_bonus": 1,
+    "chips_bonus": 15
   },
   {
     "name": "Uranus",
     "addition": "+1 Mult and +20 Chips",
     "poker_hand": "Two Pair",
     "hand_base_score": "2 Mult x 20 Chips",
-    "type": "Planet"
+    "type": "Planet",
+    "mult_bonus": 1,
+    "chips_bonus": 20
   },
   {
     "name": "Venus",
     "addition": "+2 Mult and +20 Chips",
     "poker_hand": "Three of a Kind",
     "hand_base_score": "3 Mult x 30 Chips",
-    "type": "Planet"
+    "type": "Planet",
+    "mult_bonus": 2,
+    "chips_bonus": 20
   },
   {
     "name": "Saturn",
     "addition": "+3 Mult and +30 Chips",
     "poker_hand": "Straight",
     "hand_base_score": "4 Mult x 30 Chips",
-    "type": "Planet"
+    "type": "Planet",
+    "mult_bonus": 3,
+    "chips_bonus": 30
   },
   {
     "name": "Jupiter",
     "addition": "+2 Mult and +15 Chips",
     "poker_hand": "Flush",
     "hand_base_score": "4 Mult x 35 Chips",
-    "type": "Planet"
+    "type": "Planet",
+    "mult_bonus": 2,
+    "chips_bonus": 15
   },
   {
     "name": "Earth",
     "addition": "+2 Mult and +25 Chips",
     "poker_hand": "Full House",
     "hand_base_score": "4 Mult x 40 Chips",
-    "type": "Planet"
+    "type": "Planet",
+    "mult_bonus": 2,
+    "chips_bonus": 25
   },
   {
     "name": "Mars",
     "addition": "+3 Mult and +30 Chips",
     "poker_hand": "Four of a Kind",
     "hand_base_score": "7 Mult x 60 Chips",
-    "type": "Planet"
+    "type": "Planet",
+    "mult_bonus": 3,
+    "chips_bonus": 30
   },
   {
     "name": "Neptune",
     "addition": "+4 Mult and +40 Chips",
     "poker_hand": "Straight Flush",
     "hand_base_score": "8 Mult x 100 Chips",
-    "type": "Planet"
+    "type": "Planet",
+    "mult_bonus": 4,
+    "chips_bonus": 40
   },
   {
     "name": "Planet X",
     "addition": "+3 Mult and +35 Chips",
     "poker_hand": "Five of a Kind",
     "hand_base_score": "12 Mult x 120 Chips",
-    "type": "Planet?"
+    "type": "Planet?",
+    "mult_bonus": 3,
+    "chips_bonus": 35
   },
   {
     "name": "Ceres",
     "addition": "+4 Mult and +40 Chips",
     "poker_hand": "Flush House",
     "hand_base_score": "14 Mult x 140 Chips",
-    "type": "Dwarf Planet"
+    "type": "Dwarf Planet",
+    "mult_bonus": 4,
+    "chips_bonus": 40
   },
   {
     "name": "Eris",
     "addition": "+3 Mult and +50 Chips",
     "poker_hand": "Flush Five",
     "hand_base_score": "16 Mult x 160 Chips",
-    "type": "Dwarf Planet"
+    "type": "Dwarf Planet",
+    "mult_bonus": 3,
+    "chips_bonus": 50
   }
 ]

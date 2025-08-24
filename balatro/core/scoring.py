@@ -88,6 +88,8 @@ def calculate_score(
             print(f"Gold Seal card played: +$3. Current money: ${game.money}")
 
     for joker in jokers:
+        if not joker.applies_to(hand_type):
+            continue
         new_chips = joker.apply_chips(chips)
         if new_chips != chips:
             messages.append(f"{joker.name} changes chips {chips} -> {new_chips}")
@@ -96,6 +98,9 @@ def calculate_score(
         if new_mult != mult:
             messages.append(f"{joker.name} changes mult {mult} -> {new_mult}")
         mult = new_mult
+        if joker.retrigger:
+            mult *= 1 + joker.retrigger
+            messages.append(f"{joker.name} retriggers: x{1 + joker.retrigger} mult")
 
     final_score = chips * mult
     messages.append(f"Final: {chips} chips x {mult} mult = {final_score}")

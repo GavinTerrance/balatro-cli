@@ -1,192 +1,125 @@
-# balatro/jokers.py
+"""Joker card definitions and loader."""
 
-"""This module defines the Joker class and its subclasses, representing different Joker cards in the game."""
+from __future__ import annotations
 
 import json
 from pathlib import Path
 
-from ..shop.stickers import Sticker, StickerType  # Import Sticker class and StickerType
+from ..shop.stickers import Sticker
+from ..core.poker import PokerHand
+
 
 class Joker:
-    """Base class for all Joker cards."""
-    def __init__(self, name: str, description: str):
-        """Initializes a Joker object."
+    """Base class for all Joker cards loaded from JSON."""
 
-        Args:
-            name (str): The name of the Joker.
-            description (str): A brief description of the Joker's effect.
-        """
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        chip_bonus: int = 0,
+        mult_bonus: int = 0,
+        mult_multiplier: float = 1.0,
+        trigger_hand: PokerHand | None = None,
+        retrigger: int = 0,
+    ) -> None:
         self.name = name
         self.description = description
-        self.stickers = [] # New attribute to hold Sticker objects
-        self.rounds_active = 0 # For Perishable sticker
-        self.is_debuffed = False # For Perishable sticker
+        self.chip_bonus = chip_bonus
+        self.mult_bonus = mult_bonus
+        self.mult_multiplier = mult_multiplier
+        self.trigger_hand = trigger_hand
+        self.retrigger = retrigger
+        self.stickers: list[Sticker] = []
+        self.rounds_active = 0
+        self.is_debuffed = False
 
-    def __repr__(self):
-        """Returns a string representation of the Joker object for debugging."""
-        return f"Joker(name='{self.name}')"
+    def applies_to(self, hand: PokerHand) -> bool:
+        """Return True if this Joker should apply to the given hand type."""
+
+        return self.trigger_hand is None or self.trigger_hand == hand
 
     def apply_chips(self, chips: int) -> int:
-        """Applies any chip modifications from this Joker. Overridden by specific jokers."
+        """Apply chip modifications from this Joker."""
 
-        Args:
-            chips (int): The current chips value.
-
-        Returns:
-            int: The modified chips value.
-        """
         if self.is_debuffed:
-            return 0 # Debuffed jokers provide no chips
-        return chips
+            return 0
+        return chips + self.chip_bonus
 
     def apply_mult(self, mult: int) -> int:
-        """Applies any multiplier modifications from this Joker. Overridden by specific jokers."
+        """Apply multiplier modifications from this Joker."""
 
-        Args:
-            mult (int): The current multiplier value.
-
-        Returns:
-            int: The modified multiplier value.
-        """
         if self.is_debuffed:
-            return 0 # Debuffed jokers provide no multiplier
-        return mult
+            return 0
+        new_mult = mult + self.mult_bonus
+        return new_mult * self.mult_multiplier
 
-    def to_dict(self):
-        """Converts the Joker object to a dictionary for serialization."""
+    def to_dict(self) -> dict:
+        """Serialize this Joker to a dict."""
+
         return {
-            "_class": self.__class__.__name__,
             "name": self.name,
             "description": self.description,
-            "stickers": [sticker.to_dict() for sticker in self.stickers],
+            "chips": self.chip_bonus,
+            "mult": self.mult_bonus,
+            "mult_multiplier": self.mult_multiplier,
+            "hand": self.trigger_hand.name if self.trigger_hand else None,
+            "retrigger": self.retrigger,
+            "stickers": [s.to_dict() for s in self.stickers],
             "rounds_active": self.rounds_active,
-            "is_debuffed": self.is_debuffed
+            "is_debuffed": self.is_debuffed,
         }
 
     @classmethod
-    def from_dict(cls, data):
-        """Creates a Joker object from a dictionary. This is a factory method for subclasses."""
-        # This will be a generic from_dict for the base Joker class
-        # Subclasses will need their own from_dict or a more sophisticated factory
-        # For now, it will only handle the base Joker attributes
-        return cls(data["name"], data["description"])
+    def from_dict(cls, data: dict) -> "Joker":
+        """Create a Joker from a serialized dict."""
 
-# --- Example Joker Implementations ---
-
-class JokerOfGreed(Joker):
-    """A Joker that adds +4 Mult for every hand played."""
-    def __init__(self):
-        """Initializes a JokerOfGreed object."""
-        super().__init__(
-            name="Joker of Greed",
-            description="Adds +4 Mult for every hand played."
+        hand_str = data.get("hand")
+        hand = PokerHand[hand_str] if hand_str else None
+        joker = cls(
+            data["name"],
+            data.get("description", ""),
+            chip_bonus=data.get("chips", 0),
+            mult_bonus=data.get("mult", 0),
+            mult_multiplier=data.get("mult_multiplier", 1.0),
+            trigger_hand=hand,
+            retrigger=data.get("retrigger", 0),
         )
-        self.hands_played = 0
-
-    def apply_mult(self, mult: int) -> int:
-        """Applies the multiplier bonus based on hands played."""
-        return mult + (4 * self.hands_played)
-
-    def to_dict(self):
-        """Converts the JokerOfGreed object to a dictionary for serialization."""
-        data = super().to_dict()
-        data["hands_played"] = self.hands_played
-        return data
-
-    @classmethod
-    def from_dict(cls, data):
-        """Creates a JokerOfGreed object from a dictionary."""
-        instance = cls()
-        instance.name = data["name"]
-        instance.description = data["description"]
-        instance.stickers = [Sticker.from_dict(s_data) for s_data in data["stickers"]]
-        instance.rounds_active = data["rounds_active"]
-        instance.is_debuffed = data["is_debuffed"]
-        instance.hands_played = data["hands_played"]
-        return instance
-
-class JokerOfMadness(Joker):
-    """A Joker that adds a flat +10 Mult."""
-    def __init__(self):
-        """Initializes a JokerOfMadness object."""
-        super().__init__(
-            name="Joker of Madness",
-            description="Adds a flat +10 Mult."
-        )
-
-    def apply_mult(self, mult: int) -> int:
-        """Applies the flat multiplier bonus."""
-        return mult + 10
-
-    def to_dict(self):
-        """Converts the JokerOfMadness object to a dictionary for serialization."""
-        return super().to_dict()
-
-    @classmethod
-    def from_dict(cls, data):
-        """Creates a JokerOfMadness object from a dictionary."""
-        instance = cls()
-        instance.name = data["name"]
-        instance.description = data["description"]
-        instance.stickers = [Sticker.from_dict(s_data) for s_data in data["stickers"]]
-        instance.rounds_active = data["rounds_active"]
-        instance.is_debuffed = data["is_debuffed"]
-        return instance
-
-class ChipJoker(Joker):
-    """A Joker that adds +100 Chips."""
-    def __init__(self):
-        """Initializes a ChipJoker object."""
-        super().__init__(
-            name="Chip Joker",
-            description="Adds +100 Chips."
-        )
-
-    def apply_chips(self, chips: int) -> int:
-        """Applies the flat chips bonus."""
-        return chips + 100
-
-    def to_dict(self):
-        """Converts the ChipJoker object to a dictionary for serialization."""
-        return super().to_dict()
-
-    @classmethod
-    def from_dict(cls, data):
-        """Creates a ChipJoker object from a dictionary."""
-        instance = cls()
-        instance.name = data["name"]
-        instance.description = data["description"]
-        instance.stickers = [Sticker.from_dict(s_data) for s_data in data["stickers"]]
-        instance.rounds_active = data["rounds_active"]
-        instance.is_debuffed = data["is_debuffed"]
-        return instance
-
-JOKER_CLASSES = {
-    "Joker": Joker,
-    "JokerOfGreed": JokerOfGreed,
-    "JokerOfMadness": JokerOfMadness,
-    "ChipJoker": ChipJoker
-}
-
-def joker_from_dict(data):
-    """Factory function to create a Joker object from a dictionary."""
-    joker_class = JOKER_CLASSES[data["_class"]]
-    return joker_class.from_dict(data)
+        joker.stickers = [Sticker.from_dict(s) for s in data.get("stickers", [])]
+        joker.rounds_active = data.get("rounds_active", 0)
+        joker.is_debuffed = data.get("is_debuffed", False)
+        return joker
 
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
 
-def load_jokers():
-    """Load joker data from JSON configuration."""
+def load_jokers() -> list[Joker]:
+    """Load Joker data from JSON configuration."""
+
     with open(DATA_DIR / "jokers.json", encoding="utf-8") as f:
         raw = json.load(f)
 
-    jokers = []
+    jokers: list[Joker] = []
     for entry in raw:
         name = entry.get("name", "")
         description = entry.get("effect", "")
-        joker = Joker(name, description)
+        chips = int(entry.get("chips", 0))
+        mult = int(entry.get("mult", 0))
+        mult_mult = float(entry.get("mult_multiplier", 1))
+        hand_str = entry.get("hand")
+        trigger_hand = PokerHand[hand_str] if hand_str else None
+        retrigger = int(entry.get("retrigger", 0))
+
+        joker = Joker(
+            name,
+            description,
+            chip_bonus=chips,
+            mult_bonus=mult,
+            mult_multiplier=mult_mult,
+            trigger_hand=trigger_hand,
+            retrigger=retrigger,
+        )
+
         # Parse cost like "$5" -> 5
         cost_str = str(entry.get("cost", "")).strip()
         if cost_str.startswith("$"):
@@ -199,3 +132,4 @@ def load_jokers():
         jokers.append(joker)
 
     return jokers
+
