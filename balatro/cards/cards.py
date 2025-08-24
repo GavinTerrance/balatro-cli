@@ -36,6 +36,7 @@ class Enhancement(Enum):
     LUCKY = "Lucky"
     MULT = "Mult"
     CHIP = "Chip"
+    STONE = "Stone"
 
 class Edition(Enum):
     """Represents an edition applied to a playing card."""

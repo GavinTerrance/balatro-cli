@@ -61,34 +61,31 @@ class BoosterPack:
                 game.player.planet_cards.append(card)
                 print(f"Added {card.name} to your Planet Cards.")
             elif isinstance(card, TarotCard) or isinstance(card, SpectralCard):
-                # Display sample playing cards and current jokers for potential application
-                sample_cards = game.deck.cards[:8]
-                print("--- Available Cards for Application ---")
-                for i, c in enumerate(sample_cards):
-                    print(f"[{i}] {c}")
-                for j, joker in enumerate(game.player.jokers):
-                    print(f"[J{j}] {joker.name}")
-                print("---------------------------")
-                target = input("Select target index (number or J#) or press Enter to keep card: ").strip()
-                if target:
-                    if target.upper().startswith("J"):
+                hand_cards = game.player.hand
+                if card.targets > 0 and hand_cards:
+                    print("--- Available Cards for Application ---")
+                    for i, c in enumerate(hand_cards):
+                        print(f"[{i}] {c}")
+                    print("---------------------------")
+                    target = input(
+                        "Select target indices separated by space or press Enter to keep card: "
+                    ).strip()
+                    if target:
                         try:
-                            j_idx = int(target[1:])
-                            joker = game.player.jokers[j_idx]
-                            print(
-                                f"Applied {card.name} to {joker.name} (effect not yet implemented)."
-                            )
-                        except (ValueError, IndexError):
-                            print("Invalid joker selection.")
-                    else:
-                        try:
-                            c_idx = int(target)
-                            chosen_card = sample_cards[c_idx]
-                            print(
-                                f"Applied {card.name} to {chosen_card} (effect not yet implemented)."
-                            )
-                        except (ValueError, IndexError):
+                            indices = [int(x) for x in target.split()][: card.targets]
+                            chosen = [hand_cards[i] for i in indices if 0 <= i < len(hand_cards)]
+                            card.apply_effect(game, chosen)
+                        except ValueError:
                             print("Invalid card selection.")
+                        return
+                apply_now = False
+                if card.targets == 0:
+                    choice_apply = input(
+                        "Apply this card now? (y/n): "
+                    ).strip().lower()
+                    apply_now = choice_apply == "y"
+                if apply_now and card.targets == 0:
+                    card.apply_effect(game, [])
                 else:
                     if isinstance(card, TarotCard):
                         game.player.tarot_cards.append(card)

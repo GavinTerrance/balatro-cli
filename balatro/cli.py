@@ -78,6 +78,16 @@ class BalatroCLI:
                 self.game.discard_cards(card_indices)
             else:
                 print("Did you list the cards you want to discard after 'd'?")
+        elif action == "t":
+            if additional_input.strip().isdigit():
+                self.game.use_tarot_card(int(additional_input))
+            else:
+                print("Provide the index of the Tarot card to use.")
+        elif action == "s":
+            if additional_input.strip().isdigit():
+                self.game.use_spectral_card(int(additional_input))
+            else:
+                print("Provide the index of the Spectral card to use.")
         elif action == "c":
             self.game.show_deck()
         else:

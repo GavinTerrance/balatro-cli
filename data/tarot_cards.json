@@ -1,90 +1,147 @@
 [
   {
     "name": "The Fool (0)",
-    "description": "Creates a copy of the last Tarot or Planet card used. ( The Fool excluded)"
+    "description": "Creates a copy of the last Tarot or Planet card used. ( The Fool excluded)",
+    "targets": 0
   },
   {
     "name": "The Magician (I)",
-    "description": "Enhances 2 selected cards to Lucky Cards"
+    "description": "Enhances 2 selected cards to Lucky Cards",
+    "targets": 2,
+    "action": "apply_enhancement",
+    "enhancement": "LUCKY"
   },
   {
     "name": "The High Priestess (II)",
-    "description": "Creates up to 2 random Planet cards (Must have room)"
+    "description": "Creates up to 2 random Planet cards (Must have room)",
+    "targets": 0,
+    "action": "add_planet_cards",
+    "count": 2
   },
   {
     "name": "The Empress (III)",
-    "description": "Enhances 2 selected cards to Mult Cards"
+    "description": "Enhances 2 selected cards to Mult Cards",
+    "targets": 2,
+    "action": "apply_enhancement",
+    "enhancement": "MULT"
   },
   {
     "name": "The Emperor (IV)",
-    "description": "Creates up to 2 random Tarot cards (Must have room)"
+    "description": "Creates up to 2 random Tarot cards (Must have room)",
+    "targets": 0,
+    "action": "add_tarot_cards",
+    "count": 2
   },
   {
     "name": "The Hierophant (V)",
-    "description": "Enhances 2 selected cards to Bonus Cards"
+    "description": "Enhances 2 selected cards to Bonus Cards",
+    "targets": 2,
+    "action": "apply_enhancement",
+    "enhancement": "CHIP"
   },
   {
     "name": "The Lovers (VI)",
-    "description": "Enhances 1 selected card into a Wild Card"
+    "description": "Enhances 1 selected card into a Wild Card",
+    "targets": 1,
+    "action": "apply_enhancement",
+    "enhancement": "LUCKY"
   },
   {
     "name": "The Chariot (VII)",
-    "description": "Enhances 1 selected card into a Steel Card"
+    "description": "Enhances 1 selected card into a Steel Card",
+    "targets": 1,
+    "action": "apply_enhancement",
+    "enhancement": "STEEL"
   },
   {
     "name": "Justice (VIII)",
-    "description": "Enhances 1 selected card into a Glass Card"
+    "description": "Enhances 1 selected card into a Glass Card",
+    "targets": 1,
+    "action": "apply_enhancement",
+    "enhancement": "GLASS"
   },
   {
     "name": "The Hermit (IX)",
-    "description": "Doubles money (Max of $20 )"
+    "description": "Doubles money (Max of $20 )",
+    "targets": 0,
+    "action": "double_money"
   },
   {
     "name": "The Wheel of Fortune (X)",
-    "description": "1 in 4 chance to add Foil , Holographic , or Polychrome edition to a random Joker"
+    "description": "1 in 4 chance to add Foil , Holographic , or Polychrome edition to a random Joker",
+    "targets": 0,
+    "action": "wheel_of_fortune",
+    "chance": 0.25
   },
   {
     "name": "Strength (XI)",
-    "description": "Increases rank of up to 2 selected cards by 1 (Rank order: A→2→3→4→5→6→7→8→9→10→J→Q→K→A)"
+    "description": "Increases rank of up to 2 selected cards by 1 (Rank order: A→2→3→4→5→6→7→8→9→10→J→Q→K→A)",
+    "targets": 2,
+    "action": "increase_rank"
   },
   {
     "name": "The Hanged Man (XII)",
-    "description": "Destroys up to 2 selected cards"
+    "description": "Destroys up to 2 selected cards",
+    "targets": 2,
+    "action": "destroy"
   },
   {
     "name": "Death (XIII)",
-    "description": "Select 2 cards, convert the right card into the left card (Drag to rearrange)"
+    "description": "Select 2 cards, convert the right card into the left card (Drag to rearrange)",
+    "targets": 2,
+    "action": "transform"
   },
   {
     "name": "Temperance (XIV)",
-    "description": "Gives the total sell value of all current Jokers (Max of $50 )"
+    "description": "Gives the total sell value of all current Jokers (Max of $50 )",
+    "targets": 0
   },
   {
     "name": "The Devil (XV)",
-    "description": "Enhances 1 selected card into a Gold Card"
+    "description": "Enhances 1 selected card into a Gold Card",
+    "targets": 1,
+    "action": "apply_enhancement",
+    "enhancement": "GOLD"
   },
   {
     "name": "The Tower (XVI)",
-    "description": "Enhances 1 selected card into a Stone Card"
+    "description": "Enhances 1 selected card into a Stone Card",
+    "targets": 1,
+    "action": "apply_enhancement",
+    "enhancement": "STONE"
   },
   {
     "name": "The Star (XVII)",
-    "description": "Converts up to 3 selected cards to Diamonds"
+    "description": "Converts up to 3 selected cards to Diamonds",
+    "targets": 3,
+    "action": "convert_suit",
+    "suit": "DIAMONDS"
   },
   {
     "name": "The Moon (XVIII)",
-    "description": "Converts up to 3 selected cards to Clubs"
+    "description": "Converts up to 3 selected cards to Clubs",
+    "targets": 3,
+    "action": "convert_suit",
+    "suit": "CLUBS"
   },
   {
     "name": "The Sun (XIX)",
-    "description": "Converts up to 3 selected cards to Hearts"
+    "description": "Converts up to 3 selected cards to Hearts",
+    "targets": 3,
+    "action": "convert_suit",
+    "suit": "HEARTS"
   },
   {
     "name": "Judgement (XX)",
-    "description": "Creates a random Joker card (without in-run stickers ) (Must have room)"
+    "description": "Creates a random Joker card (without in-run stickers ) (Must have room)",
+    "targets": 0,
+    "action": "add_random_joker"
   },
   {
     "name": "The World (XXI)",
-    "description": "Converts up to 3 selected cards to Spades"
+    "description": "Converts up to 3 selected cards to Spades",
+    "targets": 3,
+    "action": "convert_suit",
+    "suit": "SPADES"
   }
 ]

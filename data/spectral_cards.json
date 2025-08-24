@@ -1,74 +1,104 @@
 [
   {
     "name": "Familiar",
-    "effect": "Destroy 1 random card in your hand, but add 3 random Enhanced face cards instead."
+    "effect": "Destroy 1 random card in your hand, but add 3 random Enhanced face cards instead.",
+    "targets": 0
   },
   {
     "name": "Grim",
-    "effect": "Destroy 1 random card in your hand, but add 2 random Enhanced Aces instead."
+    "effect": "Destroy 1 random card in your hand, but add 2 random Enhanced Aces instead.",
+    "targets": 0
   },
   {
     "name": "Incantation",
-    "effect": "Destroy 1 random card in your hand, but add 4 random Enhanced numbered cards instead."
+    "effect": "Destroy 1 random card in your hand, but add 4 random Enhanced numbered cards instead.",
+    "targets": 0
   },
   {
     "name": "Talisman",
-    "effect": "Add a Gold Seal to 1 selected card."
+    "effect": "Add a Gold Seal to 1 selected card.",
+    "targets": 1,
+    "action": "add_seal",
+    "seal": "GOLD"
   },
   {
     "name": "Aura",
-    "effect": "Add Foil, Holographic, or Polychrome edition (determined at random) to 1 selected card in hand."
+    "effect": "Add Foil, Holographic, or Polychrome edition (determined at random) to 1 selected card in hand.",
+    "targets": 1,
+    "action": "add_random_edition"
   },
   {
     "name": "Wraith",
-    "effect": "Creates a random Rare Joker (must have room), but sets money to $0."
+    "effect": "Creates a random Rare Joker (must have room), but sets money to $0.",
+    "targets": 0
   },
   {
     "name": "Sigil",
-    "effect": "Converts all cards in hand to a single random suit."
+    "effect": "Converts all cards in hand to a single random suit.",
+    "targets": 0,
+    "action": "convert_all_random_suit"
   },
   {
     "name": "Ouija",
-    "effect": "Converts all cards in hand to a single random rank, but -1 Hand Size."
+    "effect": "Converts all cards in hand to a single random rank, but -1 Hand Size.",
+    "targets": 0
   },
   {
     "name": "Ectoplasm",
-    "effect": "Add Negative to a random Joker, but -1 Hand Size, plus another -1 hand size for each time Ectoplasm has been used this run, e.g. using Ectoplasm 3 times in the same run decreases hand size by a total of 6 (1+2+3)."
+    "effect": "Add Negative to a random Joker, but -1 Hand Size, plus another -1 hand size for each time Ectoplasm has been used this run, e.g. using Ectoplasm 3 times in the same run decreases hand size by a total of 6 (1+2+3).",
+    "targets": 0
   },
   {
     "name": "Immolate",
-    "effect": "Destroys 5 random cards in hand, but gain $20."
+    "effect": "Destroys 5 random cards in hand, but gain $20.",
+    "targets": 0
   },
   {
     "name": "Ankh",
-    "effect": "Creates a copy of 1 of your Jokers at random, then destroys the others, leaving you with two identical Jokers. (Editions are also copied, except Negative)."
+    "effect": "Creates a copy of 1 of your Jokers at random, then destroys the others, leaving you with two identical Jokers. (Editions are also copied, except Negative).",
+    "targets": 0
   },
   {
     "name": "Deja Vu",
-    "effect": "Adds a Red Seal to 1 selected card."
+    "effect": "Adds a Red Seal to 1 selected card.",
+    "targets": 1,
+    "action": "add_seal",
+    "seal": "RED"
   },
   {
     "name": "Hex",
-    "effect": "Adds Polychrome to a random Joker, and destroys the rest."
+    "effect": "Adds Polychrome to a random Joker, and destroys the rest.",
+    "targets": 0
   },
   {
     "name": "Trance",
-    "effect": "Adds a Blue Seal to 1 selected card."
+    "effect": "Adds a Blue Seal to 1 selected card.",
+    "targets": 1,
+    "action": "add_seal",
+    "seal": "BLUE"
   },
   {
     "name": "Medium",
-    "effect": "Adds a Purple Seal to 1 selected card."
+    "effect": "Adds a Purple Seal to 1 selected card.",
+    "targets": 1,
+    "action": "add_seal",
+    "seal": "PURPLE"
   },
   {
     "name": "Cryptid",
-    "effect": "Creates 2 exact copies (including Enhancements, Editions and Seals) of a selected card in your hand."
+    "effect": "Creates 2 exact copies (including Enhancements, Editions and Seals) of a selected card in your hand.",
+    "targets": 1,
+    "action": "copy_card",
+    "copies": 2
   },
   {
     "name": "The Soul",
-    "effect": "Creates a Legendary Joker. (Must have room)."
+    "effect": "Creates a Legendary Joker. (Must have room).",
+    "targets": 0
   },
   {
     "name": "Black Hole",
-    "effect": "Upgrades every poker hand (including secret hands not yet discovered) by one level."
+    "effect": "Upgrades every poker hand (including secret hands not yet discovered) by one level.",
+    "targets": 0
   }
 ]

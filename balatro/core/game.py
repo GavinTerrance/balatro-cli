@@ -48,6 +48,7 @@ class Game:
         self.shop = Shop()
         self.round_earnings = 0
         self.voucher_purchased = False
+        self.last_used_card = None
         self.activate_vouchers()
 
     @property
