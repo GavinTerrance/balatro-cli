@@ -1,97 +1,66 @@
-"""This module defines the Voucher class and its subclasses, representing different Vouchers in the game."""
+"""Voucher definitions and utilities for loading from JSON."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
 
 class Voucher:
-    """Base class for all Vouchers."""
-    def __init__(self, name: str, description: str, cost: int):
-        """Initializes a Voucher object."
+    """Simple representation of a shop voucher."""
 
-        Args:
-            name (str): The name of the Voucher.
-            description (str): A brief description of the Voucher's effect.
-            cost (int): The cost of the Voucher in the shop.
-        """
+    def __init__(self, name: str, description: str, cost: int = 0) -> None:
         self.name = name
         self.description = description
         self.cost = cost
 
-    def __repr__(self):
-        """Returns a string representation of the Voucher object for debugging."""
+    def __repr__(self) -> str:  # pragma: no cover - simple repr
         return f"Voucher(name='{self.name}', cost={self.cost})"
 
-    def apply_effect(self, game): # Game object passed to apply effects
-        """Applies the voucher's effect to the game state."""
-        pass
+    def apply_effect(self, game) -> None:  # pragma: no cover - placeholder
+        """Apply this voucher's effect.
 
-    def to_dict(self):
-        """Converts the Voucher object to a dictionary for serialization."""
+        The project does not yet model individual voucher effects. This
+        placeholder prevents runtime errors when a voucher is purchased.
+        """
+
+        print(f"{self.name} activated: {self.description} (effect not yet implemented).")
+
+    def to_dict(self) -> dict:
         return {
             "_class": self.__class__.__name__,
             "name": self.name,
             "description": self.description,
-            "cost": self.cost
+            "cost": self.cost,
         }
 
     @classmethod
-    def from_dict(cls, data):
-        """Creates a Voucher object from a dictionary. This is a factory method for subclasses."""
-        # This will be a generic from_dict for the base Voucher class
-        # Subclasses will need their own from_dict or a more sophisticated factory
-        # For now, it will only handle the base Voucher attributes
-        return cls(data["name"], data["description"], data["cost"])
+    def from_dict(cls, data: dict) -> "Voucher":
+        return cls(data["name"], data.get("description", ""), data.get("cost", 0))
 
-# --- Example Voucher Implementations ---
 
-class TarotMerchant(Voucher):
-    """Represents the Tarot Merchant Voucher, which makes Tarot cards appear in the shop."""
-    def __init__(self):
-        """Initializes a TarotMerchant Voucher."""
-        super().__init__(
-            name="Tarot Merchant",
-            description="Tarot cards appear in the shop.",
-            cost=10
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"
+
+
+def load_vouchers() -> list[Voucher]:
+    """Load voucher definitions from the JSON data file."""
+
+    with open(DATA_DIR / "vouchers.json", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    vouchers: list[Voucher] = []
+    for entry in raw:
+        voucher = Voucher(
+            name=entry.get("base_name", ""),
+            description=entry.get("base_effect", ""),
+            cost=10,  # default shop price; Shop may override
         )
+        vouchers.append(voucher)
 
-    def apply_effect(self, game):
-        # Placeholder for future shop integration
-        print(f"{self.name} activated: Tarot cards now appear in shop.")
+    return vouchers
 
-class CardSharp(Voucher):
-    """Represents the Card Sharp Voucher, which gives +2 Mult to the first hand of each round."""
-    def __init__(self):
-        """Initializes a CardSharp Voucher."""
-        super().__init__(
-            name="Card Sharp",
-            description="First hand of each round gets +2 Mult.",
-            cost=10
-        )
 
-    def apply_effect(self, game):
-        # This effect would need to be checked at the start of each round
-        # and applied to the first hand played.
-        print(f"{self.name} activated: First hand of each round gets +2 Mult.")
+def voucher_from_dict(data: dict) -> Voucher:
+    """Recreate a :class:`Voucher` instance from serialized data."""
 
-class Honeypot(Voucher):
-    """Represents the Honeypot Voucher, which grants money when selling a Joker."""
-    def __init__(self):
-        """Initializes a Honeypot Voucher."""
-        super().__init__(
-            name="Honeypot",
-            description="Gain $10 when you sell a Joker.",
-            cost=10
-        )
-
-    def apply_effect(self, game):
-        # This effect would need to be triggered when a Joker is sold.
-        print(f"{self.name} activated: Gain $10 when you sell a Joker.")
-
-VOUCHER_CLASSES = {
-    "Voucher": Voucher,
-    "TarotMerchant": TarotMerchant,
-    "CardSharp": CardSharp,
-    "Honeypot": Honeypot
-}
-
-def voucher_from_dict(data):
-    """Factory function to create a Voucher object from a dictionary."""
-    voucher_class = VOUCHER_CLASSES[data["_class"]]
-    return voucher_class(data["name"], data["description"], data["cost"])
+    return Voucher.from_dict(data)
