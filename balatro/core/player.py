@@ -88,5 +88,6 @@ class Player:
         if 0 <= index < len(self.planet_cards):
             planet = self.planet_cards.pop(index)
             planet.apply_effect(game)
+            game.last_used_card = planet
         else:
             print("Invalid Planet card index.")
