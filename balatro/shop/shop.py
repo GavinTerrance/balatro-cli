@@ -61,10 +61,13 @@ class BoosterPack:
                 game.player.planet_cards.append(card)
                 print(f"Added {card.name} to your Planet Cards.")
             elif isinstance(card, TarotCard) or isinstance(card, SpectralCard):
-                hand_cards = game.player.hand
-                if card.targets > 0 and hand_cards:
+                deck_cards = game.player.deck.cards
+                available_cards = (
+                    random.sample(deck_cards, min(8, len(deck_cards))) if deck_cards else []
+                )
+                if card.targets > 0 and available_cards:
                     print("--- Available Cards for Application ---")
-                    for i, c in enumerate(hand_cards):
+                    for i, c in enumerate(available_cards):
                         print(f"[{i}] {c}")
                     print("---------------------------")
                     target = input(
@@ -73,7 +76,11 @@ class BoosterPack:
                     if target:
                         try:
                             indices = [int(x) for x in target.split()][: card.targets]
-                            chosen = [hand_cards[i] for i in indices if 0 <= i < len(hand_cards)]
+                            chosen = [
+                                available_cards[i]
+                                for i in indices
+                                if 0 <= i < len(available_cards)
+                            ]
                             card.apply_effect(game, chosen)
                         except ValueError:
                             print("Invalid card selection.")
