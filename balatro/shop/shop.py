@@ -6,7 +6,7 @@ from ..cards.jokers import Joker, load_jokers
 from .stickers import Sticker, StickerType
 from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
 from ..cards.tarot_cards import TarotCard, load_tarot_cards
-from ..cards.spectral_cards import SpectralCard, TheSoul, BlackHole, Omen
+from ..cards.spectral_cards import SpectralCard, load_spectral_cards
 from ..cards.planet_cards import PlanetCard, load_planet_cards
 
 BASE_COSTS = {
@@ -39,7 +39,7 @@ class BoosterPack:
         elif self.pack_type == "tarot":
             options = random.sample(load_tarot_cards(), 3)
         elif self.pack_type == "spectral":
-            options = [random.choice([TheSoul, BlackHole, Omen])() for _ in range(3)]
+            options = random.sample(load_spectral_cards(), 3)
         else:  # planet
             options = random.sample(load_planet_cards(), 3)
 
