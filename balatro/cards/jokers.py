@@ -6,7 +6,10 @@ import json
 from pathlib import Path
 
 from ..shop.stickers import Sticker
-from ..core.poker import PokerHand
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:  # pragma: no cover - type hints only
+    from ..core.poker import PokerHand
 
 
 class Joker:
@@ -19,7 +22,7 @@ class Joker:
         chip_bonus: int = 0,
         mult_bonus: int = 0,
         mult_multiplier: float = 1.0,
-        trigger_hand: PokerHand | None = None,
+        trigger_hand: "PokerHand" | None = None,
         retrigger: int = 0,
     ) -> None:
         self.name = name
@@ -33,7 +36,7 @@ class Joker:
         self.rounds_active = 0
         self.is_debuffed = False
 
-    def applies_to(self, hand: PokerHand) -> bool:
+    def applies_to(self, hand: "PokerHand") -> bool:
         """Return True if this Joker should apply to the given hand type."""
 
         return self.trigger_hand is None or self.trigger_hand == hand
@@ -73,6 +76,8 @@ class Joker:
     def from_dict(cls, data: dict) -> "Joker":
         """Create a Joker from a serialized dict."""
 
+        from ..core.poker import PokerHand
+
         hand_str = data.get("hand")
         hand = PokerHand[hand_str] if hand_str else None
         joker = cls(
@@ -95,6 +100,8 @@ DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
 def load_jokers() -> list[Joker]:
     """Load Joker data from JSON configuration."""
+
+    from ..core.poker import PokerHand
 
     with open(DATA_DIR / "jokers.json", encoding="utf-8") as f:
         raw = json.load(f)
@@ -132,4 +139,10 @@ def load_jokers() -> list[Joker]:
         jokers.append(joker)
 
     return jokers
+
+
+def joker_from_dict(data: dict) -> Joker:
+    """Recreate a ``Joker`` instance from serialized data."""
+
+    return Joker.from_dict(data)
 
