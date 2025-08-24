@@ -4,7 +4,7 @@ import random
 
 from ..cards.jokers import Joker, load_jokers
 from .stickers import Sticker, StickerType
-from .vouchers import Voucher, TarotMerchant, CardSharp, Honeypot
+from .vouchers import Voucher, load_vouchers
 from ..cards.tarot_cards import TarotCard, load_tarot_cards
 from ..cards.spectral_cards import SpectralCard, load_spectral_cards
 from ..cards.planet_cards import PlanetCard, load_planet_cards
@@ -108,7 +108,7 @@ class Shop:
 
     def generate_items(self, game):
         self.items = []
-        available_vouchers = [TarotMerchant, CardSharp, Honeypot]
+        available_vouchers = load_vouchers()
 
         booster_types = [
             ("Joker Pack", "joker"),
@@ -120,8 +120,8 @@ class Shop:
             name, pack_type = random.choice(booster_types)
             self.items.append(BoosterPack(name=name, pack_type=pack_type))
 
-        if not game.voucher_purchased:
-            voucher = random.choice(available_vouchers)()
+        if not game.voucher_purchased and available_vouchers:
+            voucher = random.choice(available_vouchers)
             voucher.cost = BASE_COSTS["Voucher"]
             self.items.append(voucher)
 
