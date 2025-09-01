@@ -8,7 +8,7 @@ from pathlib import Path
 
 from .cards import Card, Suit, Rank, Enhancement, Edition
 from ..cards.jokers import load_jokers
-from ..cards.planet_cards import load_planet_cards
+from ..cards.planet_cards import load_planet_cards, PlanetCard
 from ..utils import get_user_input
 
 
@@ -109,14 +109,20 @@ class TarotCard:
         def _add_planet_cards(game, _selected, params):
             count = int(params.get("count", 2))
             new_cards = random.sample(load_planet_cards(), k=count)
-            game.player.planet_cards.extend(new_cards)
-            print(f"Gained {count} Planet card(s).")
+            added = 0
+            for c in new_cards:
+                if game.player.add_planet_card(c):
+                    added += 1
+            print(f"Gained {added} Planet card(s).")
 
         def _add_tarot_cards(game, _selected, params):
             count = int(params.get("count", 2))
             new_cards = random.sample(load_tarot_cards(), k=count)
-            game.player.tarot_cards.extend(new_cards)
-            print(f"Gained {count} Tarot card(s).")
+            added = 0
+            for c in new_cards:
+                if game.player.add_tarot_card(c):
+                    added += 1
+            print(f"Gained {added} Tarot card(s).")
 
         def _wheel_of_fortune(game, _selected, params):
             chance = float(params.get("chance", 0.25))
@@ -134,6 +140,31 @@ class TarotCard:
             game.player.jokers.append(joker)
             print(f"Gained Joker {joker.name}.")
 
+        def _copy_last(game, _selected, _params):
+            last = game.last_used_card
+            if isinstance(last, (TarotCard, PlanetCard)) and not last.name.startswith("The Fool"):
+                data = last.to_dict()
+                if isinstance(last, TarotCard):
+                    copy = TarotCard.from_dict(data)
+                    if game.player.add_tarot_card(copy):
+                        print(f"Copied {last.name} into inventory.")
+                    else:
+                        print("No room to store copied card.")
+                else:
+                    copy = PlanetCard.from_dict(data)
+                    if game.player.add_planet_card(copy):
+                        print(f"Copied {last.name} into inventory.")
+                    else:
+                        print("No room to store copied card.")
+            else:
+                print("The Fool had no effect.")
+
+        def _temperance(game, _selected, _params):
+            total = sum(max(getattr(j, "cost", 0) // 2, 0) for j in game.player.jokers)
+            total = min(total, 50)
+            game.player.money += total
+            print(f"Temperance grants ${total}. Current money: ${game.player.money}.")
+
         actions = {
             "apply_enhancement": _apply_enhancement,
             "convert_suit": _convert_suit,
@@ -145,13 +176,20 @@ class TarotCard:
             "add_tarot_cards": _add_tarot_cards,
             "wheel_of_fortune": _wheel_of_fortune,
             "add_random_joker": _add_random_joker,
+            "copy_last": _copy_last,
+            "temperance": _temperance,
         }
 
         func = actions.get(self.action)
         if func:
             func(game, cards, self.params)
         else:
-            print(f"{self.name} used: {self.description} (effect not yet implemented).")
+            if self.name.startswith("The Fool"):
+                _copy_last(game, cards, self.params)
+            elif self.name.startswith("Temperance"):
+                _temperance(game, cards, self.params)
+            else:
+                print(f"{self.name} has no effect.")
 
         game.last_used_card = self
 

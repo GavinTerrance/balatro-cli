@@ -59,8 +59,21 @@ class BoosterPack:
                 game.player.jokers.append(card)
                 print(f"Added {card.name} to your Jokers.")
             elif isinstance(card, PlanetCard):
-                game.player.planet_cards.append(card)
-                print(f"Added {card.name} to your Planet Cards.")
+                apply_now = (
+                    get_user_input("Apply this card now? (y/n): ")
+                    .strip()
+                    .lower()
+                    == "y"
+                )
+                if apply_now:
+                    card.apply_effect(game)
+                    game.last_used_card = card
+                else:
+                    if game.player.add_planet_card(card):
+                        print(f"Added {card.name} to your Planet Cards.")
+                    else:
+                        card.apply_effect(game)
+                        game.last_used_card = card
             elif isinstance(card, TarotCard) or isinstance(card, SpectralCard):
                 deck_cards = game.player.deck.cards
                 available_cards = (
@@ -97,11 +110,15 @@ class BoosterPack:
                     card.apply_effect(game, [])
                 else:
                     if isinstance(card, TarotCard):
-                        game.player.tarot_cards.append(card)
-                        print(f"Added {card.name} to your Tarot Cards.")
+                        if game.player.add_tarot_card(card):
+                            print(f"Added {card.name} to your Tarot Cards.")
+                        elif card.targets == 0:
+                            card.apply_effect(game, [])
                     else:
-                        game.player.spectral_cards.append(card)
-                        print(f"Added {card.name} to your Spectral Cards.")
+                        if game.player.add_spectral_card(card):
+                            print(f"Added {card.name} to your Spectral Cards.")
+                        elif card.targets == 0:
+                            card.apply_effect(game, [])
         except (ValueError, IndexError):
             print("Invalid selection.")
 
@@ -173,14 +190,66 @@ class Shop:
                     item.apply_effect(game)
                     print(f"Purchased {item.name}! Effect applied.")
                 elif isinstance(item, TarotCard):
-                    game.player.tarot_cards.append(item)
-                    print(f"Purchased {item.name}! Added to your Tarot Cards.")
+                    if item.targets > 0:
+                        deck_cards = game.player.deck.cards
+                        available_cards = (
+                            random.sample(deck_cards, min(9, len(deck_cards))) if deck_cards else []
+                        )
+                        if available_cards:
+                            print("--- 9 Card Hand ---")
+                            for i, c in enumerate(available_cards):
+                                print(f"[{i}] {c}")
+                            print("-------------------")
+                            target = get_user_input(
+                                "Select target indices separated by space or press Enter to keep card: "
+                            ).strip()
+                            if target:
+                                try:
+                                    indices = [int(x) for x in target.split()][: item.targets]
+                                    chosen = [
+                                        available_cards[i]
+                                        for i in indices
+                                        if 0 <= i < len(available_cards)
+                                    ]
+                                    item.apply_effect(game, chosen)
+                                    self.items.pop(item_index)
+                                    return True
+                                except ValueError:
+                                    print("Invalid card selection.")
+                    apply_now = (
+                        get_user_input("Apply this card now? (y/n): ")
+                        .strip()
+                        .lower()
+                        == "y"
+                    )
+                    if apply_now and item.targets == 0:
+                        item.apply_effect(game, [])
+                    else:
+                        if not game.player.add_tarot_card(item):
+                            item.apply_effect(game, [])
+                        else:
+                            print(f"Purchased {item.name}! Added to your Tarot Cards.")
                 elif isinstance(item, SpectralCard):
-                    game.player.spectral_cards.append(item)
-                    print(f"Purchased {item.name}! Added to your Spectral Cards.")
+                    if not game.player.add_spectral_card(item):
+                        print(f"Purchased {item.name}, but no room to store it.")
+                    else:
+                        print(f"Purchased {item.name}! Added to your Spectral Cards.")
                 elif isinstance(item, PlanetCard):
-                    game.player.planet_cards.append(item)
-                    print(f"Purchased {item.name}! Added to your Planet Cards.")
+                    apply_now = (
+                        get_user_input("Apply this card now? (y/n): ")
+                        .strip()
+                        .lower()
+                        == "y"
+                    )
+                    if apply_now:
+                        item.apply_effect(game)
+                        game.last_used_card = item
+                    else:
+                        if not game.player.add_planet_card(item):
+                            item.apply_effect(game)
+                            game.last_used_card = item
+                        else:
+                            print(f"Purchased {item.name}! Added to your Planet Cards.")
                 elif isinstance(item, BoosterPack):
                     item.open_pack(game)
                 self.items.pop(item_index)

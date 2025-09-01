@@ -30,6 +30,14 @@ def calculate_score(
     mult = base_score["mult"]
     messages: list[str] = [f"Base hand ({hand_type.value}): {chips} chips, {mult} mult"]
 
+    bonus = game.player.hand_bonuses.get(hand_type.name, {"chips": 0, "mult": 0})
+    if bonus["chips"] or bonus["mult"]:
+        chips += bonus["chips"]
+        mult += bonus["mult"]
+        messages.append(
+            f"Planet bonus: +{bonus['chips']} chips, +{bonus['mult']} mult"
+        )
+
     rank_chip_values = {
         Rank.TWO: 2,
         Rank.THREE: 3,

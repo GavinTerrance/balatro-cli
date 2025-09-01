@@ -17,14 +17,19 @@ class Voucher:
     def __repr__(self) -> str:  # pragma: no cover - simple repr
         return f"Voucher(name='{self.name}', cost={self.cost})"
 
-    def apply_effect(self, game) -> None:  # pragma: no cover - placeholder
-        """Apply this voucher's effect.
+    def apply_effect(self, game) -> None:  # pragma: no cover - simple effects
+        """Apply this voucher's effect."""
 
-        The project does not yet model individual voucher effects. This
-        placeholder prevents runtime errors when a voucher is purchased.
-        """
+        effects = {
+            "Crystal Ball": lambda g: setattr(g.player, "consumable_slots", g.player.consumable_slots + 1),
+            "Grabber": lambda g: setattr(g.player, "hands", g.player.hands + 1),
+            "Wasteful": lambda g: setattr(g.player, "discards", g.player.discards + 1),
+        }
 
-        print(f"{self.name} activated: {self.description} (effect not yet implemented).")
+        func = effects.get(self.name)
+        if func:
+            func(game)
+        print(f"{self.name} activated: {self.description}")
 
     def to_dict(self) -> dict:
         return {
