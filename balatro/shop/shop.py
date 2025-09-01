@@ -8,6 +8,7 @@ from .vouchers import Voucher, load_vouchers
 from ..cards.tarot_cards import TarotCard, load_tarot_cards
 from ..cards.spectral_cards import SpectralCard, load_spectral_cards
 from ..cards.planet_cards import PlanetCard, load_planet_cards
+from ..utils import get_user_input
 
 BASE_COSTS = {
     "Joker (Common)": 5,
@@ -48,7 +49,7 @@ class BoosterPack:
             desc = getattr(opt, "description", "")
             print(f"[{i}] {opt.name} - {desc}")
         print("---------------------------")
-        choice = input("Choose an item by index or press Enter to skip: ").strip()
+        choice = get_user_input("Choose an item by index or press Enter to skip: ").strip()
         if choice == "":
             return
         try:
@@ -70,7 +71,7 @@ class BoosterPack:
                     for i, c in enumerate(available_cards):
                         print(f"[{i}] {c}")
                     print("---------------------------")
-                    target = input(
+                    target = get_user_input(
                         "Select target indices separated by space or press Enter to keep card: "
                     ).strip()
                     if target:
@@ -87,7 +88,7 @@ class BoosterPack:
                         return
                 apply_now = False
                 if card.targets == 0:
-                    choice_apply = input(
+                    choice_apply = get_user_input(
                         "Apply this card now? (y/n): "
                     ).strip().lower()
                     apply_now = choice_apply == "y"
