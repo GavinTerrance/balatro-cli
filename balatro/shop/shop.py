@@ -71,6 +71,7 @@ class BoosterPack:
                     for i, c in enumerate(available_cards):
                         print(f"[{i}] {c}")
                     print("-------------------")
+
                     target = get_user_input(
                         "Select target indices separated by space or press Enter to keep card: "
                     ).strip()
