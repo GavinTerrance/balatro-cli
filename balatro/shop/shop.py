@@ -22,6 +22,26 @@ BASE_COSTS = {
     "Voucher": 10,
 }
 
+RARITY_WEIGHTS = {
+    "common": 60,
+    "uncommon": 30,
+    "rare": 9,
+    "legendary": 1,
+}
+
+
+def weighted_sample(items, k):
+    temp_items = list(items)
+    weights = [RARITY_WEIGHTS.get(getattr(it, "rarity", "").lower(), 1) for it in temp_items]
+    selected = []
+    for _ in range(min(k, len(temp_items))):
+        choice = random.choices(temp_items, weights=weights, k=1)[0]
+        idx = temp_items.index(choice)
+        selected.append(choice)
+        temp_items.pop(idx)
+        weights.pop(idx)
+    return selected
+
 
 class BoosterPack:
     """Simple representation of a booster pack."""
@@ -37,7 +57,7 @@ class BoosterPack:
         """Generate cards based on pack type and let the player pick one."""
         available_cards = []
         if self.pack_type == "joker":
-            options = random.sample(load_jokers(), 3)
+            options = weighted_sample(load_jokers(), 3)
         elif self.pack_type == "tarot":
             options = random.sample(load_tarot_cards(), 3)
             deck_cards = game.player.deck.cards
@@ -164,7 +184,7 @@ class Shop:
         for _ in range(2):
             choice = random.choice(["joker", "tarot", "planet"])
             if choice == "joker":
-                item = random.choice(load_jokers())
+                item = weighted_sample(load_jokers(), 1)[0]
             elif choice == "tarot":
                 item = random.choice(load_tarot_cards())
                 item.cost = BASE_COSTS["Tarot Card"]

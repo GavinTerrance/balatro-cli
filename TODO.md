@@ -12,6 +12,6 @@
 [x] Bug: Tarot/Spectral cards that apply an effect to a playing card bought in shop outside of a card pack now show playing cards available to apply to. See "testing_results/issue_2.md"
 [x] Bug: Riff-Raff Joker now creates two common jokers when a blind is selected. See "testing_results/issue_3.md"
 [x] Implement interest. See "data/interest.md" 
-[ ] Bug: Imolate Spectral card only destroys 3 cards. See "testing_results/issue_4.md"
+[x] Bug: Imolate Spectral card only destroys 3 cards. See "testing_results/issue_4.md"
  - Show user which cards are destroyed
-[ ] Rarity of item influences the chance of them showing up in shop/packs
+[x] Rarity of item influences the chance of them showing up in shop/packs
