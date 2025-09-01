@@ -1,6 +1,6 @@
 # Balatro CLI Game Development Todo List
 
-[] Spectral and Tarot packs show the 9 card hand available to apply card effect to
+[x] Spectral and Tarot packs show the 9 card hand available to apply card effect to
 [] implement any effect that is not yet implemented (search code base for "effect not yet implemented")
 [] Buying tarot/planet cards in the shop gives you the option to "apply now" or "put in hand"
 [] You can only have 2 consumables in your inventory unless expanded by a voucher/joker

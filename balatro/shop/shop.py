@@ -64,13 +64,13 @@ class BoosterPack:
             elif isinstance(card, TarotCard) or isinstance(card, SpectralCard):
                 deck_cards = game.player.deck.cards
                 available_cards = (
-                    random.sample(deck_cards, min(8, len(deck_cards))) if deck_cards else []
+                    random.sample(deck_cards, min(9, len(deck_cards))) if deck_cards else []
                 )
                 if card.targets > 0 and available_cards:
-                    print("--- Available Cards for Application ---")
+                    print("--- 9 Card Hand ---")
                     for i, c in enumerate(available_cards):
                         print(f"[{i}] {c}")
-                    print("---------------------------")
+                    print("-------------------")
                     target = get_user_input(
                         "Select target indices separated by space or press Enter to keep card: "
                     ).strip()
