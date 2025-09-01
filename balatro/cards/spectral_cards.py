@@ -147,11 +147,16 @@ class SpectralCard:
             print(f"Hand size reduced to {game.player.hand_size}.")
 
         def _immolate(game, _selected, _params):
+            if not game.player.hand:
+                print("No cards to destroy.")
+                return
             count = min(5, len(game.player.hand))
-            for _ in range(count):
-                game.player.hand.pop(random.randrange(len(game.player.hand)))
+            indices = random.sample(range(len(game.player.hand)), count)
+            indices.sort(reverse=True)
+            destroyed = [game.player.hand.pop(i) for i in indices]
             game.money += 20
-            print(f"Destroyed {count} cards and gained $20.")
+            destroyed_str = ", ".join(str(c) for c in destroyed)
+            print(f"Destroyed {count} cards ({destroyed_str}) and gained $20.")
 
         def _ankh(game, _selected, _params):
             if not game.player.jokers:
