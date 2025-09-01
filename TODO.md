@@ -17,5 +17,5 @@
 [x] Rarity of item influences the chance of them showing up in shop/packs
 [ ] Implement Selling Consumable items and Jokers. (sell_cost = math.max(1, math.floor(cost/2)) + ability_extra_value) | ability extra value  (+2 if foil, +3 if holo, +5 if polychrome, +5 if negative)
  - Swashbucker card seems to be only using the number of jokers to the multiplier
-[ ] Bug: Arcana pack is only showing 4 cards after purchase in the shop. I believe this is due to cards played previously are not being put back in deck. See "testing_results/issue_5.md"
-[ ] Bug: Buying a pack should generate a new random set of 9 cards instead of keeping the same set in round. Could be a result of cards not being put back in deck. See "testing_results/issue_6.md"
+[x] Bug: Arcana pack is only showing 4 cards after purchase in the shop. I believe this is due to cards played previously are not being put back in deck. See "testing_results/issue_5.md"
+[x] Bug: Buying a pack should generate a new random set of 9 cards instead of keeping the same set in round. Could be a result of cards not being put back in deck. See "testing_results/issue_6.md"
