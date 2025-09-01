@@ -35,12 +35,21 @@ class BoosterPack:
 
     def open_pack(self, game):
         """Generate cards based on pack type and let the player pick one."""
+        available_cards = []
         if self.pack_type == "joker":
             options = random.sample(load_jokers(), 3)
         elif self.pack_type == "tarot":
             options = random.sample(load_tarot_cards(), 3)
+            deck_cards = game.player.deck.cards
+            available_cards = (
+                random.sample(deck_cards, min(9, len(deck_cards))) if deck_cards else []
+            )
         elif self.pack_type == "spectral":
             options = random.sample(load_spectral_cards(), 3)
+            deck_cards = game.player.deck.cards
+            available_cards = (
+                random.sample(deck_cards, min(9, len(deck_cards))) if deck_cards else []
+            )
         else:  # planet
             options = random.sample(load_planet_cards(), 3)
 
@@ -48,6 +57,11 @@ class BoosterPack:
         for i, opt in enumerate(options):
             desc = getattr(opt, "description", "")
             print(f"[{i}] {opt.name} - {desc}")
+        if available_cards:
+            print("--- 9 Card Hand ---")
+            for i, c in enumerate(available_cards):
+                print(f"[{i}] {c}")
+            print("-------------------")
         print("---------------------------")
         choice = get_user_input("Choose an item by index or press Enter to skip: ").strip()
         if choice == "":
@@ -75,20 +89,17 @@ class BoosterPack:
                         card.apply_effect(game)
                         game.last_used_card = card
             elif isinstance(card, TarotCard) or isinstance(card, SpectralCard):
-                deck_cards = game.player.deck.cards
-                available_cards = (
-                    random.sample(deck_cards, min(9, len(deck_cards))) if deck_cards else []
-                )
                 if card.targets > 0 and available_cards:
-                    print("--- 9 Card Hand ---")
-                    for i, c in enumerate(available_cards):
-                        print(f"[{i}] {c}")
-                    print("-------------------")
-
-                    target = get_user_input(
-                        "Select target indices separated by space or press Enter to keep card: "
-                    ).strip()
-                    if target:
+                    while True:
+                        print("--- 9 Card Hand ---")
+                        for i, c in enumerate(available_cards):
+                            print(f"[{i}] {c}")
+                        print("-------------------")
+                        target = get_user_input(
+                            "Select target indices separated by space or press Enter to keep card: "
+                        ).strip()
+                        if not target:
+                            break
                         try:
                             indices = [int(x) for x in target.split()][: card.targets]
                             chosen = [
@@ -96,10 +107,12 @@ class BoosterPack:
                                 for i in indices
                                 if 0 <= i < len(available_cards)
                             ]
+                            if len(chosen) != len(indices):
+                                raise ValueError
                             card.apply_effect(game, chosen)
+                            return
                         except ValueError:
                             print("Invalid card selection.")
-                        return
                 apply_now = False
                 if card.targets == 0:
                     choice_apply = get_user_input(
