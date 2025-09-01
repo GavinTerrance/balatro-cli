@@ -34,9 +34,16 @@ class BaseDeck:
             drawn_cards = self.cards[:]
             self.cards = []
             return drawn_cards
-        
+
         drawn_cards = [self.cards.pop() for _ in range(num_cards)]
         return drawn_cards
+
+    def return_cards(self, cards: list[Card]) -> None:
+        """Return cards to the deck and reshuffle."""
+        if not cards:
+            return
+        self.cards.extend(cards)
+        self.shuffle()
 
 class RedDeck(BaseDeck):
     """Represents the Red Deck, which provides an extra discard every round."""

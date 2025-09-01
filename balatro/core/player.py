@@ -48,6 +48,8 @@ class Player:
         self.hand.sort(key=card_sort_key)
 
     def draw_hand(self) -> None:
+        if self.hand:
+            self.deck.return_cards(self.hand)
         self.hand = self.deck.draw(self.hand_size)
         self.sort_hand()
 
@@ -66,6 +68,7 @@ class Player:
         for index in card_indices:
             discarded.append(self.hand.pop(index))
         self.discards -= 1
+        self.deck.return_cards(discarded)
         new_cards = self.deck.draw(len(discarded))
         self.hand.extend(new_cards)
         self.sort_hand()

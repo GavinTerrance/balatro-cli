@@ -260,6 +260,7 @@ class Game:
             print("Error: One or more cards are not in the current hand.")
             return
 
+        played_cards = list(cards_to_play)
         for card in cards_to_play:
             self.player.hand.remove(card)
 
@@ -282,6 +283,7 @@ class Game:
         else:
             print("No valid poker hand was played.")
 
+        self.deck.return_cards(played_cards)
         self.player.hands -= 1
         print(
             f"Played {len(cards_to_play)} cards. {self.player.hands} hands remaining."
