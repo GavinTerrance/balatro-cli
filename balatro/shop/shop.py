@@ -243,10 +243,49 @@ class Shop:
                         else:
                             print(f"Purchased {item.name}! Added to your Tarot Cards.")
                 elif isinstance(item, SpectralCard):
-                    if not game.player.add_spectral_card(item):
-                        print(f"Purchased {item.name}, but no room to store it.")
+                    if item.targets > 0:
+                        deck_cards = game.player.deck.cards
+                        available_cards = (
+                            random.sample(deck_cards, min(9, len(deck_cards))) if deck_cards else []
+                        )
+                        if available_cards:
+                            print("--- 9 Card Hand ---")
+                            for i, c in enumerate(available_cards):
+                                print(f"[{i}] {c}")
+                            print("-------------------")
+                            target = get_user_input(
+                                "Select target indices separated by space or press Enter to keep card: "
+                            ).strip()
+                            if target:
+                                try:
+                                    indices = [int(x) for x in target.split()][: item.targets]
+                                    chosen = [
+                                        available_cards[i]
+                                        for i in indices
+                                        if 0 <= i < len(available_cards)
+                                    ]
+                                    if len(chosen) != len(indices):
+                                        raise ValueError
+                                    item.apply_effect(game, chosen)
+                                    self.items.pop(item_index)
+                                    return True
+                                except ValueError:
+                                    print("Invalid card selection.")
+                    apply_now = False
+                    if item.targets == 0:
+                        apply_now = (
+                            get_user_input("Apply this card now? (y/n): ")
+                            .strip()
+                            .lower()
+                            == "y"
+                        )
+                    if apply_now and item.targets == 0:
+                        item.apply_effect(game, [])
                     else:
-                        print(f"Purchased {item.name}! Added to your Spectral Cards.")
+                        if not game.player.add_spectral_card(item):
+                            print(f"Purchased {item.name}, but no room to store it.")
+                        else:
+                            print(f"Purchased {item.name}! Added to your Spectral Cards.")
                 elif isinstance(item, PlanetCard):
                     apply_now = (
                         get_user_input("Apply this card now? (y/n): ")
