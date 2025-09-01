@@ -17,6 +17,7 @@ from ..cards.spectral_cards import spectral_card_from_dict
 from ..cards.planet_cards import planet_card_from_dict
 from ..shop.stickers import StickerType
 from .player import Player
+from ..utils import get_user_input
 
 
 class Game:
@@ -151,7 +152,7 @@ class Game:
         self.shop.generate_items(self)
         while True:
             self.shop.display_items(self.money)
-            choice = input(
+            choice = get_user_input(
                 "Select item to purchase or type 'leave' to continue: "
             ).strip().lower()
             if choice in ("", "leave", "l"):
