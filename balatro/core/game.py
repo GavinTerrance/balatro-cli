@@ -162,9 +162,21 @@ class Game:
         base = 10
         leftover = self.player.hands
         self.player.money += base + leftover
-        total = base + leftover + self.round_earnings
+
+        interest = 0
+        if self.player.earns_interest:
+            cap = 5
+            if any(v.name == "Seed Money" for v in self.player.vouchers):
+                cap = 10
+            if any(v.name == "Money Tree" for v in self.player.vouchers):
+                cap = 20
+            per5 = 1 + sum(1 for j in self.player.jokers if j.name == "To the Moon")
+            interest = min(cap, (self.player.money // 5) * per5)
+            self.player.money += interest
+
+        total = base + leftover + self.round_earnings + interest
         print(
-            f"End of round winnings: base ${base} + joker/gold ${self.round_earnings} + leftover hands ${leftover} = ${total}"
+            f"End of round winnings: base ${base} + joker/gold ${self.round_earnings} + leftover hands ${leftover} + interest ${interest} = ${total}"
         )
         self.round_earnings = 0
         self.player.hands = 0
@@ -251,10 +263,15 @@ class Game:
         for card in cards_to_play:
             self.player.hand.remove(card)
 
-        played_hand_type = evaluate_hand(cards_to_play)
+        played_hand_type, hand_cards = evaluate_hand(cards_to_play)
         if played_hand_type:
+            scoring_cards = (
+                cards_to_play
+                if any(j.name == "Splash" for j in self.player.jokers)
+                else hand_cards
+            )
             hand_score, chips, mult, breakdown = calculate_score(
-                played_hand_type, cards_to_play, self.player.jokers, self
+                played_hand_type, scoring_cards, self.player.jokers, self
             )
             for line in breakdown:
                 print(line)
