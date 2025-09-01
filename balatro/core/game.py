@@ -3,12 +3,13 @@ from __future__ import annotations
 """Game engine and orchestration logic."""
 
 import json
+import random
 
 from .deck import BaseDeck, RedDeck, GreenDeck, YellowDeck
 from ..cards.cards import Card
 from .poker import evaluate_hand
 from .scoring import calculate_score
-from ..cards.jokers import joker_from_dict
+from ..cards.jokers import joker_from_dict, load_jokers
 from ..shop.vouchers import voucher_from_dict
 from .blinds import BlindManager
 from ..shop.shop import Shop
@@ -142,6 +143,20 @@ class Game:
         print(
             f"\n--- Advancing to {self.blind_manager.current.name} (Score required: {self.blind_manager.current.score_required}) ---"
         )
+        # Riff-Raff Joker effect
+        for joker in self.player.jokers:
+            if joker.name == "Riff-Raff":
+                commons = [j for j in load_jokers() if getattr(j, "rarity", "").lower() == "common"]
+                slots = max(0, 5 - len(self.player.jokers))
+                to_create = min(2, slots)
+                if to_create <= 0:
+                    print("No room for Riff-Raff to create Jokers.")
+                    break
+                for _ in range(to_create):
+                    self.player.jokers.append(random.choice(commons))
+                plural = "s" if to_create > 1 else ""
+                print(f"Riff-Raff created {to_create} Common Joker{plural}.")
+                break
 
     def end_of_round_winnings(self) -> int:
         base = 10

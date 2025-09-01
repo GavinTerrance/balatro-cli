@@ -7,7 +7,7 @@
 [x] Buying tarot/planet cards in the shop gives you the option to "apply now" or "put in hand"
 [x] You can only have 2 consumables in your inventory unless expanded by a voucher/joker
 [x] Give the user the option to exit at any point during gameplay
-[ ] Only cards in the hand played count in scoring (example: if user plays pair, only the cards in the pair count in scoring). 
+[ ] Only cards in the hand played count in scoring (example: if user plays pair, only the cards in the pair count in scoring).
  - This can be reversed by an effect. (See Joker "Splash" as an example)
-[ ] Bug: Tarot/Spectral cards that apply an effect to a playing card bought in shop outside of a card pack, can only be put into consumable slot inventory. Do not show playing cards available to apply to. See "testing_results/issue_2.md"
-[ ] Bug: Riff-Raff Joker does not work. When blind is selected it doesn't create two common jokers. See "testing_results/issue_3.md"
+[x] Bug: Tarot/Spectral cards that apply an effect to a playing card bought in shop outside of a card pack now show playing cards available to apply to. See "testing_results/issue_2.md"
+[x] Bug: Riff-Raff Joker now creates two common jokers when a blind is selected. See "testing_results/issue_3.md"
