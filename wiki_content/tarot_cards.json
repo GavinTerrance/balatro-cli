@@ -1,0 +1,90 @@
+[
+  {
+    "name": "The Fool (0)",
+    "description": "Creates a copy of the last Tarot or Planet card used. ( The Fool excluded)"
+  },
+  {
+    "name": "The Magician (I)",
+    "description": "Enhances 2 selected cards to Lucky Cards"
+  },
+  {
+    "name": "The High Priestess (II)",
+    "description": "Creates up to 2 random Planet cards (Must have room)"
+  },
+  {
+    "name": "The Empress (III)",
+    "description": "Enhances 2 selected cards to Mult Cards"
+  },
+  {
+    "name": "The Emperor (IV)",
+    "description": "Creates up to 2 random Tarot cards (Must have room)"
+  },
+  {
+    "name": "The Hierophant (V)",
+    "description": "Enhances 2 selected cards to Bonus Cards"
+  },
+  {
+    "name": "The Lovers (VI)",
+    "description": "Enhances 1 selected card into a Wild Card"
+  },
+  {
+    "name": "The Chariot (VII)",
+    "description": "Enhances 1 selected card into a Steel Card"
+  },
+  {
+    "name": "Justice (VIII)",
+    "description": "Enhances 1 selected card into a Glass Card"
+  },
+  {
+    "name": "The Hermit (IX)",
+    "description": "Doubles money (Max of $20 )"
+  },
+  {
+    "name": "The Wheel of Fortune (X)",
+    "description": "1 in 4 chance to add Foil , Holographic , or Polychrome edition to a random Joker"
+  },
+  {
+    "name": "Strength (XI)",
+    "description": "Increases rank of up to 2 selected cards by 1 (Rank order: A→2→3→4→5→6→7→8→9→10→J→Q→K→A)"
+  },
+  {
+    "name": "The Hanged Man (XII)",
+    "description": "Destroys up to 2 selected cards"
+  },
+  {
+    "name": "Death (XIII)",
+    "description": "Select 2 cards, convert the right card into the left card (Drag to rearrange)"
+  },
+  {
+    "name": "Temperance (XIV)",
+    "description": "Gives the total sell value of all current Jokers (Max of $50 )"
+  },
+  {
+    "name": "The Devil (XV)",
+    "description": "Enhances 1 selected card into a Gold Card"
+  },
+  {
+    "name": "The Tower (XVI)",
+    "description": "Enhances 1 selected card into a Stone Card"
+  },
+  {
+    "name": "The Star (XVII)",
+    "description": "Converts up to 3 selected cards to Diamonds"
+  },
+  {
+    "name": "The Moon (XVIII)",
+    "description": "Converts up to 3 selected cards to Clubs"
+  },
+  {
+    "name": "The Sun (XIX)",
+    "description": "Converts up to 3 selected cards to Hearts"
+  },
+  {
+    "name": "Judgement (XX)",
+    "description": "Creates a random Joker card (without in-run stickers ) (Must have room)"
+  },
+  {
+    "name": "The World (XXI)",
+    "description": "Converts up to 3 selected cards to Spades"
+  }
+]
