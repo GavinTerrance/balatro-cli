@@ -29,9 +29,16 @@ class PlanetCard:
         return f"PlanetCard(name='{self.name}')"
 
     def apply_effect(self, game):
-        # This will be implemented later when poker hand leveling is in place
+        from ..core.poker import PokerHand
+
+        try:
+            hand_enum = PokerHand[self.poker_hand_type.upper().replace(" ", "_")]
+        except KeyError:
+            print(f"Unknown hand type {self.poker_hand_type}.")
+            return
+        game.player.add_hand_bonus(hand_enum, self.chips_bonus, self.mult_bonus)
         print(
-            f"{self.name} used: Levels up {self.poker_hand_type} (effect not yet implemented)."
+            f"{self.name} used: {self.poker_hand_type} gains +{self.chips_bonus} chips, +{self.mult_bonus} mult."
         )
 
     def to_dict(self):

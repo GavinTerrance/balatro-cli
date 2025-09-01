@@ -50,6 +50,7 @@ class Game:
         self.round_earnings = 0
         self.voucher_purchased = False
         self.last_used_card = None
+        self.ectoplasm_uses = 0
         self.activate_vouchers()
 
     @property
@@ -79,11 +80,14 @@ class Game:
                 "hand_size": p.hand_size,
                 "score": p.score,
                 "sort_by": p.sort_by,
+                "consumable_slots": p.consumable_slots,
+                "hand_bonuses": p.hand_bonuses,
             },
             "round": self.round,
             "ante": self.ante,
             "game_over": self.game_over,
             "current_blind_index": self.blind_manager.index,
+            "ectoplasm_uses": self.ectoplasm_uses,
         }
 
     @classmethod
@@ -103,10 +107,13 @@ class Game:
         player.hand_size = p_data["hand_size"]
         player.score = p_data["score"]
         player.sort_by = p_data.get("sort_by", "rank")
+        player.consumable_slots = p_data.get("consumable_slots", 2)
+        player.hand_bonuses = p_data.get("hand_bonuses", {})
         game.round = data["round"]
         game.ante = data["ante"]
         game.game_over = data["game_over"]
         game.blind_manager.index = data["current_blind_index"]
+        game.ectoplasm_uses = data.get("ectoplasm_uses", 0)
         return game
 
     # ------------------------------------------------------------------

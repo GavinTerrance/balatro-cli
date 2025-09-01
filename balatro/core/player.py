@@ -3,6 +3,7 @@ from __future__ import annotations
 """Player related state and behaviour for Balatro."""
 
 from ..cards.cards import Card
+from ..core.poker import PokerHand
 
 
 class Player:
@@ -24,6 +25,8 @@ class Player:
         self.tarot_cards = []
         self.spectral_cards = []
         self.planet_cards = []
+        self.consumable_slots = 2
+        self.hand_bonuses: dict[str, dict[str, int]] = {}
 
     # ------------------------------------------------------------------
     # Card handling
@@ -70,6 +73,38 @@ class Player:
 
     # ------------------------------------------------------------------
     # Inventory usage helpers
+    def _total_consumables(self) -> int:
+        return len(self.tarot_cards) + len(self.spectral_cards) + len(self.planet_cards)
+
+    def _has_consumable_space(self) -> bool:
+        return self._total_consumables() < self.consumable_slots
+
+    def add_tarot_card(self, card) -> bool:
+        if self._has_consumable_space():
+            self.tarot_cards.append(card)
+            return True
+        print("No room for more consumables.")
+        return False
+
+    def add_spectral_card(self, card) -> bool:
+        if self._has_consumable_space():
+            self.spectral_cards.append(card)
+            return True
+        print("No room for more consumables.")
+        return False
+
+    def add_planet_card(self, card) -> bool:
+        if self._has_consumable_space():
+            self.planet_cards.append(card)
+            return True
+        print("No room for more consumables.")
+        return False
+
+    def add_hand_bonus(self, hand: PokerHand, chips: int = 0, mult: int = 0) -> None:
+        bonus = self.hand_bonuses.setdefault(hand.name, {"chips": 0, "mult": 0})
+        bonus["chips"] += chips
+        bonus["mult"] += mult
+
     def use_tarot_card(self, index: int, game) -> None:
         if 0 <= index < len(self.tarot_cards):
             tarot = self.tarot_cards.pop(index)
