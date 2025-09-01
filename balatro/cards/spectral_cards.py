@@ -7,6 +7,7 @@ import random
 from pathlib import Path
 
 from .cards import Card, Suit, Edition, Seal
+from ..utils import get_user_input
 
 
 class SpectralCard:
@@ -41,7 +42,7 @@ class SpectralCard:
             for i, c in enumerate(player.hand):
                 print(f"[{i}] {c}")
             print("---------------------------")
-            selection = input(
+            selection = get_user_input(
                 "Select target indices separated by space: "
             ).strip()
             if selection:

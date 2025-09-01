@@ -12,6 +12,7 @@ extend or test in isolation.
 from typing import Optional
 
 from .core.game import Game, save_game, load_game
+from .utils import get_user_input
 
 
 class BalatroCLI:
@@ -37,6 +38,7 @@ class BalatroCLI:
         print("  'v': Save the current game.")
         print("  'l': Load a previously saved game.")
         print("  'q': Quit the game.")
+        print("  Type 'exit' at any prompt to quit immediately.")
         print("--------------------")
 
     def _handle_action(self, action: str, additional_input: Optional[str]) -> bool:
@@ -101,12 +103,12 @@ class BalatroCLI:
         while True:
             while not self.game.game_over:
                 print(self.game)
-                user_input = input("Enter your action: ").strip().lower()
+                user_input = get_user_input("Enter your action: ").strip().lower()
                 action = user_input[:1]
                 additional_input = user_input[1:]
                 if not self._handle_action(action, additional_input):
                     return self.game
-            again = input("Play again? (y/n): ").strip().lower()
+            again = get_user_input("Play again? (y/n): ").strip().lower()
             if again == "y":
                 deck_type = self.game.deck_key
                 self.game = Game(deck_type=deck_type)
