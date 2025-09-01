@@ -11,3 +11,4 @@
  - This can be reversed by an effect. (See Joker "Splash" as an example)
 [x] Bug: Tarot/Spectral cards that apply an effect to a playing card bought in shop outside of a card pack now show playing cards available to apply to. See "testing_results/issue_2.md"
 [x] Bug: Riff-Raff Joker now creates two common jokers when a blind is selected. See "testing_results/issue_3.md"
+[ ] Implement interest. See "data/interest.md" 
