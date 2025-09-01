@@ -9,6 +9,7 @@ from pathlib import Path
 from .cards import Card, Suit, Rank, Enhancement, Edition
 from ..cards.jokers import load_jokers
 from ..cards.planet_cards import load_planet_cards
+from ..utils import get_user_input
 
 
 class TarotCard:
@@ -43,7 +44,7 @@ class TarotCard:
             for i, c in enumerate(player.hand):
                 print(f"[{i}] {c}")
             print("---------------------------")
-            selection = input(
+            selection = get_user_input(
                 "Select target indices separated by space: "
             ).strip()
             if selection:
