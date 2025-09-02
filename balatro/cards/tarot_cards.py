@@ -98,12 +98,11 @@ class TarotCard:
                 dst.enhancement = src.enhancement
                 dst.edition = src.edition
                 dst.seal = src.seal
-                if src in game.player.hand:
-                    game.player.hand.remove(src)
-                print("Converted second card into first card and destroyed the original.")
+                print("Converted second card into a copy of the first card.")
 
         def _double_money(game, _selected, _params):
-            game.player.money = min(game.player.money * 2, 20)
+            gain = min(game.player.money, 20)
+            game.player.money += gain
             print(f"Money is now ${game.player.money}.")
 
         def _add_planet_cards(game, _selected, params):

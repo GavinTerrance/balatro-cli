@@ -49,7 +49,11 @@ class BalatroCLI:
         card_indices: list[int] = []
         selected_cards = []
         if additional_input:
-            card_indices = [int(idx) for idx in additional_input.split()]
+            try:
+                card_indices = [int(idx) for idx in additional_input.split()]
+            except ValueError:
+                print("Please provide valid card indices.")
+                card_indices = []
             selected_cards = [
                 self.game.player.hand[i]
                 for i in card_indices

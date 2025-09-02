@@ -3,6 +3,7 @@
 from .poker import PokerHand
 from ..cards.jokers import Joker
 from ..cards.cards import Card, Enhancement, Edition, Seal, Rank
+from ..utils import calculate_sell_value
 import random  # Import random for Lucky Card
 
 # Base chips and multiplier for each hand type
@@ -96,6 +97,11 @@ def calculate_score(
             print(f"Gold Seal card played: +$3. Current money: ${game.money}")
 
     for joker in jokers:
+        if joker.name == "Swashbuckler":
+            extra = sum(calculate_sell_value(j) for j in jokers if j is not joker)
+            if extra:
+                mult += extra
+                messages.append(f"{joker.name} adds +{extra} mult from other Jokers")
         if not joker.applies_to(hand_type):
             continue
         new_chips = joker.apply_chips(chips)

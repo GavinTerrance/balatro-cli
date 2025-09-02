@@ -120,9 +120,8 @@ class Game:
     # ------------------------------------------------------------------
     def __repr__(self):
         return (
-            f"Game(Ante={self.ante}, round={self.round}, hands={self.player.hands}, "
-            f"discards={self.player.discards}, score={self.player.score}, "
-            f"money={self.player.money}, current_blind={self.blind_manager.current.name})"
+            f"Game(Ante={self.ante}, round={self.round}, money={self.player.money}, "
+            f"current_blind={self.blind_manager.current.name})"
         )
 
     def activate_vouchers(self):
@@ -185,12 +184,27 @@ class Game:
     def enter_shop(self):
         self.shop.generate_items(self)
         while True:
-            self.shop.display_items(self.money)
+            self.shop.display_items(self.money, self.player)
             choice = get_user_input(
                 "Select item to purchase or type 'leave' to continue: "
             ).strip().lower()
             if choice in ("", "leave", "l"):
                 break
+            if choice[0:1] in {"j", "t", "s", "p"}:
+                try:
+                    idx = int(choice[1:])
+                except ValueError:
+                    print("Invalid selection.")
+                    continue
+                if choice[0] == "j":
+                    self.player.sell_joker(idx)
+                elif choice[0] == "t":
+                    self.player.sell_tarot_card(idx)
+                elif choice[0] == "s":
+                    self.player.sell_spectral_card(idx)
+                else:
+                    self.player.sell_planet_card(idx)
+                continue
             try:
                 idx = int(choice)
                 self.shop.purchase_item(idx, self)
@@ -342,14 +356,7 @@ class Game:
             out.append("--------------------")
             return out
 
-        lines = [
-            "",
-            "--------------------",
-            repr(self),
-            f"Current Ante: {self.ante}",
-            f"Score needed to win blind: {self.blind_manager.current.score_required}",
-        ]
-
+        lines: list[str] = []
         lines += render_section(
             "Your Hand", self.player.hand, lambda c, i: f"[{i}] {c}", enumerated=True
         )
@@ -377,7 +384,14 @@ class Game:
             lambda p, i: f"[{i}] {p.name}: {p.description}",
             enumerated=True,
         )
-
+        lines.append(repr(self))
+        lines.append(
+            f"Score: {self.player.score}/{self.blind_manager.current.score_required}"
+        )
+        lines.append(
+            f"Hands:{self.player.hands} | Discards:{self.player.discards}"
+        )
+        lines.append("--------------------")
         return "\n".join(lines)
 
 
