@@ -2,20 +2,20 @@
 
 ## Items to be implemented
 ### Bugs
-[ ] Bug: Tarot/Spectral cards that apply an effect to a playing card bought in shop outside of a card pack should only have the option to add to consumable slots. See "testing_results/issue_7.md"
-[ ] Bug: "Death" Tarot card destroys the original card when it shouldn't there should be 2 copies of the original card after use. See "testing_results/issue_8.md"
-[ ] Bug: "Death" Tarot card should have command line instructions and not telling the user to drag items. See "testing_results/issue_8.md" 
-[ ] Bug: "The Hermit" Tarot card is limiting the balance to $20, not the amount doubled to $20. So if the user has a $25 balance before play, after play they should have $45 dollars ($25 + $20). See "testing_results/issue_9.md"
-[ ] Bug: "Clearance Sale" voucher doesn't discount items in shop. See "testing_results/issue_10.md". 
-[ ] Bug: Typing in a non-integer for a card index crashes game. See "testing_results/issue_11.md"
+[x] Bug: Tarot/Spectral cards that apply an effect to a playing card bought in shop outside of a card pack should only have the option to add to consumable slots. See "testing_results/issue_7.md"
+[x] Bug: "Death" Tarot card destroys the original card when it shouldn't there should be 2 copies of the original card after use. See "testing_results/issue_8.md"
+[x] Bug: "Death" Tarot card should have command line instructions and not telling the user to drag items. See "testing_results/issue_8.md"
+[x] Bug: "The Hermit" Tarot card is limiting the balance to $20, not the amount doubled to $20. So if the user has a $25 balance before play, after play they should have $45 dollars ($25 + $20). See "testing_results/issue_9.md"
+[x] Bug: "Clearance Sale" voucher doesn't discount items in shop. See "testing_results/issue_10.md".
+[x] Bug: Typing in a non-integer for a card index crashes game. See "testing_results/issue_11.md"
 [ ]
 
 ### Features
-[ ] Implement Selling Consumable items and Jokers. (sell_cost = math.max(1, math.floor(cost/2)) + ability_extra_value) | ability extra value  (+2 if foil, +3 if holo, +5 if polychrome, +5 if negative)
+[x] Implement Selling Consumable items and Jokers. (sell_cost = math.max(1, math.floor(cost/2)) + ability_extra_value) | ability extra value  (+2 if foil, +3 if holo, +5 if polychrome, +5 if negative)
  - Related Bug: Swashbucker card seems to be only using the number of jokers to the multiplier instead of sell value. 
 
 ### Minor Enhancements
-[ ] Game state needs to be at the bottom of round output. Score needed and current score need to be together. Hands and Discards need to be more visible. See "testing_results/enhancement_1.md" 
+[x] Game state needs to be at the bottom of round output. Score needed and current score need to be together. Hands and Discards need to be more visible. See "testing_results/enhancement_1.md"
 
 
 ## Items implemented 

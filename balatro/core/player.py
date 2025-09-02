@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from ..cards.cards import Card
 from ..core.poker import PokerHand
+from ..utils import calculate_sell_value
 
 
 class Player:
@@ -101,6 +102,48 @@ class Player:
             self.planet_cards.append(card)
             return True
         print("No room for more consumables.")
+        return False
+
+    # ------------------------------------------------------------------
+    # Selling helpers
+    def sell_joker(self, index: int) -> bool:
+        if 0 <= index < len(self.jokers):
+            joker = self.jokers.pop(index)
+            value = calculate_sell_value(joker)
+            self.money += value
+            print(f"Sold {joker.name} for ${value}.")
+            return True
+        print("Invalid Joker index.")
+        return False
+
+    def sell_tarot_card(self, index: int) -> bool:
+        if 0 <= index < len(self.tarot_cards):
+            card = self.tarot_cards.pop(index)
+            value = calculate_sell_value(card)
+            self.money += value
+            print(f"Sold {card.name} for ${value}.")
+            return True
+        print("Invalid Tarot card index.")
+        return False
+
+    def sell_spectral_card(self, index: int) -> bool:
+        if 0 <= index < len(self.spectral_cards):
+            card = self.spectral_cards.pop(index)
+            value = calculate_sell_value(card)
+            self.money += value
+            print(f"Sold {card.name} for ${value}.")
+            return True
+        print("Invalid Spectral card index.")
+        return False
+
+    def sell_planet_card(self, index: int) -> bool:
+        if 0 <= index < len(self.planet_cards):
+            card = self.planet_cards.pop(index)
+            value = calculate_sell_value(card)
+            self.money += value
+            print(f"Sold {card.name} for ${value}.")
+            return True
+        print("Invalid Planet card index.")
         return False
 
     def add_hand_bonus(self, hand: PokerHand, chips: int = 0, mult: int = 0) -> None:

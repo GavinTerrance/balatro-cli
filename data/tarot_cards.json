@@ -87,7 +87,7 @@
   },
   {
     "name": "Death (XIII)",
-    "description": "Select 2 cards, convert the right card into the left card (Drag to rearrange)",
+    "description": "Select 2 cards; the second card becomes a copy of the first",
     "targets": 2,
     "action": "transform"
   },

@@ -24,6 +24,7 @@ class Voucher:
             "Crystal Ball": lambda g: setattr(g.player, "consumable_slots", g.player.consumable_slots + 1),
             "Grabber": lambda g: setattr(g.player, "hands", g.player.hands + 1),
             "Wasteful": lambda g: setattr(g.player, "discards", g.player.discards + 1),
+            "Clearance Sale": lambda g: [setattr(item, "cost", max(1, int(item.cost * 0.75))) for item in g.shop.items],
         }
 
         func = effects.get(self.name)
